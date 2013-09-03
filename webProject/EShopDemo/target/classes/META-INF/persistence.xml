@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	
+	
+		<persistence-unit name="mysql" transaction-type="JTA" >
+			<description>generated-persistence-unit</description>
+					<provider>org.hibernate.ejb.HibernatePersistence</provider>
+      			<class>com.lqf.eshopdemo.domain.Offer</class>
+      			<class>com.lqf.eshopdemo.domain.Userinfo</class>
+      			<class>com.lqf.eshopdemo.domain.OrderItems</class>
+      			<class>com.lqf.eshopdemo.domain.Order</class>
+      			<class>com.lqf.eshopdemo.domain.ProductCatalog</class>
+      			<class>com.lqf.eshopdemo.domain.ProductProperty</class>
+      			<class>com.lqf.eshopdemo.domain.Payways</class>
+      			<class>com.lqf.eshopdemo.domain.ProductOffer</class>
+      			<class>com.lqf.eshopdemo.domain.Catalog</class>
+      			<class>com.lqf.eshopdemo.domain.CustomerComment</class>
+      			<class>com.lqf.eshopdemo.domain.ProductDetail</class>
+   			<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		</persistence-unit>
+
+	
+</persistence>

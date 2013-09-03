@@ -1,0 +1,6 @@
+#org.skyway.core settings
+#Tue Sep 03 22:25:44 CST 2013
+version=10.0.0.qualifier
+default.top.level.package=com.lqf.eshopdemo
+models.folder.name=.springDSL
+initialized=true
