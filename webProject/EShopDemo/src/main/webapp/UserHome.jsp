@@ -10,7 +10,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta http-equiv="imagetoolbar" content="no"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <link href='<c:url value = "/resources/css/jquery-ui-themes.css"/>' type="text/css" rel="stylesheet">
     <link href="resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet">
     <link href="resources/css/axure_rp_page.css" type="text/css" rel="stylesheet">
     <link href="UserHome_files/axurerp_pagespecificstyles.css" type="text/css" rel="stylesheet">
