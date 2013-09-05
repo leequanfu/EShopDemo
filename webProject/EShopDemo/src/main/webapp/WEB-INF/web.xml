@@ -46,7 +46,4 @@
 		<servlet-name>EShopDemo Servlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	<welcome-file-list>
-		<welcome-file>UserHome.jsp</welcome-file>
-	</welcome-file-list>
 </web-app>

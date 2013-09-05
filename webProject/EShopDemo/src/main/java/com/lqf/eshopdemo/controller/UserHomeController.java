@@ -35,9 +35,10 @@ public class UserHomeController {
 		Set<ProductDetail> movieList = getProductDetailByPc(moviePc);
 		Set<ProductDetail> phoneList = getProductDetailByPc(phonePc);
 		
-		model.addAttribute(bookList);
-		model.addAttribute(movieList);
-		model.addAttribute(phoneList);
+		model.addAttribute("bookList", bookList);
+		model.addAttribute("movieList", movieList);
+		model.addAttribute("phoneList", phoneList);
+		model.addAttribute("test", "ttt");
 		return "UserHome";
 	}
 
