@@ -54,60 +54,37 @@ public class ProductPropertyController {
 	private ProductPropertyService productPropertyService;
 
 	/**
-	 * Edit an existing ProductProperty entity
+	 * Create a new ProductDetail entity
 	 * 
 	 */
-	@RequestMapping("/editProductProperty")
-	public ModelAndView editProductProperty(@RequestParam Integer proIdKey, @RequestParam String keyKey) {
+	@RequestMapping("/newProductPropertyProductDetail")
+	public ModelAndView newProductPropertyProductDetail(@RequestParam Integer productproperty_proId, @RequestParam String productproperty_key) {
 		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productproperty", productPropertyDAO.findProductPropertyByPrimaryKey(proIdKey, keyKey));
-		mav.setViewName("productproperty/editProductProperty.jsp");
+		mav.addObject("productproperty_proId", productproperty_proId);
+		mav.addObject("productproperty_key", productproperty_key);
+		mav.addObject("productdetail", new ProductDetail());
+		mav.addObject("newFlag", true);
+		mav.setViewName("productproperty/productdetail/editProductDetail.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Select the ProductProperty entity for display allowing the user to confirm that they would like to delete the entity
-	 * 
 	 */
-	@RequestMapping("/confirmDeleteProductProperty")
-	public ModelAndView confirmDeleteProductProperty(@RequestParam Integer proIdKey, @RequestParam String keyKey) {
+	@RequestMapping("/productpropertyController/binary.action")
+	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productproperty", productPropertyDAO.findProductPropertyByPrimaryKey(proIdKey, keyKey));
-		mav.setViewName("productproperty/deleteProductProperty.jsp");
-
+		mav.setViewName("streamedBinaryContentView");
 		return mav;
+
 	}
 
 	/**
-	 * Select an existing ProductProperty entity
+	 * Entry point to show all ProductProperty entities
 	 * 
 	 */
-	@RequestMapping("/selectProductProperty")
-	public ModelAndView selectProductProperty(@RequestParam Integer proIdKey, @RequestParam String keyKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productproperty", productPropertyDAO.findProductPropertyByPrimaryKey(proIdKey, keyKey));
-		mav.setViewName("productproperty/viewProductProperty.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Show all ProductProperty entities
-	 * 
-	 */
-	@RequestMapping("/indexProductProperty")
-	public ModelAndView listProductPropertys() {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productpropertys", productPropertyService.loadProductPropertys());
-
-		mav.setViewName("productproperty/listProductPropertys.jsp");
-
-		return mav;
+	public String indexProductProperty() {
+		return "redirect:/indexProductProperty";
 	}
 
 	/**
@@ -121,29 +98,30 @@ public class ProductPropertyController {
 	}
 
 	/**
-	 * Delete an existing ProductDetail entity
+	 * Select the child ProductDetail entity for display allowing the user to confirm that they would like to delete the entity
 	 * 
 	 */
-	@RequestMapping("/deleteProductPropertyProductDetail")
-	public ModelAndView deleteProductPropertyProductDetail(@RequestParam Integer productproperty_proId, @RequestParam String productproperty_key, @RequestParam Integer related_productdetail_id) {
+	@RequestMapping("/confirmDeleteProductPropertyProductDetail")
+	public ModelAndView confirmDeleteProductPropertyProductDetail(@RequestParam Integer productproperty_proId, @RequestParam String productproperty_key, @RequestParam Integer related_productdetail_id) {
 		ModelAndView mav = new ModelAndView();
 
-		ProductProperty productproperty = productPropertyService.deleteProductPropertyProductDetail(productproperty_proId, productproperty_key, related_productdetail_id);
-
+		mav.addObject("productdetail", productDetailDAO.findProductDetailByPrimaryKey(related_productdetail_id));
 		mav.addObject("productproperty_proId", productproperty_proId);
 		mav.addObject("productproperty_key", productproperty_key);
-		mav.addObject("productproperty", productproperty);
-		mav.setViewName("productproperty/viewProductProperty.jsp");
+		mav.setViewName("productproperty/productdetail/deleteProductDetail.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Entry point to show all ProductProperty entities
+	 * Delete an existing ProductProperty entity
 	 * 
 	 */
-	public String indexProductProperty() {
-		return "redirect:/indexProductProperty";
+	@RequestMapping("/deleteProductProperty")
+	public String deleteProductProperty(@RequestParam Integer proIdKey, @RequestParam String keyKey) {
+		ProductProperty productproperty = productPropertyDAO.findProductPropertyByPrimaryKey(proIdKey, keyKey);
+		productPropertyService.deleteProductProperty(productproperty);
+		return "forward:/indexProductProperty";
 	}
 
 	/**
@@ -179,60 +157,33 @@ public class ProductPropertyController {
 	}
 
 	/**
+	 * Register custom, context-specific property editors
+	 * 
 	 */
-	@RequestMapping("/productpropertyController/binary.action")
-	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("streamedBinaryContentView");
-		return mav;
-
+	@InitBinder
+	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
+		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
+		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
+		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
+		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
+		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
+		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
+		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
+		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
+		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
+		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
 	}
 
 	/**
-	 * Save an existing ProductDetail entity
+	 * Edit an existing ProductProperty entity
 	 * 
 	 */
-	@RequestMapping("/saveProductPropertyProductDetail")
-	public ModelAndView saveProductPropertyProductDetail(@RequestParam Integer productproperty_proId, @RequestParam String productproperty_key, @ModelAttribute ProductDetail productdetail) {
-		ProductProperty parent_productproperty = productPropertyService.saveProductPropertyProductDetail(productproperty_proId, productproperty_key, productdetail);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("productproperty_proId", productproperty_proId);
-		mav.addObject("productproperty_key", productproperty_key);
-		mav.addObject("productproperty", parent_productproperty);
-		mav.setViewName("productproperty/viewProductProperty.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Select the child ProductDetail entity for display allowing the user to confirm that they would like to delete the entity
-	 * 
-	 */
-	@RequestMapping("/confirmDeleteProductPropertyProductDetail")
-	public ModelAndView confirmDeleteProductPropertyProductDetail(@RequestParam Integer productproperty_proId, @RequestParam String productproperty_key, @RequestParam Integer related_productdetail_id) {
+	@RequestMapping("/editProductProperty")
+	public ModelAndView editProductProperty(@RequestParam Integer proIdKey, @RequestParam String keyKey) {
 		ModelAndView mav = new ModelAndView();
 
-		mav.addObject("productdetail", productDetailDAO.findProductDetailByPrimaryKey(related_productdetail_id));
-		mav.addObject("productproperty_proId", productproperty_proId);
-		mav.addObject("productproperty_key", productproperty_key);
-		mav.setViewName("productproperty/productdetail/deleteProductDetail.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Create a new ProductDetail entity
-	 * 
-	 */
-	@RequestMapping("/newProductPropertyProductDetail")
-	public ModelAndView newProductPropertyProductDetail(@RequestParam Integer productproperty_proId, @RequestParam String productproperty_key) {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("productproperty_proId", productproperty_proId);
-		mav.addObject("productproperty_key", productproperty_key);
-		mav.addObject("productdetail", new ProductDetail());
-		mav.addObject("newFlag", true);
-		mav.setViewName("productproperty/productdetail/editProductDetail.jsp");
+		mav.addObject("productproperty", productPropertyDAO.findProductPropertyByPrimaryKey(proIdKey, keyKey));
+		mav.setViewName("productproperty/editProductProperty.jsp");
 
 		return mav;
 	}
@@ -255,14 +206,63 @@ public class ProductPropertyController {
 	}
 
 	/**
-	 * Delete an existing ProductProperty entity
+	 * Show all ProductProperty entities
 	 * 
 	 */
-	@RequestMapping("/deleteProductProperty")
-	public String deleteProductProperty(@RequestParam Integer proIdKey, @RequestParam String keyKey) {
-		ProductProperty productproperty = productPropertyDAO.findProductPropertyByPrimaryKey(proIdKey, keyKey);
-		productPropertyService.deleteProductProperty(productproperty);
-		return "forward:/indexProductProperty";
+	@RequestMapping("/indexProductProperty")
+	public ModelAndView listProductPropertys() {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productpropertys", productPropertyService.loadProductPropertys());
+
+		mav.setViewName("productproperty/listProductPropertys.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Select the ProductProperty entity for display allowing the user to confirm that they would like to delete the entity
+	 * 
+	 */
+	@RequestMapping("/confirmDeleteProductProperty")
+	public ModelAndView confirmDeleteProductProperty(@RequestParam Integer proIdKey, @RequestParam String keyKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productproperty", productPropertyDAO.findProductPropertyByPrimaryKey(proIdKey, keyKey));
+		mav.setViewName("productproperty/deleteProductProperty.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Select an existing ProductProperty entity
+	 * 
+	 */
+	@RequestMapping("/selectProductProperty")
+	public ModelAndView selectProductProperty(@RequestParam Integer proIdKey, @RequestParam String keyKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productproperty", productPropertyDAO.findProductPropertyByPrimaryKey(proIdKey, keyKey));
+		mav.setViewName("productproperty/viewProductProperty.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Save an existing ProductDetail entity
+	 * 
+	 */
+	@RequestMapping("/saveProductPropertyProductDetail")
+	public ModelAndView saveProductPropertyProductDetail(@RequestParam Integer productproperty_proId, @RequestParam String productproperty_key, @ModelAttribute ProductDetail productdetail) {
+		ProductProperty parent_productproperty = productPropertyService.saveProductPropertyProductDetail(productproperty_proId, productproperty_key, productdetail);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("productproperty_proId", productproperty_proId);
+		mav.addObject("productproperty_key", productproperty_key);
+		mav.addObject("productproperty", parent_productproperty);
+		mav.setViewName("productproperty/viewProductProperty.jsp");
+
+		return mav;
 	}
 
 	/**
@@ -280,20 +280,20 @@ public class ProductPropertyController {
 	}
 
 	/**
-	 * Register custom, context-specific property editors
+	 * Delete an existing ProductDetail entity
 	 * 
 	 */
-	@InitBinder
-	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
-		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
-		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
-		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
-		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
-		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
-		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
-		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
-		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
-		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
-		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
+	@RequestMapping("/deleteProductPropertyProductDetail")
+	public ModelAndView deleteProductPropertyProductDetail(@RequestParam Integer productproperty_proId, @RequestParam String productproperty_key, @RequestParam Integer related_productdetail_id) {
+		ModelAndView mav = new ModelAndView();
+
+		ProductProperty productproperty = productPropertyService.deleteProductPropertyProductDetail(productproperty_proId, productproperty_key, related_productdetail_id);
+
+		mav.addObject("productproperty_proId", productproperty_proId);
+		mav.addObject("productproperty_key", productproperty_key);
+		mav.addObject("productproperty", productproperty);
+		mav.setViewName("productproperty/viewProductProperty.jsp");
+
+		return mav;
 	}
 }

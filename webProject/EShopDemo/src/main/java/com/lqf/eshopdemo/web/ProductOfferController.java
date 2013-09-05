@@ -63,14 +63,14 @@ public class ProductOfferController {
 	private ProductOfferService productOfferService;
 
 	/**
-	 * Delete an existing ProductDetail entity
+	 * Delete an existing Offer entity
 	 * 
 	 */
-	@RequestMapping("/deleteProductOfferProductDetail")
-	public ModelAndView deleteProductOfferProductDetail(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @RequestParam Integer related_productdetail_id) {
+	@RequestMapping("/deleteProductOfferOffer")
+	public ModelAndView deleteProductOfferOffer(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @RequestParam Integer related_offer_id) {
 		ModelAndView mav = new ModelAndView();
 
-		ProductOffer productoffer = productOfferService.deleteProductOfferProductDetail(productoffer_proId, productoffer_offerId, related_productdetail_id);
+		ProductOffer productoffer = productOfferService.deleteProductOfferOffer(productoffer_proId, productoffer_offerId, related_offer_id);
 
 		mav.addObject("productoffer_proId", productoffer_proId);
 		mav.addObject("productoffer_offerId", productoffer_offerId);
@@ -81,45 +81,43 @@ public class ProductOfferController {
 	}
 
 	/**
-	 * Edit an existing ProductDetail entity
+	 * Show all Offer entities by ProductOffer
 	 * 
 	 */
-	@RequestMapping("/editProductOfferProductDetail")
-	public ModelAndView editProductOfferProductDetail(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @RequestParam Integer productdetail_id) {
-		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
-
+	@RequestMapping("/listProductOfferOffer")
+	public ModelAndView listProductOfferOffer(@RequestParam Integer proIdKey, @RequestParam Integer offerIdKey) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("productoffer_proId", productoffer_proId);
-		mav.addObject("productoffer_offerId", productoffer_offerId);
-		mav.addObject("productdetail", productdetail);
-		mav.setViewName("productoffer/productdetail/editProductDetail.jsp");
+
+		mav.addObject("productoffer", productOfferDAO.findProductOfferByPrimaryKey(proIdKey, offerIdKey));
+		mav.setViewName("productoffer/offer/listOffer.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Select the child Offer entity for display allowing the user to confirm that they would like to delete the entity
+	 * View an existing Offer entity
 	 * 
 	 */
-	@RequestMapping("/confirmDeleteProductOfferOffer")
-	public ModelAndView confirmDeleteProductOfferOffer(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @RequestParam Integer related_offer_id) {
-		ModelAndView mav = new ModelAndView();
+	@RequestMapping("/selectProductOfferOffer")
+	public ModelAndView selectProductOfferOffer(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @RequestParam Integer offer_id) {
+		Offer offer = offerDAO.findOfferByPrimaryKey(offer_id, -1, -1);
 
-		mav.addObject("offer", offerDAO.findOfferByPrimaryKey(related_offer_id));
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("productoffer_proId", productoffer_proId);
 		mav.addObject("productoffer_offerId", productoffer_offerId);
-		mav.setViewName("productoffer/offer/deleteOffer.jsp");
+		mav.addObject("offer", offer);
+		mav.setViewName("productoffer/offer/viewOffer.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Save an existing ProductDetail entity
+	 * Save an existing Offer entity
 	 * 
 	 */
-	@RequestMapping("/saveProductOfferProductDetail")
-	public ModelAndView saveProductOfferProductDetail(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @ModelAttribute ProductDetail productdetail) {
-		ProductOffer parent_productoffer = productOfferService.saveProductOfferProductDetail(productoffer_proId, productoffer_offerId, productdetail);
+	@RequestMapping("/saveProductOfferOffer")
+	public ModelAndView saveProductOfferOffer(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @ModelAttribute Offer offer) {
+		ProductOffer parent_productoffer = productOfferService.saveProductOfferOffer(productoffer_proId, productoffer_offerId, offer);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("productoffer_proId", productoffer_proId);
@@ -148,45 +146,18 @@ public class ProductOfferController {
 	}
 
 	/**
-	 * View an existing ProductDetail entity
+	 * Show all ProductOffer entities
 	 * 
 	 */
-	@RequestMapping("/selectProductOfferProductDetail")
-	public ModelAndView selectProductOfferProductDetail(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @RequestParam Integer productdetail_id) {
-		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("productoffer_proId", productoffer_proId);
-		mav.addObject("productoffer_offerId", productoffer_offerId);
-		mav.addObject("productdetail", productdetail);
-		mav.setViewName("productoffer/productdetail/viewProductDetail.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Select an existing ProductOffer entity
-	 * 
-	 */
-	@RequestMapping("/selectProductOffer")
-	public ModelAndView selectProductOffer(@RequestParam Integer proIdKey, @RequestParam Integer offerIdKey) {
+	@RequestMapping("/indexProductOffer")
+	public ModelAndView listProductOffers() {
 		ModelAndView mav = new ModelAndView();
 
-		mav.addObject("productoffer", productOfferDAO.findProductOfferByPrimaryKey(proIdKey, offerIdKey));
-		mav.setViewName("productoffer/viewProductOffer.jsp");
+		mav.addObject("productoffers", productOfferService.loadProductOffers());
+
+		mav.setViewName("productoffer/listProductOffers.jsp");
 
 		return mav;
-	}
-
-	/**
-	 * Delete an existing ProductOffer entity
-	 * 
-	 */
-	@RequestMapping("/deleteProductOffer")
-	public String deleteProductOffer(@RequestParam Integer proIdKey, @RequestParam Integer offerIdKey) {
-		ProductOffer productoffer = productOfferDAO.findProductOfferByPrimaryKey(proIdKey, offerIdKey);
-		productOfferService.deleteProductOffer(productoffer);
-		return "forward:/indexProductOffer";
 	}
 
 	/**
@@ -205,88 +176,60 @@ public class ProductOfferController {
 	}
 
 	/**
-	 * View an existing Offer entity
+	 * Show all ProductDetail entities by ProductOffer
 	 * 
 	 */
-	@RequestMapping("/selectProductOfferOffer")
-	public ModelAndView selectProductOfferOffer(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @RequestParam Integer offer_id) {
-		Offer offer = offerDAO.findOfferByPrimaryKey(offer_id, -1, -1);
+	@RequestMapping("/listProductOfferProductDetail")
+	public ModelAndView listProductOfferProductDetail(@RequestParam Integer proIdKey, @RequestParam Integer offerIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productoffer", productOfferDAO.findProductOfferByPrimaryKey(proIdKey, offerIdKey));
+		mav.setViewName("productoffer/productdetail/listProductDetail.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * View an existing ProductDetail entity
+	 * 
+	 */
+	@RequestMapping("/selectProductOfferProductDetail")
+	public ModelAndView selectProductOfferProductDetail(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @RequestParam Integer productdetail_id) {
+		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("productoffer_proId", productoffer_proId);
 		mav.addObject("productoffer_offerId", productoffer_offerId);
-		mav.addObject("offer", offer);
-		mav.setViewName("productoffer/offer/viewOffer.jsp");
+		mav.addObject("productdetail", productdetail);
+		mav.setViewName("productoffer/productdetail/viewProductDetail.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Select the ProductOffer entity for display allowing the user to confirm that they would like to delete the entity
+	 * Delete an existing ProductOffer entity
 	 * 
 	 */
-	@RequestMapping("/confirmDeleteProductOffer")
-	public ModelAndView confirmDeleteProductOffer(@RequestParam Integer proIdKey, @RequestParam Integer offerIdKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productoffer", productOfferDAO.findProductOfferByPrimaryKey(proIdKey, offerIdKey));
-		mav.setViewName("productoffer/deleteProductOffer.jsp");
-
-		return mav;
+	@RequestMapping("/deleteProductOffer")
+	public String deleteProductOffer(@RequestParam Integer proIdKey, @RequestParam Integer offerIdKey) {
+		ProductOffer productoffer = productOfferDAO.findProductOfferByPrimaryKey(proIdKey, offerIdKey);
+		productOfferService.deleteProductOffer(productoffer);
+		return "forward:/indexProductOffer";
 	}
 
 	/**
-	 * Show all ProductOffer entities
+	 * Edit an existing ProductDetail entity
 	 * 
 	 */
-	@RequestMapping("/indexProductOffer")
-	public ModelAndView listProductOffers() {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productoffers", productOfferService.loadProductOffers());
-
-		mav.setViewName("productoffer/listProductOffers.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Save an existing Offer entity
-	 * 
-	 */
-	@RequestMapping("/saveProductOfferOffer")
-	public ModelAndView saveProductOfferOffer(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @ModelAttribute Offer offer) {
-		ProductOffer parent_productoffer = productOfferService.saveProductOfferOffer(productoffer_proId, productoffer_offerId, offer);
+	@RequestMapping("/editProductOfferProductDetail")
+	public ModelAndView editProductOfferProductDetail(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @RequestParam Integer productdetail_id) {
+		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("productoffer_proId", productoffer_proId);
 		mav.addObject("productoffer_offerId", productoffer_offerId);
-		mav.addObject("productoffer", parent_productoffer);
-		mav.setViewName("productoffer/viewProductOffer.jsp");
-
-		return mav;
-	}
-
-	/**
-	 */
-	@RequestMapping("/productofferController/binary.action")
-	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("streamedBinaryContentView");
-		return mav;
-
-	}
-
-	/**
-	 * Show all Offer entities by ProductOffer
-	 * 
-	 */
-	@RequestMapping("/listProductOfferOffer")
-	public ModelAndView listProductOfferOffer(@RequestParam Integer proIdKey, @RequestParam Integer offerIdKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productoffer", productOfferDAO.findProductOfferByPrimaryKey(proIdKey, offerIdKey));
-		mav.setViewName("productoffer/offer/listOffer.jsp");
+		mav.addObject("productdetail", productdetail);
+		mav.setViewName("productoffer/productdetail/editProductDetail.jsp");
 
 		return mav;
 	}
@@ -308,41 +251,20 @@ public class ProductOfferController {
 	}
 
 	/**
-	 * Show all ProductDetail entities by ProductOffer
+	 * Save an existing ProductDetail entity
 	 * 
 	 */
-	@RequestMapping("/listProductOfferProductDetail")
-	public ModelAndView listProductOfferProductDetail(@RequestParam Integer proIdKey, @RequestParam Integer offerIdKey) {
-		ModelAndView mav = new ModelAndView();
+	@RequestMapping("/saveProductOfferProductDetail")
+	public ModelAndView saveProductOfferProductDetail(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @ModelAttribute ProductDetail productdetail) {
+		ProductOffer parent_productoffer = productOfferService.saveProductOfferProductDetail(productoffer_proId, productoffer_offerId, productdetail);
 
-		mav.addObject("productoffer", productOfferDAO.findProductOfferByPrimaryKey(proIdKey, offerIdKey));
-		mav.setViewName("productoffer/productdetail/listProductDetail.jsp");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("productoffer_proId", productoffer_proId);
+		mav.addObject("productoffer_offerId", productoffer_offerId);
+		mav.addObject("productoffer", parent_productoffer);
+		mav.setViewName("productoffer/viewProductOffer.jsp");
 
 		return mav;
-	}
-
-	/**
-	 * Edit an existing ProductOffer entity
-	 * 
-	 */
-	@RequestMapping("/editProductOffer")
-	public ModelAndView editProductOffer(@RequestParam Integer proIdKey, @RequestParam Integer offerIdKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productoffer", productOfferDAO.findProductOfferByPrimaryKey(proIdKey, offerIdKey));
-		mav.setViewName("productoffer/editProductOffer.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Save an existing ProductOffer entity
-	 * 
-	 */
-	@RequestMapping("/saveProductOffer")
-	public String saveProductOffer(@ModelAttribute ProductOffer productoffer) {
-		productOfferService.saveProductOffer(productoffer);
-		return "forward:/indexProductOffer";
 	}
 
 	/**
@@ -364,17 +286,63 @@ public class ProductOfferController {
 	}
 
 	/**
-	 * Create a new Offer entity
+	 * Entry point to show all ProductOffer entities
 	 * 
 	 */
-	@RequestMapping("/newProductOfferOffer")
-	public ModelAndView newProductOfferOffer(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId) {
+	public String indexProductOffer() {
+		return "redirect:/indexProductOffer";
+	}
+
+	/**
+	 * Select the child Offer entity for display allowing the user to confirm that they would like to delete the entity
+	 * 
+	 */
+	@RequestMapping("/confirmDeleteProductOfferOffer")
+	public ModelAndView confirmDeleteProductOfferOffer(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @RequestParam Integer related_offer_id) {
 		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("offer", offerDAO.findOfferByPrimaryKey(related_offer_id));
 		mav.addObject("productoffer_proId", productoffer_proId);
 		mav.addObject("productoffer_offerId", productoffer_offerId);
-		mav.addObject("offer", new Offer());
-		mav.addObject("newFlag", true);
-		mav.setViewName("productoffer/offer/editOffer.jsp");
+		mav.setViewName("productoffer/offer/deleteOffer.jsp");
+
+		return mav;
+	}
+
+	/**
+	 */
+	@RequestMapping("/productofferController/binary.action")
+	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("streamedBinaryContentView");
+		return mav;
+
+	}
+
+	/**
+	 * Save an existing ProductOffer entity
+	 * 
+	 */
+	@RequestMapping("/saveProductOffer")
+	public String saveProductOffer(@ModelAttribute ProductOffer productoffer) {
+		productOfferService.saveProductOffer(productoffer);
+		return "forward:/indexProductOffer";
+	}
+
+	/**
+	 * Delete an existing ProductDetail entity
+	 * 
+	 */
+	@RequestMapping("/deleteProductOfferProductDetail")
+	public ModelAndView deleteProductOfferProductDetail(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @RequestParam Integer related_productdetail_id) {
+		ModelAndView mav = new ModelAndView();
+
+		ProductOffer productoffer = productOfferService.deleteProductOfferProductDetail(productoffer_proId, productoffer_offerId, related_productdetail_id);
+
+		mav.addObject("productoffer_proId", productoffer_proId);
+		mav.addObject("productoffer_offerId", productoffer_offerId);
+		mav.addObject("productoffer", productoffer);
+		mav.setViewName("productoffer/viewProductOffer.jsp");
 
 		return mav;
 	}
@@ -396,27 +364,59 @@ public class ProductOfferController {
 	}
 
 	/**
-	 * Entry point to show all ProductOffer entities
+	 * Select an existing ProductOffer entity
 	 * 
 	 */
-	public String indexProductOffer() {
-		return "redirect:/indexProductOffer";
+	@RequestMapping("/selectProductOffer")
+	public ModelAndView selectProductOffer(@RequestParam Integer proIdKey, @RequestParam Integer offerIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productoffer", productOfferDAO.findProductOfferByPrimaryKey(proIdKey, offerIdKey));
+		mav.setViewName("productoffer/viewProductOffer.jsp");
+
+		return mav;
 	}
 
 	/**
-	 * Delete an existing Offer entity
+	 * Create a new Offer entity
 	 * 
 	 */
-	@RequestMapping("/deleteProductOfferOffer")
-	public ModelAndView deleteProductOfferOffer(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId, @RequestParam Integer related_offer_id) {
+	@RequestMapping("/newProductOfferOffer")
+	public ModelAndView newProductOfferOffer(@RequestParam Integer productoffer_proId, @RequestParam Integer productoffer_offerId) {
 		ModelAndView mav = new ModelAndView();
-
-		ProductOffer productoffer = productOfferService.deleteProductOfferOffer(productoffer_proId, productoffer_offerId, related_offer_id);
-
 		mav.addObject("productoffer_proId", productoffer_proId);
 		mav.addObject("productoffer_offerId", productoffer_offerId);
-		mav.addObject("productoffer", productoffer);
-		mav.setViewName("productoffer/viewProductOffer.jsp");
+		mav.addObject("offer", new Offer());
+		mav.addObject("newFlag", true);
+		mav.setViewName("productoffer/offer/editOffer.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Edit an existing ProductOffer entity
+	 * 
+	 */
+	@RequestMapping("/editProductOffer")
+	public ModelAndView editProductOffer(@RequestParam Integer proIdKey, @RequestParam Integer offerIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productoffer", productOfferDAO.findProductOfferByPrimaryKey(proIdKey, offerIdKey));
+		mav.setViewName("productoffer/editProductOffer.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Select the ProductOffer entity for display allowing the user to confirm that they would like to delete the entity
+	 * 
+	 */
+	@RequestMapping("/confirmDeleteProductOffer")
+	public ModelAndView confirmDeleteProductOffer(@RequestParam Integer proIdKey, @RequestParam Integer offerIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productoffer", productOfferDAO.findProductOfferByPrimaryKey(proIdKey, offerIdKey));
+		mav.setViewName("productoffer/deleteProductOffer.jsp");
 
 		return mav;
 	}

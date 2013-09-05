@@ -27,10 +27,10 @@ import javax.persistence.*;
 		@NamedQuery(name = "findCatalogByName", query = "select myCatalog from Catalog myCatalog where myCatalog.name = ?1"),
 		@NamedQuery(name = "findCatalogByNameContaining", query = "select myCatalog from Catalog myCatalog where myCatalog.name like ?1"),
 		@NamedQuery(name = "findCatalogByPrimaryKey", query = "select myCatalog from Catalog myCatalog where myCatalog.id = ?1") })
-@Table(catalog = "EShopDemo", name = "catalog")
+@Table(catalog = "eshopdemo", name = "catalog")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = "EShopDemo/com/lqf/eshopdemo/domain", name = "Catalog")
-@XmlRootElement(namespace = "EShopDemo/com/lqf/eshopdemo/domain")
+@XmlType(namespace = "t11/com/lqf/eshopdemo/domain", name = "Catalog")
+@XmlRootElement(namespace = "t11/com/lqf/eshopdemo/domain")
 public class Catalog implements Serializable {
 	private static final long serialVersionUID = 1L;
 

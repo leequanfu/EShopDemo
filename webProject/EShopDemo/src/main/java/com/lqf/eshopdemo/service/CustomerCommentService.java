@@ -14,40 +14,6 @@ import java.util.Set;
 public interface CustomerCommentService {
 
 	/**
-	 */
-	public CustomerComment findCustomerCommentByPrimaryKey(Integer proId, Integer userId);
-
-	/**
-	 * Save an existing Userinfo entity
-	 * 
-	 */
-	public CustomerComment saveCustomerCommentUserinfo(Integer proId_1, Integer userId_1, Userinfo related_userinfo);
-
-	/**
-	 * Save an existing CustomerComment entity
-	 * 
-	 */
-	public void saveCustomerComment(CustomerComment customercomment);
-
-	/**
-	 * Return all CustomerComment entity
-	 * 
-	 */
-	public List<CustomerComment> findAllCustomerComments(Integer startResult, Integer maxRows);
-
-	/**
-	 * Save an existing ProductDetail entity
-	 * 
-	 */
-	public CustomerComment saveCustomerCommentProductDetail(Integer proId_2, Integer userId_2, ProductDetail related_productdetail);
-
-	/**
-	 * Delete an existing CustomerComment entity
-	 * 
-	 */
-	public void deleteCustomerComment(CustomerComment customercomment_1);
-
-	/**
 	 * Delete an existing Userinfo entity
 	 * 
 	 */
@@ -60,14 +26,48 @@ public interface CustomerCommentService {
 	public Set<CustomerComment> loadCustomerComments();
 
 	/**
+	 * Save an existing Userinfo entity
+	 * 
+	 */
+	public CustomerComment saveCustomerCommentUserinfo(Integer proId, Integer userId, Userinfo related_userinfo);
+
+	/**
 	 * Return a count of all CustomerComment entity
 	 * 
 	 */
 	public Integer countCustomerComments();
 
 	/**
+	 */
+	public CustomerComment findCustomerCommentByPrimaryKey(Integer proId_1, Integer userId_1);
+
+	/**
+	 * Save an existing CustomerComment entity
+	 * 
+	 */
+	public void saveCustomerComment(CustomerComment customercomment);
+
+	/**
 	 * Delete an existing ProductDetail entity
 	 * 
 	 */
 	public CustomerComment deleteCustomerCommentProductDetail(Integer customercomment_proId_1, Integer customercomment_userId_1, Integer related_productdetail_id);
+
+	/**
+	 * Save an existing ProductDetail entity
+	 * 
+	 */
+	public CustomerComment saveCustomerCommentProductDetail(Integer proId_2, Integer userId_2, ProductDetail related_productdetail);
+
+	/**
+	 * Return all CustomerComment entity
+	 * 
+	 */
+	public List<CustomerComment> findAllCustomerComments(Integer startResult, Integer maxRows);
+
+	/**
+	 * Delete an existing CustomerComment entity
+	 * 
+	 */
+	public void deleteCustomerComment(CustomerComment customercomment_1);
 }

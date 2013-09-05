@@ -14,22 +14,34 @@ import java.util.Set;
 public interface OrderItemsService {
 
 	/**
-	 * Return all OrderItems entity
-	 * 
-	 */
-	public List<OrderItems> findAllOrderItemss(Integer startResult, Integer maxRows);
-
-	/**
-	 * Load an existing OrderItems entity
-	 * 
-	 */
-	public Set<OrderItems> loadOrderItemss();
-
-	/**
 	 * Save an existing ProductDetail entity
 	 * 
 	 */
 	public OrderItems saveOrderItemsProductDetail(Integer orderId, Integer productId, ProductDetail related_productdetail);
+
+	/**
+	 * Delete an existing Order entity
+	 * 
+	 */
+	public OrderItems deleteOrderItemsOrder(Integer orderitems_orderId, Integer orderitems_productId, Integer related_order_id);
+
+	/**
+	 * Delete an existing OrderItems entity
+	 * 
+	 */
+	public void deleteOrderItems(OrderItems orderitems);
+
+	/**
+	 * Save an existing OrderItems entity
+	 * 
+	 */
+	public void saveOrderItems(OrderItems orderitems_1);
+
+	/**
+	 * Return all OrderItems entity
+	 * 
+	 */
+	public List<OrderItems> findAllOrderItemss(Integer startResult, Integer maxRows);
 
 	/**
 	 */
@@ -42,28 +54,16 @@ public interface OrderItemsService {
 	public OrderItems saveOrderItemsOrder(Integer orderId_2, Integer productId_2, Order related_order);
 
 	/**
-	 * Save an existing OrderItems entity
-	 * 
-	 */
-	public void saveOrderItems(OrderItems orderitems);
-
-	/**
-	 * Delete an existing OrderItems entity
-	 * 
-	 */
-	public void deleteOrderItems(OrderItems orderitems_1);
-
-	/**
-	 * Delete an existing Order entity
-	 * 
-	 */
-	public OrderItems deleteOrderItemsOrder(Integer orderitems_orderId, Integer orderitems_productId, Integer related_order_id);
-
-	/**
 	 * Return a count of all OrderItems entity
 	 * 
 	 */
 	public Integer countOrderItemss();
+
+	/**
+	 * Load an existing OrderItems entity
+	 * 
+	 */
+	public Set<OrderItems> loadOrderItemss();
 
 	/**
 	 * Delete an existing ProductDetail entity

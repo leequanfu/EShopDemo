@@ -14,34 +14,6 @@ import java.util.Set;
 public interface ProductOfferService {
 
 	/**
-	 * Delete an existing Offer entity
-	 * 
-	 */
-	public ProductOffer deleteProductOfferOffer(Integer productoffer_proId, Integer productoffer_offerId, Integer related_offer_id);
-
-	/**
-	 */
-	public ProductOffer findProductOfferByPrimaryKey(Integer proId, Integer offerId);
-
-	/**
-	 * Load an existing ProductOffer entity
-	 * 
-	 */
-	public Set<ProductOffer> loadProductOffers();
-
-	/**
-	 * Save an existing ProductDetail entity
-	 * 
-	 */
-	public ProductOffer saveProductOfferProductDetail(Integer proId_1, Integer offerId_1, ProductDetail related_productdetail);
-
-	/**
-	 * Save an existing Offer entity
-	 * 
-	 */
-	public ProductOffer saveProductOfferOffer(Integer proId_2, Integer offerId_2, Offer related_offer);
-
-	/**
 	 * Return all ProductOffer entity
 	 * 
 	 */
@@ -51,13 +23,19 @@ public interface ProductOfferService {
 	 * Delete an existing ProductDetail entity
 	 * 
 	 */
-	public ProductOffer deleteProductOfferProductDetail(Integer productoffer_proId_1, Integer productoffer_offerId_1, Integer related_productdetail_id);
+	public ProductOffer deleteProductOfferProductDetail(Integer productoffer_proId, Integer productoffer_offerId, Integer related_productdetail_id);
 
 	/**
-	 * Delete an existing ProductOffer entity
+	 * Save an existing ProductOffer entity
 	 * 
 	 */
-	public void deleteProductOffer(ProductOffer productoffer);
+	public void saveProductOffer(ProductOffer productoffer);
+
+	/**
+	 * Save an existing ProductDetail entity
+	 * 
+	 */
+	public ProductOffer saveProductOfferProductDetail(Integer proId, Integer offerId, ProductDetail related_productdetail);
 
 	/**
 	 * Return a count of all ProductOffer entity
@@ -66,8 +44,30 @@ public interface ProductOfferService {
 	public Integer countProductOffers();
 
 	/**
-	 * Save an existing ProductOffer entity
+	 * Save an existing Offer entity
 	 * 
 	 */
-	public void saveProductOffer(ProductOffer productoffer_1);
+	public ProductOffer saveProductOfferOffer(Integer proId_1, Integer offerId_1, Offer related_offer);
+
+	/**
+	 * Delete an existing Offer entity
+	 * 
+	 */
+	public ProductOffer deleteProductOfferOffer(Integer productoffer_proId_1, Integer productoffer_offerId_1, Integer related_offer_id);
+
+	/**
+	 */
+	public ProductOffer findProductOfferByPrimaryKey(Integer proId_2, Integer offerId_2);
+
+	/**
+	 * Delete an existing ProductOffer entity
+	 * 
+	 */
+	public void deleteProductOffer(ProductOffer productoffer_1);
+
+	/**
+	 * Load an existing ProductOffer entity
+	 * 
+	 */
+	public Set<ProductOffer> loadProductOffers();
 }

@@ -28,9 +28,9 @@ import javax.persistence.*;
 		@NamedQuery(name = "findProductPropertyByProId", query = "select myProductProperty from ProductProperty myProductProperty where myProductProperty.proId = ?1"),
 		@NamedQuery(name = "findProductPropertyByValue", query = "select myProductProperty from ProductProperty myProductProperty where myProductProperty.value = ?1"),
 		@NamedQuery(name = "findProductPropertyByValueContaining", query = "select myProductProperty from ProductProperty myProductProperty where myProductProperty.value like ?1") })
-@Table(catalog = "EShopDemo", name = "product_property")
+@Table(catalog = "eshopdemo", name = "product_property")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = "EShopDemo/com/lqf/eshopdemo/domain", name = "ProductProperty")
+@XmlType(namespace = "t11/com/lqf/eshopdemo/domain", name = "ProductProperty")
 public class ProductProperty implements Serializable {
 	private static final long serialVersionUID = 1L;
 

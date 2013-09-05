@@ -31,10 +31,10 @@ import javax.persistence.*;
 		@NamedQuery(name = "findOrderByPhone", query = "select myOrder from Order myOrder where myOrder.phone = ?1"),
 		@NamedQuery(name = "findOrderByPhoneContaining", query = "select myOrder from Order myOrder where myOrder.phone like ?1"),
 		@NamedQuery(name = "findOrderByPrimaryKey", query = "select myOrder from Order myOrder where myOrder.id = ?1") })
-@Table(catalog = "EShopDemo", name = "order")
+@Table(catalog = "eshopdemo", name = "order")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = "EShopDemo/com/lqf/eshopdemo/domain", name = "Order")
-@XmlRootElement(namespace = "EShopDemo/com/lqf/eshopdemo/domain")
+@XmlType(namespace = "t11/com/lqf/eshopdemo/domain", name = "Order")
+@XmlRootElement(namespace = "t11/com/lqf/eshopdemo/domain")
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 

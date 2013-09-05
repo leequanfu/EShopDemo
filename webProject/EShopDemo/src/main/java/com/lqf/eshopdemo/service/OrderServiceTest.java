@@ -47,10 +47,10 @@ import org.springframework.web.context.request.SessionScope;
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class })
 @ContextConfiguration(locations = {
-		"file:./src/main/resources/EShopDemo-security-context.xml",
-		"file:./src/main/resources/EShopDemo-service-context.xml",
-		"file:./src/main/resources/EShopDemo-dao-context.xml",
-		"file:./src/main/resources/EShopDemo-web-context.xml" })
+		"file:./resources/t11-security-context.xml",
+		"file:./resources/t11-service-context.xml",
+		"file:./resources/t11-dao-context.xml",
+		"file:./resources/t11-web-context.xml" })
 @Transactional
 public class OrderServiceTest {
 
@@ -78,42 +78,17 @@ public class OrderServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Save an existing Order entity
+	 * Delete an existing Userinfo entity
 	 * 
 	 */
 	@Test
-	public void saveOrder() {
-		// TODO: JUnit - Populate test inputs for operation: saveOrder 
-		Order order = new com.lqf.eshopdemo.domain.Order();
-		service.saveOrder(order);
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Load an existing Order entity
-	 * 
-	 */
-	@Test
-	public void loadOrders() {
-		Set<Order> response = null;
-		response = service.loadOrders();
-		// TODO: JUnit - Add assertions to test outputs of operation: loadOrders
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Delete an existing OrderItems entity
-	 * 
-	 */
-	@Test
-	public void deleteOrderOrderItemses() {
-		// TODO: JUnit - Populate test inputs for operation: deleteOrderOrderItemses 
+	public void deleteOrderUserinfo() {
+		// TODO: JUnit - Populate test inputs for operation: deleteOrderUserinfo 
 		Integer order_id = 0;
-		Integer related_orderitemses_orderId = 0;
-		Integer related_orderitemses_productId = 0;
+		Integer related_userinfo_id = 0;
 		Order response = null;
-		response = service.deleteOrderOrderItemses(order_id, related_orderitemses_orderId, related_orderitemses_productId);
-		// TODO: JUnit - Add assertions to test outputs of operation: deleteOrderOrderItemses
+		response = service.deleteOrderUserinfo(order_id, related_userinfo_id);
+		// TODO: JUnit - Add assertions to test outputs of operation: deleteOrderUserinfo
 	}
 
 	/**
@@ -133,53 +108,45 @@ public class OrderServiceTest {
 
 	/**
 	 * Operation Unit Test
+	 * Save an existing Userinfo entity
+	 * 
+	 */
+	@Test
+	public void saveOrderUserinfo() {
+		// TODO: JUnit - Populate test inputs for operation: saveOrderUserinfo 
+		Integer id_1 = 0;
+		Userinfo related_userinfo = new com.lqf.eshopdemo.domain.Userinfo();
+		Order response = null;
+		response = service.saveOrderUserinfo(id_1, related_userinfo);
+		// TODO: JUnit - Add assertions to test outputs of operation: saveOrderUserinfo
+	}
+
+	/**
+	 * Operation Unit Test
 	 */
 	@Test
 	public void findOrderByPrimaryKey() {
 		// TODO: JUnit - Populate test inputs for operation: findOrderByPrimaryKey 
-		Integer id_1 = 0;
+		Integer id_2 = 0;
 		Order response = null;
-		response = service.findOrderByPrimaryKey(id_1);
+		response = service.findOrderByPrimaryKey(id_2);
 		// TODO: JUnit - Add assertions to test outputs of operation: findOrderByPrimaryKey
 	}
 
 	/**
 	 * Operation Unit Test
-	 * Delete an existing Userinfo entity
+	 * Delete an existing OrderItems entity
 	 * 
 	 */
 	@Test
-	public void deleteOrderUserinfo() {
-		// TODO: JUnit - Populate test inputs for operation: deleteOrderUserinfo 
+	public void deleteOrderOrderItemses() {
+		// TODO: JUnit - Populate test inputs for operation: deleteOrderOrderItemses 
 		Integer order_id_1 = 0;
-		Integer related_userinfo_id = 0;
+		Integer related_orderitemses_orderId = 0;
+		Integer related_orderitemses_productId = 0;
 		Order response = null;
-		response = service.deleteOrderUserinfo(order_id_1, related_userinfo_id);
-		// TODO: JUnit - Add assertions to test outputs of operation: deleteOrderUserinfo
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Return a count of all Order entity
-	 * 
-	 */
-	@Test
-	public void countOrders() {
-		Integer response = null;
-		response = service.countOrders();
-		// TODO: JUnit - Add assertions to test outputs of operation: countOrders
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Delete an existing Order entity
-	 * 
-	 */
-	@Test
-	public void deleteOrder() {
-		// TODO: JUnit - Populate test inputs for operation: deleteOrder 
-		Order order_1 = new com.lqf.eshopdemo.domain.Order();
-		service.deleteOrder(order_1);
+		response = service.deleteOrderOrderItemses(order_id_1, related_orderitemses_orderId, related_orderitemses_productId);
+		// TODO: JUnit - Add assertions to test outputs of operation: deleteOrderOrderItemses
 	}
 
 	/**
@@ -199,17 +166,50 @@ public class OrderServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Save an existing Userinfo entity
+	 * Save an existing Order entity
 	 * 
 	 */
 	@Test
-	public void saveOrderUserinfo() {
-		// TODO: JUnit - Populate test inputs for operation: saveOrderUserinfo 
-		Integer id_2 = 0;
-		Userinfo related_userinfo = new com.lqf.eshopdemo.domain.Userinfo();
-		Order response = null;
-		response = service.saveOrderUserinfo(id_2, related_userinfo);
-		// TODO: JUnit - Add assertions to test outputs of operation: saveOrderUserinfo
+	public void saveOrder() {
+		// TODO: JUnit - Populate test inputs for operation: saveOrder 
+		Order order = new com.lqf.eshopdemo.domain.Order();
+		service.saveOrder(order);
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Delete an existing Order entity
+	 * 
+	 */
+	@Test
+	public void deleteOrder() {
+		// TODO: JUnit - Populate test inputs for operation: deleteOrder 
+		Order order_1 = new com.lqf.eshopdemo.domain.Order();
+		service.deleteOrder(order_1);
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Return a count of all Order entity
+	 * 
+	 */
+	@Test
+	public void countOrders() {
+		Integer response = null;
+		response = service.countOrders();
+		// TODO: JUnit - Add assertions to test outputs of operation: countOrders
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Load an existing Order entity
+	 * 
+	 */
+	@Test
+	public void loadOrders() {
+		Set<Order> response = null;
+		response = service.loadOrders();
+		// TODO: JUnit - Add assertions to test outputs of operation: loadOrders
 	}
 
 	/**

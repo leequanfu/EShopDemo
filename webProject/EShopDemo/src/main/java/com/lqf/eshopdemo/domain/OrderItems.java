@@ -29,9 +29,9 @@ import javax.persistence.*;
 		@NamedQuery(name = "findOrderItemsByPrimaryKey", query = "select myOrderItems from OrderItems myOrderItems where myOrderItems.orderId = ?1 and myOrderItems.productId = ?2"),
 		@NamedQuery(name = "findOrderItemsByProductId", query = "select myOrderItems from OrderItems myOrderItems where myOrderItems.productId = ?1"),
 		@NamedQuery(name = "findOrderItemsByQuality", query = "select myOrderItems from OrderItems myOrderItems where myOrderItems.quality = ?1") })
-@Table(catalog = "EShopDemo", name = "order_items")
+@Table(catalog = "eshopdemo", name = "order_items")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = "EShopDemo/com/lqf/eshopdemo/domain", name = "OrderItems")
+@XmlType(namespace = "t11/com/lqf/eshopdemo/domain", name = "OrderItems")
 public class OrderItems implements Serializable {
 	private static final long serialVersionUID = 1L;
 

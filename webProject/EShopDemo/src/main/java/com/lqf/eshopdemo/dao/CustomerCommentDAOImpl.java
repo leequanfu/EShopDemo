@@ -67,50 +67,6 @@ public class CustomerCommentDAOImpl extends AbstractJpaDao<CustomerComment>
 	}
 
 	/**
-	 * JPQL Query - findCustomerCommentByUserId
-	 *
-	 */
-	@Transactional
-	public Set<CustomerComment> findCustomerCommentByUserId(Integer userId) throws DataAccessException {
-
-		return findCustomerCommentByUserId(userId, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findCustomerCommentByUserId
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<CustomerComment> findCustomerCommentByUserId(Integer userId, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findCustomerCommentByUserId", startResult, maxRows, userId);
-		return new LinkedHashSet<CustomerComment>(query.getResultList());
-	}
-
-	/**
-	 * JPQL Query - findAllCustomerComments
-	 *
-	 */
-	@Transactional
-	public Set<CustomerComment> findAllCustomerComments() throws DataAccessException {
-
-		return findAllCustomerComments(-1, -1);
-	}
-
-	/**
-	 * JPQL Query - findAllCustomerComments
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<CustomerComment> findAllCustomerComments(int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findAllCustomerComments", startResult, maxRows);
-		return new LinkedHashSet<CustomerComment>(query.getResultList());
-	}
-
-	/**
 	 * JPQL Query - findCustomerCommentByComment
 	 *
 	 */
@@ -133,46 +89,24 @@ public class CustomerCommentDAOImpl extends AbstractJpaDao<CustomerComment>
 	}
 
 	/**
-	 * JPQL Query - findCustomerCommentByProId
+	 * JPQL Query - findCustomerCommentByCommentContaining
 	 *
 	 */
 	@Transactional
-	public Set<CustomerComment> findCustomerCommentByProId(Integer proId) throws DataAccessException {
+	public Set<CustomerComment> findCustomerCommentByCommentContaining(String comment) throws DataAccessException {
 
-		return findCustomerCommentByProId(proId, -1, -1);
+		return findCustomerCommentByCommentContaining(comment, -1, -1);
 	}
 
 	/**
-	 * JPQL Query - findCustomerCommentByProId
+	 * JPQL Query - findCustomerCommentByCommentContaining
 	 *
 	 */
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Set<CustomerComment> findCustomerCommentByProId(Integer proId, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findCustomerCommentByProId", startResult, maxRows, proId);
-		return new LinkedHashSet<CustomerComment>(query.getResultList());
-	}
-
-	/**
-	 * JPQL Query - findCustomerCommentByRate
-	 *
-	 */
-	@Transactional
-	public Set<CustomerComment> findCustomerCommentByRate(Integer rate) throws DataAccessException {
-
-		return findCustomerCommentByRate(rate, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findCustomerCommentByRate
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<CustomerComment> findCustomerCommentByRate(Integer rate, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findCustomerCommentByRate", startResult, maxRows, rate);
+	public Set<CustomerComment> findCustomerCommentByCommentContaining(String comment, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findCustomerCommentByCommentContaining", startResult, maxRows, comment);
 		return new LinkedHashSet<CustomerComment>(query.getResultList());
 	}
 
@@ -202,24 +136,90 @@ public class CustomerCommentDAOImpl extends AbstractJpaDao<CustomerComment>
 	}
 
 	/**
-	 * JPQL Query - findCustomerCommentByCommentContaining
+	 * JPQL Query - findAllCustomerComments
 	 *
 	 */
 	@Transactional
-	public Set<CustomerComment> findCustomerCommentByCommentContaining(String comment) throws DataAccessException {
+	public Set<CustomerComment> findAllCustomerComments() throws DataAccessException {
 
-		return findCustomerCommentByCommentContaining(comment, -1, -1);
+		return findAllCustomerComments(-1, -1);
 	}
 
 	/**
-	 * JPQL Query - findCustomerCommentByCommentContaining
+	 * JPQL Query - findAllCustomerComments
 	 *
 	 */
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Set<CustomerComment> findCustomerCommentByCommentContaining(String comment, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findCustomerCommentByCommentContaining", startResult, maxRows, comment);
+	public Set<CustomerComment> findAllCustomerComments(int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findAllCustomerComments", startResult, maxRows);
+		return new LinkedHashSet<CustomerComment>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findCustomerCommentByRate
+	 *
+	 */
+	@Transactional
+	public Set<CustomerComment> findCustomerCommentByRate(Integer rate) throws DataAccessException {
+
+		return findCustomerCommentByRate(rate, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findCustomerCommentByRate
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<CustomerComment> findCustomerCommentByRate(Integer rate, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findCustomerCommentByRate", startResult, maxRows, rate);
+		return new LinkedHashSet<CustomerComment>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findCustomerCommentByProId
+	 *
+	 */
+	@Transactional
+	public Set<CustomerComment> findCustomerCommentByProId(Integer proId) throws DataAccessException {
+
+		return findCustomerCommentByProId(proId, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findCustomerCommentByProId
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<CustomerComment> findCustomerCommentByProId(Integer proId, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findCustomerCommentByProId", startResult, maxRows, proId);
+		return new LinkedHashSet<CustomerComment>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findCustomerCommentByUserId
+	 *
+	 */
+	@Transactional
+	public Set<CustomerComment> findCustomerCommentByUserId(Integer userId) throws DataAccessException {
+
+		return findCustomerCommentByUserId(userId, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findCustomerCommentByUserId
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<CustomerComment> findCustomerCommentByUserId(Integer userId, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findCustomerCommentByUserId", startResult, maxRows, userId);
 		return new LinkedHashSet<CustomerComment>(query.getResultList());
 	}
 

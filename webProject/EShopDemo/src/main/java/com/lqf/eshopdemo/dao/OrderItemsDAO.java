@@ -17,30 +17,6 @@ import org.springframework.dao.DataAccessException;
 public interface OrderItemsDAO extends JpaDao<OrderItems> {
 
 	/**
-	 * JPQL Query - findOrderItemsByPrice
-	 *
-	 */
-	public Set<OrderItems> findOrderItemsByPrice(java.math.BigDecimal price) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findOrderItemsByPrice
-	 *
-	 */
-	public Set<OrderItems> findOrderItemsByPrice(BigDecimal price, int startResult, int maxRows) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findOrderItemsByProductId
-	 *
-	 */
-	public Set<OrderItems> findOrderItemsByProductId(Integer productId) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findOrderItemsByProductId
-	 *
-	 */
-	public Set<OrderItems> findOrderItemsByProductId(Integer productId, int startResult, int maxRows) throws DataAccessException;
-
-	/**
 	 * JPQL Query - findOrderItemsByOrderId
 	 *
 	 */
@@ -51,18 +27,6 @@ public interface OrderItemsDAO extends JpaDao<OrderItems> {
 	 *
 	 */
 	public Set<OrderItems> findOrderItemsByOrderId(Integer orderId, int startResult, int maxRows) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findOrderItemsByQuality
-	 *
-	 */
-	public Set<OrderItems> findOrderItemsByQuality(Integer quality) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findOrderItemsByQuality
-	 *
-	 */
-	public Set<OrderItems> findOrderItemsByQuality(Integer quality, int startResult, int maxRows) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findAllOrderItemss
@@ -80,12 +44,48 @@ public interface OrderItemsDAO extends JpaDao<OrderItems> {
 	 * JPQL Query - findOrderItemsByPrimaryKey
 	 *
 	 */
-	public OrderItems findOrderItemsByPrimaryKey(Integer orderId_1, Integer productId_1) throws DataAccessException;
+	public OrderItems findOrderItemsByPrimaryKey(Integer orderId_1, Integer productId) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findOrderItemsByPrimaryKey
 	 *
 	 */
-	public OrderItems findOrderItemsByPrimaryKey(Integer orderId_1, Integer productId_1, int startResult, int maxRows) throws DataAccessException;
+	public OrderItems findOrderItemsByPrimaryKey(Integer orderId_1, Integer productId, int startResult, int maxRows) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findOrderItemsByProductId
+	 *
+	 */
+	public Set<OrderItems> findOrderItemsByProductId(Integer productId_1) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findOrderItemsByProductId
+	 *
+	 */
+	public Set<OrderItems> findOrderItemsByProductId(Integer productId_1, int startResult, int maxRows) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findOrderItemsByPrice
+	 *
+	 */
+	public Set<OrderItems> findOrderItemsByPrice(java.math.BigDecimal price) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findOrderItemsByPrice
+	 *
+	 */
+	public Set<OrderItems> findOrderItemsByPrice(BigDecimal price, int startResult, int maxRows) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findOrderItemsByQuality
+	 *
+	 */
+	public Set<OrderItems> findOrderItemsByQuality(Integer quality) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findOrderItemsByQuality
+	 *
+	 */
+	public Set<OrderItems> findOrderItemsByQuality(Integer quality, int startResult, int maxRows) throws DataAccessException;
 
 }

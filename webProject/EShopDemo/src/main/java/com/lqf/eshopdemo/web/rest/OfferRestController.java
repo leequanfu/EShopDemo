@@ -55,14 +55,13 @@ public class OfferRestController {
 	private OfferService offerService;
 
 	/**
-	 * Create a new Offer entity
+	 * Delete an existing ProductOffer entity
 	 * 
 	 */
-	@RequestMapping(value = "/Offer", method = RequestMethod.POST)
+	@RequestMapping(value = "/Offer/{offer_id}/productOffers/{productoffer_proId}/{productoffer_offerId}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public Offer newOffer(@RequestBody Offer offer) {
-		offerService.saveOffer(offer);
-		return offerDAO.findOfferByPrimaryKey(offer.getId());
+	public void deleteOfferProductOffers(@PathVariable Integer offer_id, @PathVariable Integer related_productoffers_proId, @PathVariable Integer related_productoffers_offerId) {
+		offerService.deleteOfferProductOffers(offer_id, related_productoffers_proId, related_productoffers_offerId);
 	}
 
 	/**
@@ -76,34 +75,13 @@ public class OfferRestController {
 	}
 
 	/**
-	 * Delete an existing ProductOffer entity
+	 * Show all Offer entities
 	 * 
 	 */
-	@RequestMapping(value = "/Offer/{offer_id}/productOffers/{productoffer_proId}/{productoffer_offerId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/Offer", method = RequestMethod.GET)
 	@ResponseBody
-	public void deleteOfferProductOffers(@PathVariable Integer offer_id, @PathVariable Integer related_productoffers_proId, @PathVariable Integer related_productoffers_offerId) {
-		offerService.deleteOfferProductOffers(offer_id, related_productoffers_proId, related_productoffers_offerId);
-	}
-
-	/**
-	 * Save an existing ProductOffer entity
-	 * 
-	 */
-	@RequestMapping(value = "/Offer/{offer_id}/productOffers", method = RequestMethod.PUT)
-	@ResponseBody
-	public ProductOffer saveOfferProductOffers(@PathVariable Integer offer_id, @RequestBody ProductOffer productoffers) {
-		offerService.saveOfferProductOffers(offer_id, productoffers);
-		return productOfferDAO.findProductOfferByPrimaryKey(productoffers.getProId(), productoffers.getOfferId());
-	}
-
-	/**
-	 * Select an existing Offer entity
-	 * 
-	 */
-	@RequestMapping(value = "/Offer/{offer_id}", method = RequestMethod.GET)
-	@ResponseBody
-	public Offer loadOffer(@PathVariable Integer offer_id) {
-		return offerDAO.findOfferByPrimaryKey(offer_id);
+	public List<Offer> listOffers() {
+		return new java.util.ArrayList<Offer>(offerService.loadOffers());
 	}
 
 	/**
@@ -118,6 +96,17 @@ public class OfferRestController {
 	}
 
 	/**
+	 * Save an existing ProductOffer entity
+	 * 
+	 */
+	@RequestMapping(value = "/Offer/{offer_id}/productOffers", method = RequestMethod.PUT)
+	@ResponseBody
+	public ProductOffer saveOfferProductOffers(@PathVariable Integer offer_id, @RequestBody ProductOffer productoffers) {
+		offerService.saveOfferProductOffers(offer_id, productoffers);
+		return productOfferDAO.findProductOfferByPrimaryKey(productoffers.getProId(), productoffers.getOfferId());
+	}
+
+	/**
 	 * Delete an existing Offer entity
 	 * 
 	 */
@@ -126,16 +115,6 @@ public class OfferRestController {
 	public void deleteOffer(@PathVariable Integer offer_id) {
 		Offer offer = offerDAO.findOfferByPrimaryKey(offer_id);
 		offerService.deleteOffer(offer);
-	}
-
-	/**
-	 * Show all Offer entities
-	 * 
-	 */
-	@RequestMapping(value = "/Offer", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Offer> listOffers() {
-		return new java.util.ArrayList<Offer>(offerService.loadOffers());
 	}
 
 	/**
@@ -148,17 +127,6 @@ public class OfferRestController {
 		ProductOffer productoffer = productOfferDAO.findProductOfferByPrimaryKey(related_productoffers_proId, related_productoffers_offerId, -1, -1);
 
 		return productoffer;
-	}
-
-	/**
-	 * Save an existing Offer entity
-	 * 
-	 */
-	@RequestMapping(value = "/Offer", method = RequestMethod.PUT)
-	@ResponseBody
-	public Offer saveOffer(@RequestBody Offer offer) {
-		offerService.saveOffer(offer);
-		return offerDAO.findOfferByPrimaryKey(offer.getId());
 	}
 
 	/**
@@ -177,5 +145,37 @@ public class OfferRestController {
 		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
 		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
 		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
+	}
+
+	/**
+	 * Save an existing Offer entity
+	 * 
+	 */
+	@RequestMapping(value = "/Offer", method = RequestMethod.PUT)
+	@ResponseBody
+	public Offer saveOffer(@RequestBody Offer offer) {
+		offerService.saveOffer(offer);
+		return offerDAO.findOfferByPrimaryKey(offer.getId());
+	}
+
+	/**
+	 * Create a new Offer entity
+	 * 
+	 */
+	@RequestMapping(value = "/Offer", method = RequestMethod.POST)
+	@ResponseBody
+	public Offer newOffer(@RequestBody Offer offer) {
+		offerService.saveOffer(offer);
+		return offerDAO.findOfferByPrimaryKey(offer.getId());
+	}
+
+	/**
+	 * Select an existing Offer entity
+	 * 
+	 */
+	@RequestMapping(value = "/Offer/{offer_id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Offer loadOffer(@PathVariable Integer offer_id) {
+		return offerDAO.findOfferByPrimaryKey(offer_id);
 	}
 }

@@ -29,10 +29,10 @@ import org.springframework.web.context.request.SessionScope;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-		"file:./src/main/resources/EShopDemo-security-context.xml",
-		"file:./src/main/resources/EShopDemo-service-context.xml",
-		"file:./src/main/resources/EShopDemo-dao-context.xml",
-		"file:./src/main/resources/EShopDemo-web-context.xml" })
+		"file:./resources/t11-security-context.xml",
+		"file:./resources/t11-service-context.xml",
+		"file:./resources/t11-dao-context.xml",
+		"file:./resources/t11-web-context.xml" })
 public class ProductPropertyRestControllerTest {
 	/**
 	 * The Spring application context.

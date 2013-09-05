@@ -64,6 +64,105 @@ public class ProductCatalogServiceImpl implements ProductCatalogService {
 	}
 
 	/**
+	 * Delete an existing ProductCatalog entity
+	 * 
+	 */
+	@Transactional
+	public void deleteProductCatalog(ProductCatalog productcatalog) {
+		productCatalogDAO.remove(productcatalog);
+		productCatalogDAO.flush();
+	}
+
+	/**
+	 * Delete an existing Catalog entity
+	 * 
+	 */
+	@Transactional
+	public ProductCatalog deleteProductCatalogCatalog(Integer productcatalog_productId, Integer productcatalog_catalogId, Integer related_catalog_id) {
+		ProductCatalog productcatalog = productCatalogDAO.findProductCatalogByPrimaryKey(productcatalog_productId, productcatalog_catalogId, -1, -1);
+		Catalog related_catalog = catalogDAO.findCatalogByPrimaryKey(related_catalog_id, -1, -1);
+
+		productcatalog.setCatalog(null);
+		related_catalog.getProductCatalogs().remove(productcatalog);
+		productcatalog = productCatalogDAO.store(productcatalog);
+		productCatalogDAO.flush();
+
+		related_catalog = catalogDAO.store(related_catalog);
+		catalogDAO.flush();
+
+		catalogDAO.remove(related_catalog);
+		catalogDAO.flush();
+
+		return productcatalog;
+	}
+
+	/**
+	 * Save an existing ProductCatalog entity
+	 * 
+	 */
+	@Transactional
+	public void saveProductCatalog(ProductCatalog productcatalog) {
+		ProductCatalog existingProductCatalog = productCatalogDAO.findProductCatalogByPrimaryKey(productcatalog.getProductId(), productcatalog.getCatalogId());
+
+		if (existingProductCatalog != null) {
+			if (existingProductCatalog != productcatalog) {
+				existingProductCatalog.setProductId(productcatalog.getProductId());
+				existingProductCatalog.setCatalogId(productcatalog.getCatalogId());
+			}
+			productcatalog = productCatalogDAO.store(existingProductCatalog);
+		} else {
+			productcatalog = productCatalogDAO.store(productcatalog);
+		}
+		productCatalogDAO.flush();
+	}
+
+	/**
+	 * Save an existing Catalog entity
+	 * 
+	 */
+	@Transactional
+	public ProductCatalog saveProductCatalogCatalog(Integer productId, Integer catalogId, Catalog related_catalog) {
+		ProductCatalog productcatalog = productCatalogDAO.findProductCatalogByPrimaryKey(productId, catalogId, -1, -1);
+		Catalog existingcatalog = catalogDAO.findCatalogByPrimaryKey(related_catalog.getId());
+
+		// copy into the existing record to preserve existing relationships
+		if (existingcatalog != null) {
+			existingcatalog.setId(related_catalog.getId());
+			existingcatalog.setName(related_catalog.getName());
+			related_catalog = existingcatalog;
+		} else {
+			related_catalog = catalogDAO.store(related_catalog);
+			catalogDAO.flush();
+		}
+
+		productcatalog.setCatalog(related_catalog);
+		related_catalog.getProductCatalogs().add(productcatalog);
+		productcatalog = productCatalogDAO.store(productcatalog);
+		productCatalogDAO.flush();
+
+		related_catalog = catalogDAO.store(related_catalog);
+		catalogDAO.flush();
+
+		return productcatalog;
+	}
+
+	/**
+	 */
+	@Transactional
+	public ProductCatalog findProductCatalogByPrimaryKey(Integer productId, Integer catalogId) {
+		return productCatalogDAO.findProductCatalogByPrimaryKey(productId, catalogId);
+	}
+
+	/**
+	 * Return a count of all ProductCatalog entity
+	 * 
+	 */
+	@Transactional
+	public Integer countProductCatalogs() {
+		return ((Long) productCatalogDAO.createQuerySingleResult("select count(*) from ProductCatalog o").getSingleResult()).intValue();
+	}
+
+	/**
 	 * Save an existing ProductDetail entity
 	 * 
 	 */
@@ -79,6 +178,7 @@ public class ProductCatalogServiceImpl implements ProductCatalogService {
 			existingproductDetail.setPrice(related_productdetail.getPrice());
 			existingproductDetail.setQuantity(related_productdetail.getQuantity());
 			existingproductDetail.setDescription(related_productdetail.getDescription());
+			existingproductDetail.setPicnum(related_productdetail.getPicnum());
 			related_productdetail = existingproductDetail;
 		} else {
 			related_productdetail = productDetailDAO.store(related_productdetail);
@@ -120,110 +220,11 @@ public class ProductCatalogServiceImpl implements ProductCatalogService {
 	}
 
 	/**
-	 * Delete an existing ProductCatalog entity
-	 * 
-	 */
-	@Transactional
-	public void deleteProductCatalog(ProductCatalog productcatalog) {
-		productCatalogDAO.remove(productcatalog);
-		productCatalogDAO.flush();
-	}
-
-	/**
-	 * Delete an existing Catalog entity
-	 * 
-	 */
-	@Transactional
-	public ProductCatalog deleteProductCatalogCatalog(Integer productcatalog_productId, Integer productcatalog_catalogId, Integer related_catalog_id) {
-		ProductCatalog productcatalog = productCatalogDAO.findProductCatalogByPrimaryKey(productcatalog_productId, productcatalog_catalogId, -1, -1);
-		Catalog related_catalog = catalogDAO.findCatalogByPrimaryKey(related_catalog_id, -1, -1);
-
-		productcatalog.setCatalog(null);
-		related_catalog.getProductCatalogs().remove(productcatalog);
-		productcatalog = productCatalogDAO.store(productcatalog);
-		productCatalogDAO.flush();
-
-		related_catalog = catalogDAO.store(related_catalog);
-		catalogDAO.flush();
-
-		catalogDAO.remove(related_catalog);
-		catalogDAO.flush();
-
-		return productcatalog;
-	}
-
-	/**
-	 * Save an existing Catalog entity
-	 * 
-	 */
-	@Transactional
-	public ProductCatalog saveProductCatalogCatalog(Integer productId, Integer catalogId, Catalog related_catalog) {
-		ProductCatalog productcatalog = productCatalogDAO.findProductCatalogByPrimaryKey(productId, catalogId, -1, -1);
-		Catalog existingcatalog = catalogDAO.findCatalogByPrimaryKey(related_catalog.getId());
-
-		// copy into the existing record to preserve existing relationships
-		if (existingcatalog != null) {
-			existingcatalog.setId(related_catalog.getId());
-			existingcatalog.setName(related_catalog.getName());
-			related_catalog = existingcatalog;
-		} else {
-			related_catalog = catalogDAO.store(related_catalog);
-			catalogDAO.flush();
-		}
-
-		productcatalog.setCatalog(related_catalog);
-		related_catalog.getProductCatalogs().add(productcatalog);
-		productcatalog = productCatalogDAO.store(productcatalog);
-		productCatalogDAO.flush();
-
-		related_catalog = catalogDAO.store(related_catalog);
-		catalogDAO.flush();
-
-		return productcatalog;
-	}
-
-	/**
 	 * Load an existing ProductCatalog entity
 	 * 
 	 */
 	@Transactional
 	public Set<ProductCatalog> loadProductCatalogs() {
 		return productCatalogDAO.findAllProductCatalogs();
-	}
-
-	/**
-	 * Return a count of all ProductCatalog entity
-	 * 
-	 */
-	@Transactional
-	public Integer countProductCatalogs() {
-		return ((Long) productCatalogDAO.createQuerySingleResult("select count(*) from ProductCatalog o").getSingleResult()).intValue();
-	}
-
-	/**
-	 */
-	@Transactional
-	public ProductCatalog findProductCatalogByPrimaryKey(Integer productId, Integer catalogId) {
-		return productCatalogDAO.findProductCatalogByPrimaryKey(productId, catalogId);
-	}
-
-	/**
-	 * Save an existing ProductCatalog entity
-	 * 
-	 */
-	@Transactional
-	public void saveProductCatalog(ProductCatalog productcatalog) {
-		ProductCatalog existingProductCatalog = productCatalogDAO.findProductCatalogByPrimaryKey(productcatalog.getProductId(), productcatalog.getCatalogId());
-
-		if (existingProductCatalog != null) {
-			if (existingProductCatalog != productcatalog) {
-				existingProductCatalog.setProductId(productcatalog.getProductId());
-				existingProductCatalog.setCatalogId(productcatalog.getCatalogId());
-			}
-			productcatalog = productCatalogDAO.store(existingProductCatalog);
-		} else {
-			productcatalog = productCatalogDAO.store(productcatalog);
-		}
-		productCatalogDAO.flush();
 	}
 }

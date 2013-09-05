@@ -46,10 +46,10 @@ import org.springframework.web.context.request.SessionScope;
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class })
 @ContextConfiguration(locations = {
-		"file:./src/main/resources/EShopDemo-security-context.xml",
-		"file:./src/main/resources/EShopDemo-service-context.xml",
-		"file:./src/main/resources/EShopDemo-dao-context.xml",
-		"file:./src/main/resources/EShopDemo-web-context.xml" })
+		"file:./resources/t11-security-context.xml",
+		"file:./resources/t11-service-context.xml",
+		"file:./resources/t11-dao-context.xml",
+		"file:./resources/t11-web-context.xml" })
 @Transactional
 public class CatalogServiceTest {
 
@@ -73,6 +73,18 @@ public class CatalogServiceTest {
 	 */
 	public CatalogServiceTest() {
 		setupRequestContext();
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Return a count of all Catalog entity
+	 * 
+	 */
+	@Test
+	public void countCatalogs() {
+		Integer response = null;
+		response = service.countCatalogs();
+		// TODO: JUnit - Add assertions to test outputs of operation: countCatalogs
 	}
 
 	/**
@@ -101,18 +113,17 @@ public class CatalogServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Delete an existing ProductCatalog entity
+	 * Return all Catalog entity
 	 * 
 	 */
 	@Test
-	public void deleteCatalogProductCatalogs() {
-		// TODO: JUnit - Populate test inputs for operation: deleteCatalogProductCatalogs 
-		Integer catalog_id = 0;
-		Integer related_productcatalogs_productId = 0;
-		Integer related_productcatalogs_catalogId = 0;
-		Catalog response = null;
-		response = service.deleteCatalogProductCatalogs(catalog_id, related_productcatalogs_productId, related_productcatalogs_catalogId);
-		// TODO: JUnit - Add assertions to test outputs of operation: deleteCatalogProductCatalogs
+	public void findAllCatalogs() {
+		// TODO: JUnit - Populate test inputs for operation: findAllCatalogs 
+		Integer startResult = 0;
+		Integer maxRows = 0;
+		List<Catalog> response = null;
+		response = service.findAllCatalogs(startResult, maxRows);
+		// TODO: JUnit - Add assertions to test outputs of operation: findAllCatalogs
 	}
 
 	/**
@@ -125,21 +136,6 @@ public class CatalogServiceTest {
 		// TODO: JUnit - Populate test inputs for operation: saveCatalog 
 		Catalog catalog_1 = new com.lqf.eshopdemo.domain.Catalog();
 		service.saveCatalog(catalog_1);
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Return all Catalog entity
-	 * 
-	 */
-	@Test
-	public void findAllCatalogs() {
-		// TODO: JUnit - Populate test inputs for operation: findAllCatalogs 
-		Integer startResult = 0;
-		Integer maxRows = 0;
-		List<Catalog> response = null;
-		response = service.findAllCatalogs(startResult, maxRows);
-		// TODO: JUnit - Add assertions to test outputs of operation: findAllCatalogs
 	}
 
 	/**
@@ -159,18 +155,6 @@ public class CatalogServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Return a count of all Catalog entity
-	 * 
-	 */
-	@Test
-	public void countCatalogs() {
-		Integer response = null;
-		response = service.countCatalogs();
-		// TODO: JUnit - Add assertions to test outputs of operation: countCatalogs
-	}
-
-	/**
-	 * Operation Unit Test
 	 */
 	@Test
 	public void findCatalogByPrimaryKey() {
@@ -179,6 +163,22 @@ public class CatalogServiceTest {
 		Catalog response = null;
 		response = service.findCatalogByPrimaryKey(id_1);
 		// TODO: JUnit - Add assertions to test outputs of operation: findCatalogByPrimaryKey
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Delete an existing ProductCatalog entity
+	 * 
+	 */
+	@Test
+	public void deleteCatalogProductCatalogs() {
+		// TODO: JUnit - Populate test inputs for operation: deleteCatalogProductCatalogs 
+		Integer catalog_id = 0;
+		Integer related_productcatalogs_productId = 0;
+		Integer related_productcatalogs_catalogId = 0;
+		Catalog response = null;
+		response = service.deleteCatalogProductCatalogs(catalog_id, related_productcatalogs_productId, related_productcatalogs_catalogId);
+		// TODO: JUnit - Add assertions to test outputs of operation: deleteCatalogProductCatalogs
 	}
 
 	/**

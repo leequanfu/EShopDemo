@@ -14,46 +14,6 @@ import java.util.Set;
 public interface UserinfoService {
 
 	/**
-	 * Save an existing Order entity
-	 * 
-	 */
-	public Userinfo saveUserinfoOrders(Integer id, Order related_orders);
-
-	/**
-	 * Delete an existing Userinfo entity
-	 * 
-	 */
-	public void deleteUserinfo(Userinfo userinfo);
-
-	/**
-	 * Return all Userinfo entity
-	 * 
-	 */
-	public List<Userinfo> findAllUserinfos(Integer startResult, Integer maxRows);
-
-	/**
-	 * Save an existing Userinfo entity
-	 * 
-	 */
-	public void saveUserinfo(Userinfo userinfo_1);
-
-	/**
-	 */
-	public Userinfo findUserinfoByPrimaryKey(Integer id_1);
-
-	/**
-	 * Delete an existing CustomerComment entity
-	 * 
-	 */
-	public Userinfo deleteUserinfoCustomerComments(Integer userinfo_id, Integer related_customercomments_proId, Integer related_customercomments_userId);
-
-	/**
-	 * Save an existing CustomerComment entity
-	 * 
-	 */
-	public Userinfo saveUserinfoCustomerComments(Integer id_2, CustomerComment related_customercomments);
-
-	/**
 	 * Load an existing Userinfo entity
 	 * 
 	 */
@@ -66,8 +26,48 @@ public interface UserinfoService {
 	public Integer countUserinfos();
 
 	/**
+	 * Delete an existing Userinfo entity
+	 * 
+	 */
+	public void deleteUserinfo(Userinfo userinfo);
+
+	/**
+	 * Save an existing Userinfo entity
+	 * 
+	 */
+	public void saveUserinfo(Userinfo userinfo_1);
+
+	/**
+	 * Save an existing CustomerComment entity
+	 * 
+	 */
+	public Userinfo saveUserinfoCustomerComments(Integer id, CustomerComment related_customercomments);
+
+	/**
+	 * Save an existing Order entity
+	 * 
+	 */
+	public Userinfo saveUserinfoOrders(Integer id_1, Order related_orders);
+
+	/**
+	 */
+	public Userinfo findUserinfoByPrimaryKey(Integer id_2);
+
+	/**
 	 * Delete an existing Order entity
 	 * 
 	 */
-	public Userinfo deleteUserinfoOrders(Integer userinfo_id_1, Integer related_orders_id);
+	public Userinfo deleteUserinfoOrders(Integer userinfo_id, Integer related_orders_id);
+
+	/**
+	 * Return all Userinfo entity
+	 * 
+	 */
+	public List<Userinfo> findAllUserinfos(Integer startResult, Integer maxRows);
+
+	/**
+	 * Delete an existing CustomerComment entity
+	 * 
+	 */
+	public Userinfo deleteUserinfoCustomerComments(Integer userinfo_id_1, Integer related_customercomments_proId, Integer related_customercomments_userId);
 }

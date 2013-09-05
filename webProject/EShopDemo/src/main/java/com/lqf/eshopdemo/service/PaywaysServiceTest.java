@@ -45,10 +45,10 @@ import org.springframework.web.context.request.SessionScope;
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class })
 @ContextConfiguration(locations = {
-		"file:./src/main/resources/EShopDemo-security-context.xml",
-		"file:./src/main/resources/EShopDemo-service-context.xml",
-		"file:./src/main/resources/EShopDemo-dao-context.xml",
-		"file:./src/main/resources/EShopDemo-web-context.xml" })
+		"file:./resources/t11-security-context.xml",
+		"file:./resources/t11-service-context.xml",
+		"file:./resources/t11-dao-context.xml",
+		"file:./resources/t11-web-context.xml" })
 @Transactional
 public class PaywaysServiceTest {
 
@@ -76,26 +76,26 @@ public class PaywaysServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Delete an existing Payways entity
-	 * 
-	 */
-	@Test
-	public void deletePayways() {
-		// TODO: JUnit - Populate test inputs for operation: deletePayways 
-		Payways payways = new com.lqf.eshopdemo.domain.Payways();
-		service.deletePayways(payways);
-	}
-
-	/**
-	 * Operation Unit Test
 	 * Save an existing Payways entity
 	 * 
 	 */
 	@Test
 	public void savePayways() {
 		// TODO: JUnit - Populate test inputs for operation: savePayways 
-		Payways payways_1 = new com.lqf.eshopdemo.domain.Payways();
-		service.savePayways(payways_1);
+		Payways payways = new com.lqf.eshopdemo.domain.Payways();
+		service.savePayways(payways);
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Load an existing Payways entity
+	 * 
+	 */
+	@Test
+	public void loadPaywayss() {
+		Set<Payways> response = null;
+		response = service.loadPaywayss();
+		// TODO: JUnit - Add assertions to test outputs of operation: loadPaywayss
 	}
 
 	/**
@@ -112,6 +112,18 @@ public class PaywaysServiceTest {
 
 	/**
 	 * Operation Unit Test
+	 * Delete an existing Payways entity
+	 * 
+	 */
+	@Test
+	public void deletePayways() {
+		// TODO: JUnit - Populate test inputs for operation: deletePayways 
+		Payways payways_1 = new com.lqf.eshopdemo.domain.Payways();
+		service.deletePayways(payways_1);
+	}
+
+	/**
+	 * Operation Unit Test
 	 * Return all Payways entity
 	 * 
 	 */
@@ -123,18 +135,6 @@ public class PaywaysServiceTest {
 		List<Payways> response = null;
 		response = service.findAllPaywayss(startResult, maxRows);
 		// TODO: JUnit - Add assertions to test outputs of operation: findAllPaywayss
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Load an existing Payways entity
-	 * 
-	 */
-	@Test
-	public void loadPaywayss() {
-		Set<Payways> response = null;
-		response = service.loadPaywayss();
-		// TODO: JUnit - Add assertions to test outputs of operation: loadPaywayss
 	}
 
 	/**

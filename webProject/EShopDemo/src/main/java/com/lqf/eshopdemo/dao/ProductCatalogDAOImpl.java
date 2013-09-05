@@ -67,6 +67,50 @@ public class ProductCatalogDAOImpl extends AbstractJpaDao<ProductCatalog>
 	}
 
 	/**
+	 * JPQL Query - findProductCatalogByProductId
+	 *
+	 */
+	@Transactional
+	public Set<ProductCatalog> findProductCatalogByProductId(Integer productId) throws DataAccessException {
+
+		return findProductCatalogByProductId(productId, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findProductCatalogByProductId
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<ProductCatalog> findProductCatalogByProductId(Integer productId, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findProductCatalogByProductId", startResult, maxRows, productId);
+		return new LinkedHashSet<ProductCatalog>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findAllProductCatalogs
+	 *
+	 */
+	@Transactional
+	public Set<ProductCatalog> findAllProductCatalogs() throws DataAccessException {
+
+		return findAllProductCatalogs(-1, -1);
+	}
+
+	/**
+	 * JPQL Query - findAllProductCatalogs
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<ProductCatalog> findAllProductCatalogs(int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findAllProductCatalogs", startResult, maxRows);
+		return new LinkedHashSet<ProductCatalog>(query.getResultList());
+	}
+
+	/**
 	 * JPQL Query - findProductCatalogByPrimaryKey
 	 *
 	 */
@@ -110,50 +154,6 @@ public class ProductCatalogDAOImpl extends AbstractJpaDao<ProductCatalog>
 	@Transactional
 	public Set<ProductCatalog> findProductCatalogByCatalogId(Integer catalogId, int startResult, int maxRows) throws DataAccessException {
 		Query query = createNamedQuery("findProductCatalogByCatalogId", startResult, maxRows, catalogId);
-		return new LinkedHashSet<ProductCatalog>(query.getResultList());
-	}
-
-	/**
-	 * JPQL Query - findProductCatalogByProductId
-	 *
-	 */
-	@Transactional
-	public Set<ProductCatalog> findProductCatalogByProductId(Integer productId) throws DataAccessException {
-
-		return findProductCatalogByProductId(productId, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findProductCatalogByProductId
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<ProductCatalog> findProductCatalogByProductId(Integer productId, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findProductCatalogByProductId", startResult, maxRows, productId);
-		return new LinkedHashSet<ProductCatalog>(query.getResultList());
-	}
-
-	/**
-	 * JPQL Query - findAllProductCatalogs
-	 *
-	 */
-	@Transactional
-	public Set<ProductCatalog> findAllProductCatalogs() throws DataAccessException {
-
-		return findAllProductCatalogs(-1, -1);
-	}
-
-	/**
-	 * JPQL Query - findAllProductCatalogs
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<ProductCatalog> findAllProductCatalogs(int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findAllProductCatalogs", startResult, maxRows);
 		return new LinkedHashSet<ProductCatalog>(query.getResultList());
 	}
 

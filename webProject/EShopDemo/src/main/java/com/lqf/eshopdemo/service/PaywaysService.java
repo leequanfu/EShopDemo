@@ -12,32 +12,32 @@ import java.util.Set;
 public interface PaywaysService {
 
 	/**
-	 * Delete an existing Payways entity
-	 * 
-	 */
-	public void deletePayways(Payways payways);
-
-	/**
 	 * Save an existing Payways entity
 	 * 
 	 */
-	public void savePayways(Payways payways_1);
-
-	/**
-	 */
-	public Payways findPaywaysByPrimaryKey(String way);
-
-	/**
-	 * Return all Payways entity
-	 * 
-	 */
-	public List<Payways> findAllPaywayss(Integer startResult, Integer maxRows);
+	public void savePayways(Payways payways);
 
 	/**
 	 * Load an existing Payways entity
 	 * 
 	 */
 	public Set<Payways> loadPaywayss();
+
+	/**
+	 */
+	public Payways findPaywaysByPrimaryKey(String way);
+
+	/**
+	 * Delete an existing Payways entity
+	 * 
+	 */
+	public void deletePayways(Payways payways_1);
+
+	/**
+	 * Return all Payways entity
+	 * 
+	 */
+	public List<Payways> findAllPaywayss(Integer startResult, Integer maxRows);
 
 	/**
 	 * Return a count of all Payways entity

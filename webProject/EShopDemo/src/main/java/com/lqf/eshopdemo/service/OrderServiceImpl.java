@@ -55,51 +55,24 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	/**
-	 * Save an existing Order entity
+	 * Delete an existing Userinfo entity
 	 * 
 	 */
 	@Transactional
-	public void saveOrder(Order order) {
-		Order existingOrder = orderDAO.findOrderByPrimaryKey(order.getId());
-
-		if (existingOrder != null) {
-			if (existingOrder != order) {
-				existingOrder.setId(order.getId());
-				existingOrder.setAddress(order.getAddress());
-				existingOrder.setPhone(order.getPhone());
-				existingOrder.setPayway(order.getPayway());
-			}
-			order = orderDAO.store(existingOrder);
-		} else {
-			order = orderDAO.store(order);
-		}
-		orderDAO.flush();
-	}
-
-	/**
-	 * Load an existing Order entity
-	 * 
-	 */
-	@Transactional
-	public Set<Order> loadOrders() {
-		return orderDAO.findAllOrders();
-	}
-
-	/**
-	 * Delete an existing OrderItems entity
-	 * 
-	 */
-	@Transactional
-	public Order deleteOrderOrderItemses(Integer order_id, Integer related_orderitemses_orderId, Integer related_orderitemses_productId) {
-		OrderItems related_orderitemses = orderItemsDAO.findOrderItemsByPrimaryKey(related_orderitemses_orderId, related_orderitemses_productId, -1, -1);
-
+	public Order deleteOrderUserinfo(Integer order_id, Integer related_userinfo_id) {
 		Order order = orderDAO.findOrderByPrimaryKey(order_id, -1, -1);
+		Userinfo related_userinfo = userinfoDAO.findUserinfoByPrimaryKey(related_userinfo_id, -1, -1);
 
-		related_orderitemses.setOrder(null);
-		order.getOrderItemses().remove(related_orderitemses);
+		order.setUserinfo(null);
+		related_userinfo.getOrders().remove(order);
+		order = orderDAO.store(order);
+		orderDAO.flush();
 
-		orderItemsDAO.remove(related_orderitemses);
-		orderItemsDAO.flush();
+		related_userinfo = userinfoDAO.store(related_userinfo);
+		userinfoDAO.flush();
+
+		userinfoDAO.remove(related_userinfo);
+		userinfoDAO.flush();
 
 		return order;
 	}
@@ -137,64 +110,6 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	/**
-	 */
-	@Transactional
-	public Order findOrderByPrimaryKey(Integer id) {
-		return orderDAO.findOrderByPrimaryKey(id);
-	}
-
-	/**
-	 * Delete an existing Userinfo entity
-	 * 
-	 */
-	@Transactional
-	public Order deleteOrderUserinfo(Integer order_id, Integer related_userinfo_id) {
-		Order order = orderDAO.findOrderByPrimaryKey(order_id, -1, -1);
-		Userinfo related_userinfo = userinfoDAO.findUserinfoByPrimaryKey(related_userinfo_id, -1, -1);
-
-		order.setUserinfo(null);
-		related_userinfo.getOrders().remove(order);
-		order = orderDAO.store(order);
-		orderDAO.flush();
-
-		related_userinfo = userinfoDAO.store(related_userinfo);
-		userinfoDAO.flush();
-
-		userinfoDAO.remove(related_userinfo);
-		userinfoDAO.flush();
-
-		return order;
-	}
-
-	/**
-	 * Return a count of all Order entity
-	 * 
-	 */
-	@Transactional
-	public Integer countOrders() {
-		return ((Long) orderDAO.createQuerySingleResult("select count(o) from Order o").getSingleResult()).intValue();
-	}
-
-	/**
-	 * Delete an existing Order entity
-	 * 
-	 */
-	@Transactional
-	public void deleteOrder(Order order) {
-		orderDAO.remove(order);
-		orderDAO.flush();
-	}
-
-	/**
-	 * Return all Order entity
-	 * 
-	 */
-	@Transactional
-	public List<Order> findAllOrders(Integer startResult, Integer maxRows) {
-		return new java.util.ArrayList<Order>(orderDAO.findAllOrders(startResult, maxRows));
-	}
-
-	/**
 	 * Save an existing Userinfo entity
 	 * 
 	 */
@@ -228,5 +143,90 @@ public class OrderServiceImpl implements OrderService {
 		userinfoDAO.flush();
 
 		return order;
+	}
+
+	/**
+	 */
+	@Transactional
+	public Order findOrderByPrimaryKey(Integer id) {
+		return orderDAO.findOrderByPrimaryKey(id);
+	}
+
+	/**
+	 * Delete an existing OrderItems entity
+	 * 
+	 */
+	@Transactional
+	public Order deleteOrderOrderItemses(Integer order_id, Integer related_orderitemses_orderId, Integer related_orderitemses_productId) {
+		OrderItems related_orderitemses = orderItemsDAO.findOrderItemsByPrimaryKey(related_orderitemses_orderId, related_orderitemses_productId, -1, -1);
+
+		Order order = orderDAO.findOrderByPrimaryKey(order_id, -1, -1);
+
+		related_orderitemses.setOrder(null);
+		order.getOrderItemses().remove(related_orderitemses);
+
+		orderItemsDAO.remove(related_orderitemses);
+		orderItemsDAO.flush();
+
+		return order;
+	}
+
+	/**
+	 * Return all Order entity
+	 * 
+	 */
+	@Transactional
+	public List<Order> findAllOrders(Integer startResult, Integer maxRows) {
+		return new java.util.ArrayList<Order>(orderDAO.findAllOrders(startResult, maxRows));
+	}
+
+	/**
+	 * Save an existing Order entity
+	 * 
+	 */
+	@Transactional
+	public void saveOrder(Order order) {
+		Order existingOrder = orderDAO.findOrderByPrimaryKey(order.getId());
+
+		if (existingOrder != null) {
+			if (existingOrder != order) {
+				existingOrder.setId(order.getId());
+				existingOrder.setAddress(order.getAddress());
+				existingOrder.setPhone(order.getPhone());
+				existingOrder.setPayway(order.getPayway());
+			}
+			order = orderDAO.store(existingOrder);
+		} else {
+			order = orderDAO.store(order);
+		}
+		orderDAO.flush();
+	}
+
+	/**
+	 * Delete an existing Order entity
+	 * 
+	 */
+	@Transactional
+	public void deleteOrder(Order order) {
+		orderDAO.remove(order);
+		orderDAO.flush();
+	}
+
+	/**
+	 * Return a count of all Order entity
+	 * 
+	 */
+	@Transactional
+	public Integer countOrders() {
+		return ((Long) orderDAO.createQuerySingleResult("select count(o) from Order o").getSingleResult()).intValue();
+	}
+
+	/**
+	 * Load an existing Order entity
+	 * 
+	 */
+	@Transactional
+	public Set<Order> loadOrders() {
+		return orderDAO.findAllOrders();
 	}
 }

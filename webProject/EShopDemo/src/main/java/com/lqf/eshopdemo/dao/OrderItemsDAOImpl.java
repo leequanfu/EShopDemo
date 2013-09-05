@@ -67,50 +67,6 @@ public class OrderItemsDAOImpl extends AbstractJpaDao<OrderItems> implements
 	}
 
 	/**
-	 * JPQL Query - findOrderItemsByPrice
-	 *
-	 */
-	@Transactional
-	public Set<OrderItems> findOrderItemsByPrice(java.math.BigDecimal price) throws DataAccessException {
-
-		return findOrderItemsByPrice(price, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findOrderItemsByPrice
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<OrderItems> findOrderItemsByPrice(java.math.BigDecimal price, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findOrderItemsByPrice", startResult, maxRows, price);
-		return new LinkedHashSet<OrderItems>(query.getResultList());
-	}
-
-	/**
-	 * JPQL Query - findOrderItemsByProductId
-	 *
-	 */
-	@Transactional
-	public Set<OrderItems> findOrderItemsByProductId(Integer productId) throws DataAccessException {
-
-		return findOrderItemsByProductId(productId, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findOrderItemsByProductId
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<OrderItems> findOrderItemsByProductId(Integer productId, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findOrderItemsByProductId", startResult, maxRows, productId);
-		return new LinkedHashSet<OrderItems>(query.getResultList());
-	}
-
-	/**
 	 * JPQL Query - findOrderItemsByOrderId
 	 *
 	 */
@@ -129,28 +85,6 @@ public class OrderItemsDAOImpl extends AbstractJpaDao<OrderItems> implements
 	@Transactional
 	public Set<OrderItems> findOrderItemsByOrderId(Integer orderId, int startResult, int maxRows) throws DataAccessException {
 		Query query = createNamedQuery("findOrderItemsByOrderId", startResult, maxRows, orderId);
-		return new LinkedHashSet<OrderItems>(query.getResultList());
-	}
-
-	/**
-	 * JPQL Query - findOrderItemsByQuality
-	 *
-	 */
-	@Transactional
-	public Set<OrderItems> findOrderItemsByQuality(Integer quality) throws DataAccessException {
-
-		return findOrderItemsByQuality(quality, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findOrderItemsByQuality
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<OrderItems> findOrderItemsByQuality(Integer quality, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findOrderItemsByQuality", startResult, maxRows, quality);
 		return new LinkedHashSet<OrderItems>(query.getResultList());
 	}
 
@@ -199,6 +133,72 @@ public class OrderItemsDAOImpl extends AbstractJpaDao<OrderItems> implements
 		} catch (NoResultException nre) {
 			return null;
 		}
+	}
+
+	/**
+	 * JPQL Query - findOrderItemsByProductId
+	 *
+	 */
+	@Transactional
+	public Set<OrderItems> findOrderItemsByProductId(Integer productId) throws DataAccessException {
+
+		return findOrderItemsByProductId(productId, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findOrderItemsByProductId
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<OrderItems> findOrderItemsByProductId(Integer productId, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findOrderItemsByProductId", startResult, maxRows, productId);
+		return new LinkedHashSet<OrderItems>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findOrderItemsByPrice
+	 *
+	 */
+	@Transactional
+	public Set<OrderItems> findOrderItemsByPrice(java.math.BigDecimal price) throws DataAccessException {
+
+		return findOrderItemsByPrice(price, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findOrderItemsByPrice
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<OrderItems> findOrderItemsByPrice(java.math.BigDecimal price, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findOrderItemsByPrice", startResult, maxRows, price);
+		return new LinkedHashSet<OrderItems>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findOrderItemsByQuality
+	 *
+	 */
+	@Transactional
+	public Set<OrderItems> findOrderItemsByQuality(Integer quality) throws DataAccessException {
+
+		return findOrderItemsByQuality(quality, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findOrderItemsByQuality
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<OrderItems> findOrderItemsByQuality(Integer quality, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findOrderItemsByQuality", startResult, maxRows, quality);
+		return new LinkedHashSet<OrderItems>(query.getResultList());
 	}
 
 	/**

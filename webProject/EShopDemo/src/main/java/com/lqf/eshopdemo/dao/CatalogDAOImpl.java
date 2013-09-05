@@ -67,24 +67,24 @@ public class CatalogDAOImpl extends AbstractJpaDao<Catalog> implements
 	}
 
 	/**
-	 * JPQL Query - findCatalogByName
+	 * JPQL Query - findCatalogByNameContaining
 	 *
 	 */
 	@Transactional
-	public Set<Catalog> findCatalogByName(String name) throws DataAccessException {
+	public Set<Catalog> findCatalogByNameContaining(String name) throws DataAccessException {
 
-		return findCatalogByName(name, -1, -1);
+		return findCatalogByNameContaining(name, -1, -1);
 	}
 
 	/**
-	 * JPQL Query - findCatalogByName
+	 * JPQL Query - findCatalogByNameContaining
 	 *
 	 */
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Set<Catalog> findCatalogByName(String name, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findCatalogByName", startResult, maxRows, name);
+	public Set<Catalog> findCatalogByNameContaining(String name, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findCatalogByNameContaining", startResult, maxRows, name);
 		return new LinkedHashSet<Catalog>(query.getResultList());
 	}
 
@@ -139,6 +139,28 @@ public class CatalogDAOImpl extends AbstractJpaDao<Catalog> implements
 	}
 
 	/**
+	 * JPQL Query - findCatalogByName
+	 *
+	 */
+	@Transactional
+	public Set<Catalog> findCatalogByName(String name) throws DataAccessException {
+
+		return findCatalogByName(name, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findCatalogByName
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<Catalog> findCatalogByName(String name, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findCatalogByName", startResult, maxRows, name);
+		return new LinkedHashSet<Catalog>(query.getResultList());
+	}
+
+	/**
 	 * JPQL Query - findAllCatalogs
 	 *
 	 */
@@ -157,28 +179,6 @@ public class CatalogDAOImpl extends AbstractJpaDao<Catalog> implements
 	@Transactional
 	public Set<Catalog> findAllCatalogs(int startResult, int maxRows) throws DataAccessException {
 		Query query = createNamedQuery("findAllCatalogs", startResult, maxRows);
-		return new LinkedHashSet<Catalog>(query.getResultList());
-	}
-
-	/**
-	 * JPQL Query - findCatalogByNameContaining
-	 *
-	 */
-	@Transactional
-	public Set<Catalog> findCatalogByNameContaining(String name) throws DataAccessException {
-
-		return findCatalogByNameContaining(name, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findCatalogByNameContaining
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<Catalog> findCatalogByNameContaining(String name, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findCatalogByNameContaining", startResult, maxRows, name);
 		return new LinkedHashSet<Catalog>(query.getResultList());
 	}
 

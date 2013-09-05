@@ -67,6 +67,50 @@ public class ProductOfferDAOImpl extends AbstractJpaDao<ProductOffer> implements
 	}
 
 	/**
+	 * JPQL Query - findProductOfferByProId
+	 *
+	 */
+	@Transactional
+	public Set<ProductOffer> findProductOfferByProId(Integer proId) throws DataAccessException {
+
+		return findProductOfferByProId(proId, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findProductOfferByProId
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<ProductOffer> findProductOfferByProId(Integer proId, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findProductOfferByProId", startResult, maxRows, proId);
+		return new LinkedHashSet<ProductOffer>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findProductOfferByOfferId
+	 *
+	 */
+	@Transactional
+	public Set<ProductOffer> findProductOfferByOfferId(Integer offerId) throws DataAccessException {
+
+		return findProductOfferByOfferId(offerId, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findProductOfferByOfferId
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<ProductOffer> findProductOfferByOfferId(Integer offerId, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findProductOfferByOfferId", startResult, maxRows, offerId);
+		return new LinkedHashSet<ProductOffer>(query.getResultList());
+	}
+
+	/**
 	 * JPQL Query - findProductOfferByPrimaryKey
 	 *
 	 */
@@ -110,50 +154,6 @@ public class ProductOfferDAOImpl extends AbstractJpaDao<ProductOffer> implements
 	@Transactional
 	public Set<ProductOffer> findAllProductOffers(int startResult, int maxRows) throws DataAccessException {
 		Query query = createNamedQuery("findAllProductOffers", startResult, maxRows);
-		return new LinkedHashSet<ProductOffer>(query.getResultList());
-	}
-
-	/**
-	 * JPQL Query - findProductOfferByProId
-	 *
-	 */
-	@Transactional
-	public Set<ProductOffer> findProductOfferByProId(Integer proId) throws DataAccessException {
-
-		return findProductOfferByProId(proId, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findProductOfferByProId
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<ProductOffer> findProductOfferByProId(Integer proId, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findProductOfferByProId", startResult, maxRows, proId);
-		return new LinkedHashSet<ProductOffer>(query.getResultList());
-	}
-
-	/**
-	 * JPQL Query - findProductOfferByOfferId
-	 *
-	 */
-	@Transactional
-	public Set<ProductOffer> findProductOfferByOfferId(Integer offerId) throws DataAccessException {
-
-		return findProductOfferByOfferId(offerId, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findProductOfferByOfferId
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<ProductOffer> findProductOfferByOfferId(Integer offerId, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findProductOfferByOfferId", startResult, maxRows, offerId);
 		return new LinkedHashSet<ProductOffer>(query.getResultList());
 	}
 

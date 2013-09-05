@@ -55,6 +55,26 @@ public class CatalogRestController {
 	private CatalogService catalogService;
 
 	/**
+	 * Select an existing Catalog entity
+	 * 
+	 */
+	@RequestMapping(value = "/Catalog/{catalog_id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Catalog loadCatalog(@PathVariable Integer catalog_id) {
+		return catalogDAO.findCatalogByPrimaryKey(catalog_id);
+	}
+
+	/**
+	 * Show all Catalog entities
+	 * 
+	 */
+	@RequestMapping(value = "/Catalog", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Catalog> listCatalogs() {
+		return new java.util.ArrayList<Catalog>(catalogService.loadCatalogs());
+	}
+
+	/**
 	 * Show all ProductCatalog entities by Catalog
 	 * 
 	 */
@@ -65,15 +85,47 @@ public class CatalogRestController {
 	}
 
 	/**
-	 * View an existing ProductCatalog entity
+	 * Save an existing Catalog entity
 	 * 
 	 */
-	@RequestMapping(value = "/Catalog/{catalog_id}/productCatalogs/{productcatalog_productId}/{productcatalog_catalogId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/Catalog", method = RequestMethod.PUT)
 	@ResponseBody
-	public ProductCatalog loadCatalogProductCatalogs(@PathVariable Integer catalog_id, @PathVariable Integer related_productcatalogs_productId, @PathVariable Integer related_productcatalogs_catalogId) {
-		ProductCatalog productcatalog = productCatalogDAO.findProductCatalogByPrimaryKey(related_productcatalogs_productId, related_productcatalogs_catalogId, -1, -1);
+	public Catalog saveCatalog(@RequestBody Catalog catalog) {
+		catalogService.saveCatalog(catalog);
+		return catalogDAO.findCatalogByPrimaryKey(catalog.getId());
+	}
 
-		return productcatalog;
+	/**
+	 * Create a new Catalog entity
+	 * 
+	 */
+	@RequestMapping(value = "/Catalog", method = RequestMethod.POST)
+	@ResponseBody
+	public Catalog newCatalog(@RequestBody Catalog catalog) {
+		catalogService.saveCatalog(catalog);
+		return catalogDAO.findCatalogByPrimaryKey(catalog.getId());
+	}
+
+	/**
+	 * Create a new ProductCatalog entity
+	 * 
+	 */
+	@RequestMapping(value = "/Catalog/{catalog_id}/productCatalogs", method = RequestMethod.POST)
+	@ResponseBody
+	public ProductCatalog newCatalogProductCatalogs(@PathVariable Integer catalog_id, @RequestBody ProductCatalog productcatalog) {
+		catalogService.saveCatalogProductCatalogs(catalog_id, productcatalog);
+		return productCatalogDAO.findProductCatalogByPrimaryKey(productcatalog.getProductId(), productcatalog.getCatalogId());
+	}
+
+	/**
+	 * Delete an existing Catalog entity
+	 * 
+	 */
+	@RequestMapping(value = "/Catalog/{catalog_id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public void deleteCatalog(@PathVariable Integer catalog_id) {
+		Catalog catalog = catalogDAO.findCatalogByPrimaryKey(catalog_id);
+		catalogService.deleteCatalog(catalog);
 	}
 
 	/**
@@ -95,67 +147,15 @@ public class CatalogRestController {
 	}
 
 	/**
-	 * Create a new Catalog entity
+	 * View an existing ProductCatalog entity
 	 * 
 	 */
-	@RequestMapping(value = "/Catalog", method = RequestMethod.POST)
+	@RequestMapping(value = "/Catalog/{catalog_id}/productCatalogs/{productcatalog_productId}/{productcatalog_catalogId}", method = RequestMethod.GET)
 	@ResponseBody
-	public Catalog newCatalog(@RequestBody Catalog catalog) {
-		catalogService.saveCatalog(catalog);
-		return catalogDAO.findCatalogByPrimaryKey(catalog.getId());
-	}
+	public ProductCatalog loadCatalogProductCatalogs(@PathVariable Integer catalog_id, @PathVariable Integer related_productcatalogs_productId, @PathVariable Integer related_productcatalogs_catalogId) {
+		ProductCatalog productcatalog = productCatalogDAO.findProductCatalogByPrimaryKey(related_productcatalogs_productId, related_productcatalogs_catalogId, -1, -1);
 
-	/**
-	 * Delete an existing Catalog entity
-	 * 
-	 */
-	@RequestMapping(value = "/Catalog/{catalog_id}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public void deleteCatalog(@PathVariable Integer catalog_id) {
-		Catalog catalog = catalogDAO.findCatalogByPrimaryKey(catalog_id);
-		catalogService.deleteCatalog(catalog);
-	}
-
-	/**
-	 * Select an existing Catalog entity
-	 * 
-	 */
-	@RequestMapping(value = "/Catalog/{catalog_id}", method = RequestMethod.GET)
-	@ResponseBody
-	public Catalog loadCatalog(@PathVariable Integer catalog_id) {
-		return catalogDAO.findCatalogByPrimaryKey(catalog_id);
-	}
-
-	/**
-	 * Show all Catalog entities
-	 * 
-	 */
-	@RequestMapping(value = "/Catalog", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Catalog> listCatalogs() {
-		return new java.util.ArrayList<Catalog>(catalogService.loadCatalogs());
-	}
-
-	/**
-	 * Save an existing Catalog entity
-	 * 
-	 */
-	@RequestMapping(value = "/Catalog", method = RequestMethod.PUT)
-	@ResponseBody
-	public Catalog saveCatalog(@RequestBody Catalog catalog) {
-		catalogService.saveCatalog(catalog);
-		return catalogDAO.findCatalogByPrimaryKey(catalog.getId());
-	}
-
-	/**
-	 * Create a new ProductCatalog entity
-	 * 
-	 */
-	@RequestMapping(value = "/Catalog/{catalog_id}/productCatalogs", method = RequestMethod.POST)
-	@ResponseBody
-	public ProductCatalog newCatalogProductCatalogs(@PathVariable Integer catalog_id, @RequestBody ProductCatalog productcatalog) {
-		catalogService.saveCatalogProductCatalogs(catalog_id, productcatalog);
-		return productCatalogDAO.findProductCatalogByPrimaryKey(productcatalog.getProductId(), productcatalog.getCatalogId());
+		return productcatalog;
 	}
 
 	/**

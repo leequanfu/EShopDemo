@@ -25,9 +25,9 @@ import javax.persistence.*;
 		@NamedQuery(name = "findProductOfferByOfferId", query = "select myProductOffer from ProductOffer myProductOffer where myProductOffer.offerId = ?1"),
 		@NamedQuery(name = "findProductOfferByPrimaryKey", query = "select myProductOffer from ProductOffer myProductOffer where myProductOffer.proId = ?1 and myProductOffer.offerId = ?2"),
 		@NamedQuery(name = "findProductOfferByProId", query = "select myProductOffer from ProductOffer myProductOffer where myProductOffer.proId = ?1") })
-@Table(catalog = "EShopDemo", name = "product_offer")
+@Table(catalog = "eshopdemo", name = "product_offer")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = "EShopDemo/com/lqf/eshopdemo/domain", name = "ProductOffer")
+@XmlType(namespace = "t11/com/lqf/eshopdemo/domain", name = "ProductOffer")
 public class ProductOffer implements Serializable {
 	private static final long serialVersionUID = 1L;
 

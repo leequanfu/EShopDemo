@@ -82,41 +82,72 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 	}
 
 	/**
-	 * Delete an existing ProductProperty entity
+	 * Delete an existing ProductOffer entity
 	 * 
 	 */
 	@Transactional
-	public ProductDetail deleteProductDetailProductProperties(Integer productdetail_id, Integer related_productproperties_proId, String related_productproperties_key) {
-		ProductProperty related_productproperties = productPropertyDAO.findProductPropertyByPrimaryKey(related_productproperties_proId, related_productproperties_key, -1, -1);
+	public ProductDetail deleteProductDetailProductOffers(Integer productdetail_id, Integer related_productoffers_proId, Integer related_productoffers_offerId) {
+		ProductOffer related_productoffers = productOfferDAO.findProductOfferByPrimaryKey(related_productoffers_proId, related_productoffers_offerId, -1, -1);
 
 		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
 
-		related_productproperties.setProductDetail(null);
-		productdetail.getProductProperties().remove(related_productproperties);
+		related_productoffers.setProductDetail(null);
+		productdetail.getProductOffers().remove(related_productoffers);
 
-		productPropertyDAO.remove(related_productproperties);
-		productPropertyDAO.flush();
+		productOfferDAO.remove(related_productoffers);
+		productOfferDAO.flush();
 
 		return productdetail;
 	}
 
 	/**
-	 * Delete an existing ProductCatalog entity
+	 */
+	@Transactional
+	public ProductDetail findProductDetailByPrimaryKey(Integer id) {
+		return productDetailDAO.findProductDetailByPrimaryKey(id);
+	}
+
+	/**
+	 * Save an existing ProductDetail entity
 	 * 
 	 */
 	@Transactional
-	public ProductDetail deleteProductDetailProductCatalogs(Integer productdetail_id, Integer related_productcatalogs_productId, Integer related_productcatalogs_catalogId) {
-		ProductCatalog related_productcatalogs = productCatalogDAO.findProductCatalogByPrimaryKey(related_productcatalogs_productId, related_productcatalogs_catalogId, -1, -1);
+	public void saveProductDetail(ProductDetail productdetail) {
+		ProductDetail existingProductDetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail.getId());
 
-		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
+		if (existingProductDetail != null) {
+			if (existingProductDetail != productdetail) {
+				existingProductDetail.setId(productdetail.getId());
+				existingProductDetail.setTitle(productdetail.getTitle());
+				existingProductDetail.setPrice(productdetail.getPrice());
+				existingProductDetail.setQuantity(productdetail.getQuantity());
+				existingProductDetail.setDescription(productdetail.getDescription());
+				existingProductDetail.setPicnum(productdetail.getPicnum());
+			}
+			productdetail = productDetailDAO.store(existingProductDetail);
+		} else {
+			productdetail = productDetailDAO.store(productdetail);
+		}
+		productDetailDAO.flush();
+	}
 
-		related_productcatalogs.setProductDetail(null);
-		productdetail.getProductCatalogs().remove(related_productcatalogs);
+	/**
+	 * Delete an existing ProductDetail entity
+	 * 
+	 */
+	@Transactional
+	public void deleteProductDetail(ProductDetail productdetail) {
+		productDetailDAO.remove(productdetail);
+		productDetailDAO.flush();
+	}
 
-		productCatalogDAO.remove(related_productcatalogs);
-		productCatalogDAO.flush();
-
-		return productdetail;
+	/**
+	 * Load an existing ProductDetail entity
+	 * 
+	 */
+	@Transactional
+	public Set<ProductDetail> loadProductDetails() {
+		return productDetailDAO.findAllProductDetails();
 	}
 
 	/**
@@ -152,16 +183,6 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 	}
 
 	/**
-	 * Delete an existing ProductDetail entity
-	 * 
-	 */
-	@Transactional
-	public void deleteProductDetail(ProductDetail productdetail) {
-		productDetailDAO.remove(productdetail);
-		productDetailDAO.flush();
-	}
-
-	/**
 	 * Save an existing ProductOffer entity
 	 * 
 	 */
@@ -192,12 +213,41 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 	}
 
 	/**
-	 * Load an existing ProductDetail entity
+	 * Delete an existing CustomerComment entity
 	 * 
 	 */
 	@Transactional
-	public Set<ProductDetail> loadProductDetails() {
-		return productDetailDAO.findAllProductDetails();
+	public ProductDetail deleteProductDetailCustomerComments(Integer productdetail_id, Integer related_customercomments_proId, Integer related_customercomments_userId) {
+		CustomerComment related_customercomments = customerCommentDAO.findCustomerCommentByPrimaryKey(related_customercomments_proId, related_customercomments_userId, -1, -1);
+
+		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
+
+		related_customercomments.setProductDetail(null);
+		productdetail.getCustomerComments().remove(related_customercomments);
+
+		customerCommentDAO.remove(related_customercomments);
+		customerCommentDAO.flush();
+
+		return productdetail;
+	}
+
+	/**
+	 * Delete an existing ProductProperty entity
+	 * 
+	 */
+	@Transactional
+	public ProductDetail deleteProductDetailProductProperties(Integer productdetail_id, Integer related_productproperties_proId, String related_productproperties_key) {
+		ProductProperty related_productproperties = productPropertyDAO.findProductPropertyByPrimaryKey(related_productproperties_proId, related_productproperties_key, -1, -1);
+
+		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
+
+		related_productproperties.setProductDetail(null);
+		productdetail.getProductProperties().remove(related_productproperties);
+
+		productPropertyDAO.remove(related_productproperties);
+		productPropertyDAO.flush();
+
+		return productdetail;
 	}
 
 	/**
@@ -216,74 +266,6 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 	@Transactional
 	public List<ProductDetail> findAllProductDetails(Integer startResult, Integer maxRows) {
 		return new java.util.ArrayList<ProductDetail>(productDetailDAO.findAllProductDetails(startResult, maxRows));
-	}
-
-	/**
-	 * Delete an existing OrderItems entity
-	 * 
-	 */
-	@Transactional
-	public ProductDetail deleteProductDetailOrderItemses(Integer productdetail_id, Integer related_orderitemses_orderId, Integer related_orderitemses_productId) {
-		OrderItems related_orderitemses = orderItemsDAO.findOrderItemsByPrimaryKey(related_orderitemses_orderId, related_orderitemses_productId, -1, -1);
-
-		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
-
-		related_orderitemses.setProductDetail(null);
-		productdetail.getOrderItemses().remove(related_orderitemses);
-
-		orderItemsDAO.remove(related_orderitemses);
-		orderItemsDAO.flush();
-
-		return productdetail;
-	}
-
-	/**
-	 * Save an existing ProductDetail entity
-	 * 
-	 */
-	@Transactional
-	public void saveProductDetail(ProductDetail productdetail) {
-		ProductDetail existingProductDetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail.getId());
-
-		if (existingProductDetail != null) {
-			if (existingProductDetail != productdetail) {
-				existingProductDetail.setId(productdetail.getId());
-				existingProductDetail.setTitle(productdetail.getTitle());
-				existingProductDetail.setPrice(productdetail.getPrice());
-				existingProductDetail.setQuantity(productdetail.getQuantity());
-				existingProductDetail.setDescription(productdetail.getDescription());
-			}
-			productdetail = productDetailDAO.store(existingProductDetail);
-		} else {
-			productdetail = productDetailDAO.store(productdetail);
-		}
-		productDetailDAO.flush();
-	}
-
-	/**
-	 */
-	@Transactional
-	public ProductDetail findProductDetailByPrimaryKey(Integer id) {
-		return productDetailDAO.findProductDetailByPrimaryKey(id);
-	}
-
-	/**
-	 * Delete an existing ProductOffer entity
-	 * 
-	 */
-	@Transactional
-	public ProductDetail deleteProductDetailProductOffers(Integer productdetail_id, Integer related_productoffers_proId, Integer related_productoffers_offerId) {
-		ProductOffer related_productoffers = productOfferDAO.findProductOfferByPrimaryKey(related_productoffers_proId, related_productoffers_offerId, -1, -1);
-
-		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
-
-		related_productoffers.setProductDetail(null);
-		productdetail.getProductOffers().remove(related_productoffers);
-
-		productOfferDAO.remove(related_productoffers);
-		productOfferDAO.flush();
-
-		return productdetail;
 	}
 
 	/**
@@ -309,37 +291,6 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 		productdetail.getProductCatalogs().add(related_productcatalogs);
 		related_productcatalogs = productCatalogDAO.store(related_productcatalogs);
 		productCatalogDAO.flush();
-
-		productdetail = productDetailDAO.store(productdetail);
-		productDetailDAO.flush();
-
-		return productdetail;
-	}
-
-	/**
-	 * Save an existing ProductProperty entity
-	 * 
-	 */
-	@Transactional
-	public ProductDetail saveProductDetailProductProperties(Integer id, ProductProperty related_productproperties) {
-		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(id, -1, -1);
-		ProductProperty existingproductProperties = productPropertyDAO.findProductPropertyByPrimaryKey(related_productproperties.getProId(), related_productproperties.getKey());
-
-		// copy into the existing record to preserve existing relationships
-		if (existingproductProperties != null) {
-			existingproductProperties.setProId(related_productproperties.getProId());
-			existingproductProperties.setKey(related_productproperties.getKey());
-			existingproductProperties.setValue(related_productproperties.getValue());
-			related_productproperties = existingproductProperties;
-		} else {
-			related_productproperties = productPropertyDAO.store(related_productproperties);
-			productPropertyDAO.flush();
-		}
-
-		related_productproperties.setProductDetail(productdetail);
-		productdetail.getProductProperties().add(related_productproperties);
-		related_productproperties = productPropertyDAO.store(related_productproperties);
-		productPropertyDAO.flush();
 
 		productdetail = productDetailDAO.store(productdetail);
 		productDetailDAO.flush();
@@ -380,20 +331,70 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 	}
 
 	/**
-	 * Delete an existing CustomerComment entity
+	 * Delete an existing OrderItems entity
 	 * 
 	 */
 	@Transactional
-	public ProductDetail deleteProductDetailCustomerComments(Integer productdetail_id, Integer related_customercomments_proId, Integer related_customercomments_userId) {
-		CustomerComment related_customercomments = customerCommentDAO.findCustomerCommentByPrimaryKey(related_customercomments_proId, related_customercomments_userId, -1, -1);
+	public ProductDetail deleteProductDetailOrderItemses(Integer productdetail_id, Integer related_orderitemses_orderId, Integer related_orderitemses_productId) {
+		OrderItems related_orderitemses = orderItemsDAO.findOrderItemsByPrimaryKey(related_orderitemses_orderId, related_orderitemses_productId, -1, -1);
 
 		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
 
-		related_customercomments.setProductDetail(null);
-		productdetail.getCustomerComments().remove(related_customercomments);
+		related_orderitemses.setProductDetail(null);
+		productdetail.getOrderItemses().remove(related_orderitemses);
 
-		customerCommentDAO.remove(related_customercomments);
-		customerCommentDAO.flush();
+		orderItemsDAO.remove(related_orderitemses);
+		orderItemsDAO.flush();
+
+		return productdetail;
+	}
+
+	/**
+	 * Save an existing ProductProperty entity
+	 * 
+	 */
+	@Transactional
+	public ProductDetail saveProductDetailProductProperties(Integer id, ProductProperty related_productproperties) {
+		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(id, -1, -1);
+		ProductProperty existingproductProperties = productPropertyDAO.findProductPropertyByPrimaryKey(related_productproperties.getProId(), related_productproperties.getKey());
+
+		// copy into the existing record to preserve existing relationships
+		if (existingproductProperties != null) {
+			existingproductProperties.setProId(related_productproperties.getProId());
+			existingproductProperties.setKey(related_productproperties.getKey());
+			existingproductProperties.setValue(related_productproperties.getValue());
+			related_productproperties = existingproductProperties;
+		} else {
+			related_productproperties = productPropertyDAO.store(related_productproperties);
+			productPropertyDAO.flush();
+		}
+
+		related_productproperties.setProductDetail(productdetail);
+		productdetail.getProductProperties().add(related_productproperties);
+		related_productproperties = productPropertyDAO.store(related_productproperties);
+		productPropertyDAO.flush();
+
+		productdetail = productDetailDAO.store(productdetail);
+		productDetailDAO.flush();
+
+		return productdetail;
+	}
+
+	/**
+	 * Delete an existing ProductCatalog entity
+	 * 
+	 */
+	@Transactional
+	public ProductDetail deleteProductDetailProductCatalogs(Integer productdetail_id, Integer related_productcatalogs_productId, Integer related_productcatalogs_catalogId) {
+		ProductCatalog related_productcatalogs = productCatalogDAO.findProductCatalogByPrimaryKey(related_productcatalogs_productId, related_productcatalogs_catalogId, -1, -1);
+
+		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
+
+		related_productcatalogs.setProductDetail(null);
+		productdetail.getProductCatalogs().remove(related_productcatalogs);
+
+		productCatalogDAO.remove(related_productcatalogs);
+		productCatalogDAO.flush();
 
 		return productdetail;
 	}

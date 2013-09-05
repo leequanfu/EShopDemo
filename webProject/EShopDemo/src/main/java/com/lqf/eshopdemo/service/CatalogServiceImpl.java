@@ -46,6 +46,15 @@ public class CatalogServiceImpl implements CatalogService {
 	}
 
 	/**
+	 * Return a count of all Catalog entity
+	 * 
+	 */
+	@Transactional
+	public Integer countCatalogs() {
+		return ((Long) catalogDAO.createQuerySingleResult("select count(o) from Catalog o").getSingleResult()).intValue();
+	}
+
+	/**
 	 * Load an existing Catalog entity
 	 * 
 	 */
@@ -65,22 +74,12 @@ public class CatalogServiceImpl implements CatalogService {
 	}
 
 	/**
-	 * Delete an existing ProductCatalog entity
+	 * Return all Catalog entity
 	 * 
 	 */
 	@Transactional
-	public Catalog deleteCatalogProductCatalogs(Integer catalog_id, Integer related_productcatalogs_productId, Integer related_productcatalogs_catalogId) {
-		ProductCatalog related_productcatalogs = productCatalogDAO.findProductCatalogByPrimaryKey(related_productcatalogs_productId, related_productcatalogs_catalogId, -1, -1);
-
-		Catalog catalog = catalogDAO.findCatalogByPrimaryKey(catalog_id, -1, -1);
-
-		related_productcatalogs.setCatalog(null);
-		catalog.getProductCatalogs().remove(related_productcatalogs);
-
-		productCatalogDAO.remove(related_productcatalogs);
-		productCatalogDAO.flush();
-
-		return catalog;
+	public List<Catalog> findAllCatalogs(Integer startResult, Integer maxRows) {
+		return new java.util.ArrayList<Catalog>(catalogDAO.findAllCatalogs(startResult, maxRows));
 	}
 
 	/**
@@ -101,15 +100,6 @@ public class CatalogServiceImpl implements CatalogService {
 			catalog = catalogDAO.store(catalog);
 		}
 		catalogDAO.flush();
-	}
-
-	/**
-	 * Return all Catalog entity
-	 * 
-	 */
-	@Transactional
-	public List<Catalog> findAllCatalogs(Integer startResult, Integer maxRows) {
-		return new java.util.ArrayList<Catalog>(catalogDAO.findAllCatalogs(startResult, maxRows));
 	}
 
 	/**
@@ -143,18 +133,28 @@ public class CatalogServiceImpl implements CatalogService {
 	}
 
 	/**
-	 * Return a count of all Catalog entity
-	 * 
-	 */
-	@Transactional
-	public Integer countCatalogs() {
-		return ((Long) catalogDAO.createQuerySingleResult("select count(o) from Catalog o").getSingleResult()).intValue();
-	}
-
-	/**
 	 */
 	@Transactional
 	public Catalog findCatalogByPrimaryKey(Integer id) {
 		return catalogDAO.findCatalogByPrimaryKey(id);
+	}
+
+	/**
+	 * Delete an existing ProductCatalog entity
+	 * 
+	 */
+	@Transactional
+	public Catalog deleteCatalogProductCatalogs(Integer catalog_id, Integer related_productcatalogs_productId, Integer related_productcatalogs_catalogId) {
+		ProductCatalog related_productcatalogs = productCatalogDAO.findProductCatalogByPrimaryKey(related_productcatalogs_productId, related_productcatalogs_catalogId, -1, -1);
+
+		Catalog catalog = catalogDAO.findCatalogByPrimaryKey(catalog_id, -1, -1);
+
+		related_productcatalogs.setCatalog(null);
+		catalog.getProductCatalogs().remove(related_productcatalogs);
+
+		productCatalogDAO.remove(related_productcatalogs);
+		productCatalogDAO.flush();
+
+		return catalog;
 	}
 }

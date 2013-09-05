@@ -66,46 +66,90 @@ public class OrderDAOImpl extends AbstractJpaDao<Order> implements OrderDAO {
 	}
 
 	/**
-	 * JPQL Query - findOrderByPhone
+	 * JPQL Query - findAllOrders
 	 *
 	 */
 	@Transactional
-	public Set<Order> findOrderByPhone(String phone) throws DataAccessException {
+	public Set<Order> findAllOrders() throws DataAccessException {
 
-		return findOrderByPhone(phone, -1, -1);
+		return findAllOrders(-1, -1);
 	}
 
 	/**
-	 * JPQL Query - findOrderByPhone
+	 * JPQL Query - findAllOrders
 	 *
 	 */
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Set<Order> findOrderByPhone(String phone, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findOrderByPhone", startResult, maxRows, phone);
+	public Set<Order> findAllOrders(int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findAllOrders", startResult, maxRows);
 		return new LinkedHashSet<Order>(query.getResultList());
 	}
 
 	/**
-	 * JPQL Query - findOrderByPaywayContaining
+	 * JPQL Query - findOrderByAddressContaining
 	 *
 	 */
 	@Transactional
-	public Set<Order> findOrderByPaywayContaining(String payway) throws DataAccessException {
+	public Set<Order> findOrderByAddressContaining(String address) throws DataAccessException {
 
-		return findOrderByPaywayContaining(payway, -1, -1);
+		return findOrderByAddressContaining(address, -1, -1);
 	}
 
 	/**
-	 * JPQL Query - findOrderByPaywayContaining
+	 * JPQL Query - findOrderByAddressContaining
 	 *
 	 */
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Set<Order> findOrderByPaywayContaining(String payway, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findOrderByPaywayContaining", startResult, maxRows, payway);
+	public Set<Order> findOrderByAddressContaining(String address, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findOrderByAddressContaining", startResult, maxRows, address);
+		return new LinkedHashSet<Order>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findOrderByPhoneContaining
+	 *
+	 */
+	@Transactional
+	public Set<Order> findOrderByPhoneContaining(String phone) throws DataAccessException {
+
+		return findOrderByPhoneContaining(phone, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findOrderByPhoneContaining
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<Order> findOrderByPhoneContaining(String phone, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findOrderByPhoneContaining", startResult, maxRows, phone);
+		return new LinkedHashSet<Order>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findOrderByPayway
+	 *
+	 */
+	@Transactional
+	public Set<Order> findOrderByPayway(String payway) throws DataAccessException {
+
+		return findOrderByPayway(payway, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findOrderByPayway
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<Order> findOrderByPayway(String payway, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findOrderByPayway", startResult, maxRows, payway);
 		return new LinkedHashSet<Order>(query.getResultList());
 	}
 
@@ -135,28 +179,6 @@ public class OrderDAOImpl extends AbstractJpaDao<Order> implements OrderDAO {
 	}
 
 	/**
-	 * JPQL Query - findOrderByAddressContaining
-	 *
-	 */
-	@Transactional
-	public Set<Order> findOrderByAddressContaining(String address) throws DataAccessException {
-
-		return findOrderByAddressContaining(address, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findOrderByAddressContaining
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<Order> findOrderByAddressContaining(String address, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findOrderByAddressContaining", startResult, maxRows, address);
-		return new LinkedHashSet<Order>(query.getResultList());
-	}
-
-	/**
 	 * JPQL Query - findOrderByAddress
 	 *
 	 */
@@ -179,46 +201,46 @@ public class OrderDAOImpl extends AbstractJpaDao<Order> implements OrderDAO {
 	}
 
 	/**
-	 * JPQL Query - findAllOrders
+	 * JPQL Query - findOrderByPaywayContaining
 	 *
 	 */
 	@Transactional
-	public Set<Order> findAllOrders() throws DataAccessException {
+	public Set<Order> findOrderByPaywayContaining(String payway) throws DataAccessException {
 
-		return findAllOrders(-1, -1);
+		return findOrderByPaywayContaining(payway, -1, -1);
 	}
 
 	/**
-	 * JPQL Query - findAllOrders
+	 * JPQL Query - findOrderByPaywayContaining
 	 *
 	 */
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Set<Order> findAllOrders(int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findAllOrders", startResult, maxRows);
+	public Set<Order> findOrderByPaywayContaining(String payway, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findOrderByPaywayContaining", startResult, maxRows, payway);
 		return new LinkedHashSet<Order>(query.getResultList());
 	}
 
 	/**
-	 * JPQL Query - findOrderByPayway
+	 * JPQL Query - findOrderByPhone
 	 *
 	 */
 	@Transactional
-	public Set<Order> findOrderByPayway(String payway) throws DataAccessException {
+	public Set<Order> findOrderByPhone(String phone) throws DataAccessException {
 
-		return findOrderByPayway(payway, -1, -1);
+		return findOrderByPhone(phone, -1, -1);
 	}
 
 	/**
-	 * JPQL Query - findOrderByPayway
+	 * JPQL Query - findOrderByPhone
 	 *
 	 */
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Set<Order> findOrderByPayway(String payway, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findOrderByPayway", startResult, maxRows, payway);
+	public Set<Order> findOrderByPhone(String phone, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findOrderByPhone", startResult, maxRows, phone);
 		return new LinkedHashSet<Order>(query.getResultList());
 	}
 
@@ -245,28 +267,6 @@ public class OrderDAOImpl extends AbstractJpaDao<Order> implements OrderDAO {
 		} catch (NoResultException nre) {
 			return null;
 		}
-	}
-
-	/**
-	 * JPQL Query - findOrderByPhoneContaining
-	 *
-	 */
-	@Transactional
-	public Set<Order> findOrderByPhoneContaining(String phone) throws DataAccessException {
-
-		return findOrderByPhoneContaining(phone, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findOrderByPhoneContaining
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<Order> findOrderByPhoneContaining(String phone, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findOrderByPhoneContaining", startResult, maxRows, phone);
-		return new LinkedHashSet<Order>(query.getResultList());
 	}
 
 	/**

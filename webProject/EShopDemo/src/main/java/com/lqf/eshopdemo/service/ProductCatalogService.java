@@ -20,18 +20,6 @@ public interface ProductCatalogService {
 	public List<ProductCatalog> findAllProductCatalogs(Integer startResult, Integer maxRows);
 
 	/**
-	 * Save an existing ProductDetail entity
-	 * 
-	 */
-	public ProductCatalog saveProductCatalogProductDetail(Integer productId, Integer catalogId, ProductDetail related_productdetail);
-
-	/**
-	 * Delete an existing ProductDetail entity
-	 * 
-	 */
-	public ProductCatalog deleteProductCatalogProductDetail(Integer productcatalog_productId, Integer productcatalog_catalogId, Integer related_productdetail_id);
-
-	/**
 	 * Delete an existing ProductCatalog entity
 	 * 
 	 */
@@ -41,19 +29,23 @@ public interface ProductCatalogService {
 	 * Delete an existing Catalog entity
 	 * 
 	 */
-	public ProductCatalog deleteProductCatalogCatalog(Integer productcatalog_productId_1, Integer productcatalog_catalogId_1, Integer related_catalog_id);
+	public ProductCatalog deleteProductCatalogCatalog(Integer productcatalog_productId, Integer productcatalog_catalogId, Integer related_catalog_id);
+
+	/**
+	 * Save an existing ProductCatalog entity
+	 * 
+	 */
+	public void saveProductCatalog(ProductCatalog productcatalog_1);
 
 	/**
 	 * Save an existing Catalog entity
 	 * 
 	 */
-	public ProductCatalog saveProductCatalogCatalog(Integer productId_1, Integer catalogId_1, Catalog related_catalog);
+	public ProductCatalog saveProductCatalogCatalog(Integer productId, Integer catalogId, Catalog related_catalog);
 
 	/**
-	 * Load an existing ProductCatalog entity
-	 * 
 	 */
-	public Set<ProductCatalog> loadProductCatalogs();
+	public ProductCatalog findProductCatalogByPrimaryKey(Integer productId_1, Integer catalogId_1);
 
 	/**
 	 * Return a count of all ProductCatalog entity
@@ -62,12 +54,20 @@ public interface ProductCatalogService {
 	public Integer countProductCatalogs();
 
 	/**
-	 */
-	public ProductCatalog findProductCatalogByPrimaryKey(Integer productId_2, Integer catalogId_2);
-
-	/**
-	 * Save an existing ProductCatalog entity
+	 * Save an existing ProductDetail entity
 	 * 
 	 */
-	public void saveProductCatalog(ProductCatalog productcatalog_1);
+	public ProductCatalog saveProductCatalogProductDetail(Integer productId_2, Integer catalogId_2, ProductDetail related_productdetail);
+
+	/**
+	 * Delete an existing ProductDetail entity
+	 * 
+	 */
+	public ProductCatalog deleteProductCatalogProductDetail(Integer productcatalog_productId_1, Integer productcatalog_catalogId_1, Integer related_productdetail_id);
+
+	/**
+	 * Load an existing ProductCatalog entity
+	 * 
+	 */
+	public Set<ProductCatalog> loadProductCatalogs();
 }

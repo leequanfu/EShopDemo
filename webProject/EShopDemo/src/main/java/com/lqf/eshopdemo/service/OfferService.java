@@ -13,20 +13,16 @@ import java.util.Set;
 public interface OfferService {
 
 	/**
-	 */
-	public Offer findOfferByPrimaryKey(Integer id);
-
-	/**
 	 * Load an existing Offer entity
 	 * 
 	 */
 	public Set<Offer> loadOffers();
 
 	/**
-	 * Delete an existing Offer entity
+	 * Save an existing ProductOffer entity
 	 * 
 	 */
-	public void deleteOffer(Offer offer);
+	public Offer saveOfferProductOffers(Integer id, ProductOffer related_productoffers);
 
 	/**
 	 * Return all Offer entity
@@ -35,16 +31,20 @@ public interface OfferService {
 	public List<Offer> findAllOffers(Integer startResult, Integer maxRows);
 
 	/**
+	 * Delete an existing Offer entity
+	 * 
+	 */
+	public void deleteOffer(Offer offer);
+
+	/**
+	 */
+	public Offer findOfferByPrimaryKey(Integer id_1);
+
+	/**
 	 * Delete an existing ProductOffer entity
 	 * 
 	 */
 	public Offer deleteOfferProductOffers(Integer offer_id, Integer related_productoffers_proId, Integer related_productoffers_offerId);
-
-	/**
-	 * Save an existing Offer entity
-	 * 
-	 */
-	public void saveOffer(Offer offer_1);
 
 	/**
 	 * Return a count of all Offer entity
@@ -53,8 +53,8 @@ public interface OfferService {
 	public Integer countOffers();
 
 	/**
-	 * Save an existing ProductOffer entity
+	 * Save an existing Offer entity
 	 * 
 	 */
-	public Offer saveOfferProductOffers(Integer id_1, ProductOffer related_productoffers);
+	public void saveOffer(Offer offer_1);
 }

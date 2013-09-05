@@ -55,24 +55,6 @@ public class OrderItemsServiceImpl implements OrderItemsService {
 	}
 
 	/**
-	 * Return all OrderItems entity
-	 * 
-	 */
-	@Transactional
-	public List<OrderItems> findAllOrderItemss(Integer startResult, Integer maxRows) {
-		return new java.util.ArrayList<OrderItems>(orderItemsDAO.findAllOrderItemss(startResult, maxRows));
-	}
-
-	/**
-	 * Load an existing OrderItems entity
-	 * 
-	 */
-	@Transactional
-	public Set<OrderItems> loadOrderItemss() {
-		return orderItemsDAO.findAllOrderItemss();
-	}
-
-	/**
 	 * Save an existing ProductDetail entity
 	 * 
 	 */
@@ -88,6 +70,7 @@ public class OrderItemsServiceImpl implements OrderItemsService {
 			existingproductDetail.setPrice(related_productdetail.getPrice());
 			existingproductDetail.setQuantity(related_productdetail.getQuantity());
 			existingproductDetail.setDescription(related_productdetail.getDescription());
+			existingproductDetail.setPicnum(related_productdetail.getPicnum());
 			related_productdetail = existingproductDetail;
 		} else {
 			related_productdetail = productDetailDAO.store(related_productdetail);
@@ -103,6 +86,70 @@ public class OrderItemsServiceImpl implements OrderItemsService {
 		productDetailDAO.flush();
 
 		return orderitems;
+	}
+
+	/**
+	 * Delete an existing Order entity
+	 * 
+	 */
+	@Transactional
+	public OrderItems deleteOrderItemsOrder(Integer orderitems_orderId, Integer orderitems_productId, Integer related_order_id) {
+		OrderItems orderitems = orderItemsDAO.findOrderItemsByPrimaryKey(orderitems_orderId, orderitems_productId, -1, -1);
+		Order related_order = orderDAO.findOrderByPrimaryKey(related_order_id, -1, -1);
+
+		orderitems.setOrder(null);
+		related_order.getOrderItemses().remove(orderitems);
+		orderitems = orderItemsDAO.store(orderitems);
+		orderItemsDAO.flush();
+
+		related_order = orderDAO.store(related_order);
+		orderDAO.flush();
+
+		orderDAO.remove(related_order);
+		orderDAO.flush();
+
+		return orderitems;
+	}
+
+	/**
+	 * Delete an existing OrderItems entity
+	 * 
+	 */
+	@Transactional
+	public void deleteOrderItems(OrderItems orderitems) {
+		orderItemsDAO.remove(orderitems);
+		orderItemsDAO.flush();
+	}
+
+	/**
+	 * Save an existing OrderItems entity
+	 * 
+	 */
+	@Transactional
+	public void saveOrderItems(OrderItems orderitems) {
+		OrderItems existingOrderItems = orderItemsDAO.findOrderItemsByPrimaryKey(orderitems.getOrderId(), orderitems.getProductId());
+
+		if (existingOrderItems != null) {
+			if (existingOrderItems != orderitems) {
+				existingOrderItems.setOrderId(orderitems.getOrderId());
+				existingOrderItems.setProductId(orderitems.getProductId());
+				existingOrderItems.setPrice(orderitems.getPrice());
+				existingOrderItems.setQuality(orderitems.getQuality());
+			}
+			orderitems = orderItemsDAO.store(existingOrderItems);
+		} else {
+			orderitems = orderItemsDAO.store(orderitems);
+		}
+		orderItemsDAO.flush();
+	}
+
+	/**
+	 * Return all OrderItems entity
+	 * 
+	 */
+	@Transactional
+	public List<OrderItems> findAllOrderItemss(Integer startResult, Integer maxRows) {
+		return new java.util.ArrayList<OrderItems>(orderItemsDAO.findAllOrderItemss(startResult, maxRows));
 	}
 
 	/**
@@ -145,67 +192,21 @@ public class OrderItemsServiceImpl implements OrderItemsService {
 	}
 
 	/**
-	 * Save an existing OrderItems entity
-	 * 
-	 */
-	@Transactional
-	public void saveOrderItems(OrderItems orderitems) {
-		OrderItems existingOrderItems = orderItemsDAO.findOrderItemsByPrimaryKey(orderitems.getOrderId(), orderitems.getProductId());
-
-		if (existingOrderItems != null) {
-			if (existingOrderItems != orderitems) {
-				existingOrderItems.setOrderId(orderitems.getOrderId());
-				existingOrderItems.setProductId(orderitems.getProductId());
-				existingOrderItems.setPrice(orderitems.getPrice());
-				existingOrderItems.setQuality(orderitems.getQuality());
-			}
-			orderitems = orderItemsDAO.store(existingOrderItems);
-		} else {
-			orderitems = orderItemsDAO.store(orderitems);
-		}
-		orderItemsDAO.flush();
-	}
-
-	/**
-	 * Delete an existing OrderItems entity
-	 * 
-	 */
-	@Transactional
-	public void deleteOrderItems(OrderItems orderitems) {
-		orderItemsDAO.remove(orderitems);
-		orderItemsDAO.flush();
-	}
-
-	/**
-	 * Delete an existing Order entity
-	 * 
-	 */
-	@Transactional
-	public OrderItems deleteOrderItemsOrder(Integer orderitems_orderId, Integer orderitems_productId, Integer related_order_id) {
-		OrderItems orderitems = orderItemsDAO.findOrderItemsByPrimaryKey(orderitems_orderId, orderitems_productId, -1, -1);
-		Order related_order = orderDAO.findOrderByPrimaryKey(related_order_id, -1, -1);
-
-		orderitems.setOrder(null);
-		related_order.getOrderItemses().remove(orderitems);
-		orderitems = orderItemsDAO.store(orderitems);
-		orderItemsDAO.flush();
-
-		related_order = orderDAO.store(related_order);
-		orderDAO.flush();
-
-		orderDAO.remove(related_order);
-		orderDAO.flush();
-
-		return orderitems;
-	}
-
-	/**
 	 * Return a count of all OrderItems entity
 	 * 
 	 */
 	@Transactional
 	public Integer countOrderItemss() {
 		return ((Long) orderItemsDAO.createQuerySingleResult("select count(*) from OrderItems o").getSingleResult()).intValue();
+	}
+
+	/**
+	 * Load an existing OrderItems entity
+	 * 
+	 */
+	@Transactional
+	public Set<OrderItems> loadOrderItemss() {
+		return orderItemsDAO.findAllOrderItemss();
 	}
 
 	/**

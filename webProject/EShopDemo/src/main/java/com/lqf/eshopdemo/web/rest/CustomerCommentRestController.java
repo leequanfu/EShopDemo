@@ -64,15 +64,35 @@ public class CustomerCommentRestController {
 	private CustomerCommentService customerCommentService;
 
 	/**
-	 * View an existing Userinfo entity
+	 * Create a new Userinfo entity
 	 * 
 	 */
-	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/userinfo/{userinfo_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/userinfo", method = RequestMethod.POST)
 	@ResponseBody
-	public Userinfo loadCustomerCommentUserinfo(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @PathVariable Integer related_userinfo_id) {
-		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(related_userinfo_id, -1, -1);
+	public Userinfo newCustomerCommentUserinfo(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @RequestBody Userinfo userinfo) {
+		customerCommentService.saveCustomerCommentUserinfo(customercomment_proId, customercomment_userId, userinfo);
+		return userinfoDAO.findUserinfoByPrimaryKey(userinfo.getId());
+	}
 
-		return userinfo;
+	/**
+	 * Delete an existing Userinfo entity
+	 * 
+	 */
+	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/userinfo/{userinfo_id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public void deleteCustomerCommentUserinfo(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @PathVariable Integer related_userinfo_id) {
+		customerCommentService.deleteCustomerCommentUserinfo(customercomment_proId, customercomment_userId, related_userinfo_id);
+	}
+
+	/**
+	 * Save an existing Userinfo entity
+	 * 
+	 */
+	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/userinfo", method = RequestMethod.PUT)
+	@ResponseBody
+	public Userinfo saveCustomerCommentUserinfo(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @RequestBody Userinfo userinfo) {
+		customerCommentService.saveCustomerCommentUserinfo(customercomment_proId, customercomment_userId, userinfo);
+		return userinfoDAO.findUserinfoByPrimaryKey(userinfo.getId());
 	}
 
 	/**
@@ -83,6 +103,78 @@ public class CustomerCommentRestController {
 	@ResponseBody
 	public void deleteCustomerCommentProductDetail(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @PathVariable Integer related_productdetail_id) {
 		customerCommentService.deleteCustomerCommentProductDetail(customercomment_proId, customercomment_userId, related_productdetail_id);
+	}
+
+	/**
+	 * Create a new CustomerComment entity
+	 * 
+	 */
+	@RequestMapping(value = "/CustomerComment", method = RequestMethod.POST)
+	@ResponseBody
+	public CustomerComment newCustomerComment(@RequestBody CustomerComment customercomment) {
+		customerCommentService.saveCustomerComment(customercomment);
+		return customerCommentDAO.findCustomerCommentByPrimaryKey(customercomment.getProId(), customercomment.getUserId());
+	}
+
+	/**
+	 * Register custom, context-specific property editors
+	 * 
+	 */
+	@InitBinder
+	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
+		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
+		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
+		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
+		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
+		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
+		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
+		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
+		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
+		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
+		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
+	}
+
+	/**
+	 * View an existing ProductDetail entity
+	 * 
+	 */
+	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/productDetail/{productdetail_id}", method = RequestMethod.GET)
+	@ResponseBody
+	public ProductDetail loadCustomerCommentProductDetail(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @PathVariable Integer related_productdetail_id) {
+		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(related_productdetail_id, -1, -1);
+
+		return productdetail;
+	}
+
+	/**
+	 * Create a new ProductDetail entity
+	 * 
+	 */
+	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/productDetail", method = RequestMethod.POST)
+	@ResponseBody
+	public ProductDetail newCustomerCommentProductDetail(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @RequestBody ProductDetail productdetail) {
+		customerCommentService.saveCustomerCommentProductDetail(customercomment_proId, customercomment_userId, productdetail);
+		return productDetailDAO.findProductDetailByPrimaryKey(productdetail.getId());
+	}
+
+	/**
+	 * Get ProductDetail entity by CustomerComment
+	 * 
+	 */
+	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/productDetail", method = RequestMethod.GET)
+	@ResponseBody
+	public ProductDetail getCustomerCommentProductDetail(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId) {
+		return customerCommentDAO.findCustomerCommentByPrimaryKey(customercomment_proId, customercomment_userId).getProductDetail();
+	}
+
+	/**
+	 * Get Userinfo entity by CustomerComment
+	 * 
+	 */
+	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/userinfo", method = RequestMethod.GET)
+	@ResponseBody
+	public Userinfo getCustomerCommentUserinfo(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId) {
+		return customerCommentDAO.findCustomerCommentByPrimaryKey(customercomment_proId, customercomment_userId).getUserinfo();
 	}
 
 	/**
@@ -106,25 +198,26 @@ public class CustomerCommentRestController {
 	}
 
 	/**
-	 * Create a new Userinfo entity
+	 * Save an existing ProductDetail entity
 	 * 
 	 */
-	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/userinfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/productDetail", method = RequestMethod.PUT)
 	@ResponseBody
-	public Userinfo newCustomerCommentUserinfo(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @RequestBody Userinfo userinfo) {
-		customerCommentService.saveCustomerCommentUserinfo(customercomment_proId, customercomment_userId, userinfo);
-		return userinfoDAO.findUserinfoByPrimaryKey(userinfo.getId());
+	public ProductDetail saveCustomerCommentProductDetail(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @RequestBody ProductDetail productdetail) {
+		customerCommentService.saveCustomerCommentProductDetail(customercomment_proId, customercomment_userId, productdetail);
+		return productDetailDAO.findProductDetailByPrimaryKey(productdetail.getId());
 	}
 
 	/**
-	 * Delete an existing CustomerComment entity
+	 * View an existing Userinfo entity
 	 * 
 	 */
-	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/userinfo/{userinfo_id}", method = RequestMethod.GET)
 	@ResponseBody
-	public void deleteCustomerComment(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId) {
-		CustomerComment customercomment = customerCommentDAO.findCustomerCommentByPrimaryKey(customercomment_proId, customercomment_userId);
-		customerCommentService.deleteCustomerComment(customercomment);
+	public Userinfo loadCustomerCommentUserinfo(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @PathVariable Integer related_userinfo_id) {
+		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(related_userinfo_id, -1, -1);
+
+		return userinfo;
 	}
 
 	/**
@@ -139,106 +232,13 @@ public class CustomerCommentRestController {
 	}
 
 	/**
-	 * Save an existing ProductDetail entity
+	 * Delete an existing CustomerComment entity
 	 * 
 	 */
-	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/productDetail", method = RequestMethod.PUT)
+	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public ProductDetail saveCustomerCommentProductDetail(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @RequestBody ProductDetail productdetail) {
-		customerCommentService.saveCustomerCommentProductDetail(customercomment_proId, customercomment_userId, productdetail);
-		return productDetailDAO.findProductDetailByPrimaryKey(productdetail.getId());
-	}
-
-	/**
-	 * Save an existing Userinfo entity
-	 * 
-	 */
-	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/userinfo", method = RequestMethod.PUT)
-	@ResponseBody
-	public Userinfo saveCustomerCommentUserinfo(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @RequestBody Userinfo userinfo) {
-		customerCommentService.saveCustomerCommentUserinfo(customercomment_proId, customercomment_userId, userinfo);
-		return userinfoDAO.findUserinfoByPrimaryKey(userinfo.getId());
-	}
-
-	/**
-	 * Get ProductDetail entity by CustomerComment
-	 * 
-	 */
-	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/productDetail", method = RequestMethod.GET)
-	@ResponseBody
-	public ProductDetail getCustomerCommentProductDetail(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId) {
-		return customerCommentDAO.findCustomerCommentByPrimaryKey(customercomment_proId, customercomment_userId).getProductDetail();
-	}
-
-	/**
-	 * Create a new CustomerComment entity
-	 * 
-	 */
-	@RequestMapping(value = "/CustomerComment", method = RequestMethod.POST)
-	@ResponseBody
-	public CustomerComment newCustomerComment(@RequestBody CustomerComment customercomment) {
-		customerCommentService.saveCustomerComment(customercomment);
-		return customerCommentDAO.findCustomerCommentByPrimaryKey(customercomment.getProId(), customercomment.getUserId());
-	}
-
-	/**
-	 * Get Userinfo entity by CustomerComment
-	 * 
-	 */
-	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/userinfo", method = RequestMethod.GET)
-	@ResponseBody
-	public Userinfo getCustomerCommentUserinfo(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId) {
-		return customerCommentDAO.findCustomerCommentByPrimaryKey(customercomment_proId, customercomment_userId).getUserinfo();
-	}
-
-	/**
-	 * View an existing ProductDetail entity
-	 * 
-	 */
-	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/productDetail/{productdetail_id}", method = RequestMethod.GET)
-	@ResponseBody
-	public ProductDetail loadCustomerCommentProductDetail(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @PathVariable Integer related_productdetail_id) {
-		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(related_productdetail_id, -1, -1);
-
-		return productdetail;
-	}
-
-	/**
-	 * Delete an existing Userinfo entity
-	 * 
-	 */
-	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/userinfo/{userinfo_id}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public void deleteCustomerCommentUserinfo(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @PathVariable Integer related_userinfo_id) {
-		customerCommentService.deleteCustomerCommentUserinfo(customercomment_proId, customercomment_userId, related_userinfo_id);
-	}
-
-	/**
-	 * Register custom, context-specific property editors
-	 * 
-	 */
-	@InitBinder
-	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
-		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
-		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
-		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
-		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
-		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
-		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
-		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
-		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
-		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
-		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
-	}
-
-	/**
-	 * Create a new ProductDetail entity
-	 * 
-	 */
-	@RequestMapping(value = "/CustomerComment/{customercomment_proId}/{customercomment_userId}/productDetail", method = RequestMethod.POST)
-	@ResponseBody
-	public ProductDetail newCustomerCommentProductDetail(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId, @RequestBody ProductDetail productdetail) {
-		customerCommentService.saveCustomerCommentProductDetail(customercomment_proId, customercomment_userId, productdetail);
-		return productDetailDAO.findProductDetailByPrimaryKey(productdetail.getId());
+	public void deleteCustomerComment(@PathVariable Integer customercomment_proId, @PathVariable Integer customercomment_userId) {
+		CustomerComment customercomment = customerCommentDAO.findCustomerCommentByPrimaryKey(customercomment_proId, customercomment_userId);
+		customerCommentService.deleteCustomerComment(customercomment);
 	}
 }

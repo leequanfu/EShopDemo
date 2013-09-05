@@ -63,37 +63,90 @@ public class ProductCatalogController {
 	private ProductCatalogService productCatalogService;
 
 	/**
-	 * Delete an existing ProductDetail entity
+	 * Edit an existing ProductDetail entity
 	 * 
 	 */
-	@RequestMapping("/deleteProductCatalogProductDetail")
-	public ModelAndView deleteProductCatalogProductDetail(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId, @RequestParam Integer related_productdetail_id) {
+	@RequestMapping("/editProductCatalogProductDetail")
+	public ModelAndView editProductCatalogProductDetail(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId, @RequestParam Integer productdetail_id) {
+		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
+
 		ModelAndView mav = new ModelAndView();
-
-		ProductCatalog productcatalog = productCatalogService.deleteProductCatalogProductDetail(productcatalog_productId, productcatalog_catalogId, related_productdetail_id);
-
 		mav.addObject("productcatalog_productId", productcatalog_productId);
 		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
-		mav.addObject("productcatalog", productcatalog);
+		mav.addObject("productdetail", productdetail);
+		mav.setViewName("productcatalog/productdetail/editProductDetail.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Select the ProductCatalog entity for display allowing the user to confirm that they would like to delete the entity
+	 * 
+	 */
+	@RequestMapping("/confirmDeleteProductCatalog")
+	public ModelAndView confirmDeleteProductCatalog(@RequestParam Integer productIdKey, @RequestParam Integer catalogIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productcatalog", productCatalogDAO.findProductCatalogByPrimaryKey(productIdKey, catalogIdKey));
+		mav.setViewName("productcatalog/deleteProductCatalog.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Select an existing ProductCatalog entity
+	 * 
+	 */
+	@RequestMapping("/selectProductCatalog")
+	public ModelAndView selectProductCatalog(@RequestParam Integer productIdKey, @RequestParam Integer catalogIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productcatalog", productCatalogDAO.findProductCatalogByPrimaryKey(productIdKey, catalogIdKey));
 		mav.setViewName("productcatalog/viewProductCatalog.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Select the child Catalog entity for display allowing the user to confirm that they would like to delete the entity
+	 * Create a new ProductDetail entity
 	 * 
 	 */
-	@RequestMapping("/confirmDeleteProductCatalogCatalog")
-	public ModelAndView confirmDeleteProductCatalogCatalog(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId, @RequestParam Integer related_catalog_id) {
+	@RequestMapping("/newProductCatalogProductDetail")
+	public ModelAndView newProductCatalogProductDetail(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId) {
 		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("catalog", catalogDAO.findCatalogByPrimaryKey(related_catalog_id));
 		mav.addObject("productcatalog_productId", productcatalog_productId);
 		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
-		mav.setViewName("productcatalog/catalog/deleteCatalog.jsp");
+		mav.addObject("productdetail", new ProductDetail());
+		mav.addObject("newFlag", true);
+		mav.setViewName("productcatalog/productdetail/editProductDetail.jsp");
 
 		return mav;
+	}
+
+	/**
+	 * Create a new Catalog entity
+	 * 
+	 */
+	@RequestMapping("/newProductCatalogCatalog")
+	public ModelAndView newProductCatalogCatalog(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("productcatalog_productId", productcatalog_productId);
+		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
+		mav.addObject("catalog", new Catalog());
+		mav.addObject("newFlag", true);
+		mav.setViewName("productcatalog/catalog/editCatalog.jsp");
+
+		return mav;
+	}
+
+	/**
+	 */
+	@RequestMapping("/productcatalogController/binary.action")
+	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("streamedBinaryContentView");
+		return mav;
+
 	}
 
 	/**
@@ -109,20 +162,6 @@ public class ProductCatalogController {
 		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
 		mav.addObject("productdetail", productdetail);
 		mav.setViewName("productcatalog/productdetail/viewProductDetail.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Show all Catalog entities by ProductCatalog
-	 * 
-	 */
-	@RequestMapping("/listProductCatalogCatalog")
-	public ModelAndView listProductCatalogCatalog(@RequestParam Integer productIdKey, @RequestParam Integer catalogIdKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productcatalog", productCatalogDAO.findProductCatalogByPrimaryKey(productIdKey, catalogIdKey));
-		mav.setViewName("productcatalog/catalog/listCatalog.jsp");
 
 		return mav;
 	}
@@ -145,113 +184,45 @@ public class ProductCatalogController {
 	}
 
 	/**
-	 * Select the ProductCatalog entity for display allowing the user to confirm that they would like to delete the entity
+	 * Show all Catalog entities by ProductCatalog
 	 * 
 	 */
-	@RequestMapping("/confirmDeleteProductCatalog")
-	public ModelAndView confirmDeleteProductCatalog(@RequestParam Integer productIdKey, @RequestParam Integer catalogIdKey) {
+	@RequestMapping("/listProductCatalogCatalog")
+	public ModelAndView listProductCatalogCatalog(@RequestParam Integer productIdKey, @RequestParam Integer catalogIdKey) {
 		ModelAndView mav = new ModelAndView();
 
 		mav.addObject("productcatalog", productCatalogDAO.findProductCatalogByPrimaryKey(productIdKey, catalogIdKey));
-		mav.setViewName("productcatalog/deleteProductCatalog.jsp");
+		mav.setViewName("productcatalog/catalog/listCatalog.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Edit an existing Catalog entity
+	 * Show all ProductCatalog entities
 	 * 
 	 */
-	@RequestMapping("/editProductCatalogCatalog")
-	public ModelAndView editProductCatalogCatalog(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId, @RequestParam Integer catalog_id) {
-		Catalog catalog = catalogDAO.findCatalogByPrimaryKey(catalog_id, -1, -1);
-
+	@RequestMapping("/indexProductCatalog")
+	public ModelAndView listProductCatalogs() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("productcatalog_productId", productcatalog_productId);
-		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
-		mav.addObject("catalog", catalog);
-		mav.setViewName("productcatalog/catalog/editCatalog.jsp");
+
+		mav.addObject("productcatalogs", productCatalogService.loadProductCatalogs());
+
+		mav.setViewName("productcatalog/listProductCatalogs.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Create a new Catalog entity
+	 * Create a new ProductCatalog entity
 	 * 
 	 */
-	@RequestMapping("/newProductCatalogCatalog")
-	public ModelAndView newProductCatalogCatalog(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId) {
+	@RequestMapping("/newProductCatalog")
+	public ModelAndView newProductCatalog() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("productcatalog_productId", productcatalog_productId);
-		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
-		mav.addObject("catalog", new Catalog());
+
+		mav.addObject("productcatalog", new ProductCatalog());
 		mav.addObject("newFlag", true);
-		mav.setViewName("productcatalog/catalog/editCatalog.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Save an existing ProductCatalog entity
-	 * 
-	 */
-	@RequestMapping("/saveProductCatalog")
-	public String saveProductCatalog(@ModelAttribute ProductCatalog productcatalog) {
-		productCatalogService.saveProductCatalog(productcatalog);
-		return "forward:/indexProductCatalog";
-	}
-
-	/**
-	 */
-	@RequestMapping("/productcatalogController/binary.action")
-	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("streamedBinaryContentView");
-		return mav;
-
-	}
-
-	/**
-	 * Show all ProductDetail entities by ProductCatalog
-	 * 
-	 */
-	@RequestMapping("/listProductCatalogProductDetail")
-	public ModelAndView listProductCatalogProductDetail(@RequestParam Integer productIdKey, @RequestParam Integer catalogIdKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productcatalog", productCatalogDAO.findProductCatalogByPrimaryKey(productIdKey, catalogIdKey));
-		mav.setViewName("productcatalog/productdetail/listProductDetail.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * View an existing Catalog entity
-	 * 
-	 */
-	@RequestMapping("/selectProductCatalogCatalog")
-	public ModelAndView selectProductCatalogCatalog(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId, @RequestParam Integer catalog_id) {
-		Catalog catalog = catalogDAO.findCatalogByPrimaryKey(catalog_id, -1, -1);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("productcatalog_productId", productcatalog_productId);
-		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
-		mav.addObject("catalog", catalog);
-		mav.setViewName("productcatalog/catalog/viewCatalog.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Select an existing ProductCatalog entity
-	 * 
-	 */
-	@RequestMapping("/selectProductCatalog")
-	public ModelAndView selectProductCatalog(@RequestParam Integer productIdKey, @RequestParam Integer catalogIdKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productcatalog", productCatalogDAO.findProductCatalogByPrimaryKey(productIdKey, catalogIdKey));
-		mav.setViewName("productcatalog/viewProductCatalog.jsp");
+		mav.setViewName("productcatalog/editProductCatalog.jsp");
 
 		return mav;
 	}
@@ -274,6 +245,64 @@ public class ProductCatalogController {
 	}
 
 	/**
+	 * Save an existing ProductCatalog entity
+	 * 
+	 */
+	@RequestMapping("/saveProductCatalog")
+	public String saveProductCatalog(@ModelAttribute ProductCatalog productcatalog) {
+		productCatalogService.saveProductCatalog(productcatalog);
+		return "forward:/indexProductCatalog";
+	}
+
+	/**
+	 * Delete an existing Catalog entity
+	 * 
+	 */
+	@RequestMapping("/deleteProductCatalogCatalog")
+	public ModelAndView deleteProductCatalogCatalog(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId, @RequestParam Integer related_catalog_id) {
+		ModelAndView mav = new ModelAndView();
+
+		ProductCatalog productcatalog = productCatalogService.deleteProductCatalogCatalog(productcatalog_productId, productcatalog_catalogId, related_catalog_id);
+
+		mav.addObject("productcatalog_productId", productcatalog_productId);
+		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
+		mav.addObject("productcatalog", productcatalog);
+		mav.setViewName("productcatalog/viewProductCatalog.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Show all ProductDetail entities by ProductCatalog
+	 * 
+	 */
+	@RequestMapping("/listProductCatalogProductDetail")
+	public ModelAndView listProductCatalogProductDetail(@RequestParam Integer productIdKey, @RequestParam Integer catalogIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productcatalog", productCatalogDAO.findProductCatalogByPrimaryKey(productIdKey, catalogIdKey));
+		mav.setViewName("productcatalog/productdetail/listProductDetail.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Select the child Catalog entity for display allowing the user to confirm that they would like to delete the entity
+	 * 
+	 */
+	@RequestMapping("/confirmDeleteProductCatalogCatalog")
+	public ModelAndView confirmDeleteProductCatalogCatalog(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId, @RequestParam Integer related_catalog_id) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("catalog", catalogDAO.findCatalogByPrimaryKey(related_catalog_id));
+		mav.addObject("productcatalog_productId", productcatalog_productId);
+		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
+		mav.setViewName("productcatalog/catalog/deleteCatalog.jsp");
+
+		return mav;
+	}
+
+	/**
 	 * Select the child ProductDetail entity for display allowing the user to confirm that they would like to delete the entity
 	 * 
 	 */
@@ -290,32 +319,44 @@ public class ProductCatalogController {
 	}
 
 	/**
-	 * Create a new ProductDetail entity
+	 * Delete an existing ProductDetail entity
 	 * 
 	 */
-	@RequestMapping("/newProductCatalogProductDetail")
-	public ModelAndView newProductCatalogProductDetail(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId) {
+	@RequestMapping("/deleteProductCatalogProductDetail")
+	public ModelAndView deleteProductCatalogProductDetail(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId, @RequestParam Integer related_productdetail_id) {
 		ModelAndView mav = new ModelAndView();
+
+		ProductCatalog productcatalog = productCatalogService.deleteProductCatalogProductDetail(productcatalog_productId, productcatalog_catalogId, related_productdetail_id);
+
 		mav.addObject("productcatalog_productId", productcatalog_productId);
 		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
-		mav.addObject("productdetail", new ProductDetail());
-		mav.addObject("newFlag", true);
-		mav.setViewName("productcatalog/productdetail/editProductDetail.jsp");
+		mav.addObject("productcatalog", productcatalog);
+		mav.setViewName("productcatalog/viewProductCatalog.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Create a new ProductCatalog entity
+	 * Entry point to show all ProductCatalog entities
 	 * 
 	 */
-	@RequestMapping("/newProductCatalog")
-	public ModelAndView newProductCatalog() {
-		ModelAndView mav = new ModelAndView();
+	public String indexProductCatalog() {
+		return "redirect:/indexProductCatalog";
+	}
 
-		mav.addObject("productcatalog", new ProductCatalog());
-		mav.addObject("newFlag", true);
-		mav.setViewName("productcatalog/editProductCatalog.jsp");
+	/**
+	 * Edit an existing Catalog entity
+	 * 
+	 */
+	@RequestMapping("/editProductCatalogCatalog")
+	public ModelAndView editProductCatalogCatalog(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId, @RequestParam Integer catalog_id) {
+		Catalog catalog = catalogDAO.findCatalogByPrimaryKey(catalog_id, -1, -1);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("productcatalog_productId", productcatalog_productId);
+		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
+		mav.addObject("catalog", catalog);
+		mav.setViewName("productcatalog/catalog/editCatalog.jsp");
 
 		return mav;
 	}
@@ -350,28 +391,20 @@ public class ProductCatalogController {
 	}
 
 	/**
-	 * Edit an existing ProductDetail entity
+	 * View an existing Catalog entity
 	 * 
 	 */
-	@RequestMapping("/editProductCatalogProductDetail")
-	public ModelAndView editProductCatalogProductDetail(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId, @RequestParam Integer productdetail_id) {
-		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
+	@RequestMapping("/selectProductCatalogCatalog")
+	public ModelAndView selectProductCatalogCatalog(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId, @RequestParam Integer catalog_id) {
+		Catalog catalog = catalogDAO.findCatalogByPrimaryKey(catalog_id, -1, -1);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("productcatalog_productId", productcatalog_productId);
 		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
-		mav.addObject("productdetail", productdetail);
-		mav.setViewName("productcatalog/productdetail/editProductDetail.jsp");
+		mav.addObject("catalog", catalog);
+		mav.setViewName("productcatalog/catalog/viewCatalog.jsp");
 
 		return mav;
-	}
-
-	/**
-	 * Entry point to show all ProductCatalog entities
-	 * 
-	 */
-	public String indexProductCatalog() {
-		return "redirect:/indexProductCatalog";
 	}
 
 	/**
@@ -384,39 +417,6 @@ public class ProductCatalogController {
 
 		mav.addObject("productcatalog", productCatalogDAO.findProductCatalogByPrimaryKey(productIdKey, catalogIdKey));
 		mav.setViewName("productcatalog/editProductCatalog.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Show all ProductCatalog entities
-	 * 
-	 */
-	@RequestMapping("/indexProductCatalog")
-	public ModelAndView listProductCatalogs() {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productcatalogs", productCatalogService.loadProductCatalogs());
-
-		mav.setViewName("productcatalog/listProductCatalogs.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Delete an existing Catalog entity
-	 * 
-	 */
-	@RequestMapping("/deleteProductCatalogCatalog")
-	public ModelAndView deleteProductCatalogCatalog(@RequestParam Integer productcatalog_productId, @RequestParam Integer productcatalog_catalogId, @RequestParam Integer related_catalog_id) {
-		ModelAndView mav = new ModelAndView();
-
-		ProductCatalog productcatalog = productCatalogService.deleteProductCatalogCatalog(productcatalog_productId, productcatalog_catalogId, related_catalog_id);
-
-		mav.addObject("productcatalog_productId", productcatalog_productId);
-		mav.addObject("productcatalog_catalogId", productcatalog_catalogId);
-		mav.addObject("productcatalog", productcatalog);
-		mav.setViewName("productcatalog/viewProductCatalog.jsp");
 
 		return mav;
 	}

@@ -27,15 +27,16 @@ import javax.persistence.*;
 		@NamedQuery(name = "findAllProductDetails", query = "select myProductDetail from ProductDetail myProductDetail"),
 		@NamedQuery(name = "findProductDetailByDescription", query = "select myProductDetail from ProductDetail myProductDetail where myProductDetail.description = ?1"),
 		@NamedQuery(name = "findProductDetailById", query = "select myProductDetail from ProductDetail myProductDetail where myProductDetail.id = ?1"),
+		@NamedQuery(name = "findProductDetailByPicnum", query = "select myProductDetail from ProductDetail myProductDetail where myProductDetail.picnum = ?1"),
 		@NamedQuery(name = "findProductDetailByPrice", query = "select myProductDetail from ProductDetail myProductDetail where myProductDetail.price = ?1"),
 		@NamedQuery(name = "findProductDetailByPrimaryKey", query = "select myProductDetail from ProductDetail myProductDetail where myProductDetail.id = ?1"),
 		@NamedQuery(name = "findProductDetailByQuantity", query = "select myProductDetail from ProductDetail myProductDetail where myProductDetail.quantity = ?1"),
 		@NamedQuery(name = "findProductDetailByTitle", query = "select myProductDetail from ProductDetail myProductDetail where myProductDetail.title = ?1"),
 		@NamedQuery(name = "findProductDetailByTitleContaining", query = "select myProductDetail from ProductDetail myProductDetail where myProductDetail.title like ?1") })
-@Table(catalog = "EShopDemo", name = "product_detail")
+@Table(catalog = "eshopdemo", name = "product_detail")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = "EShopDemo/com/lqf/eshopdemo/domain", name = "ProductDetail")
-@XmlRootElement(namespace = "EShopDemo/com/lqf/eshopdemo/domain")
+@XmlType(namespace = "t11/com/lqf/eshopdemo/domain", name = "ProductDetail")
+@XmlRootElement(namespace = "t11/com/lqf/eshopdemo/domain")
 public class ProductDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -76,6 +77,13 @@ public class ProductDetail implements Serializable {
 	@Lob
 	@XmlElement
 	String description;
+	/**
+	 */
+
+	@Column(name = "picnum")
+	@Basic(fetch = FetchType.EAGER)
+	@XmlElement
+	Integer picnum;
 
 	/**
 	 */
@@ -161,6 +169,18 @@ public class ProductDetail implements Serializable {
 	 */
 	public String getDescription() {
 		return this.description;
+	}
+
+	/**
+	 */
+	public void setPicnum(Integer picnum) {
+		this.picnum = picnum;
+	}
+
+	/**
+	 */
+	public Integer getPicnum() {
+		return this.picnum;
 	}
 
 	/**
@@ -258,6 +278,7 @@ public class ProductDetail implements Serializable {
 		setPrice(that.getPrice());
 		setQuantity(that.getQuantity());
 		setDescription(that.getDescription());
+		setPicnum(that.getPicnum());
 		setProductCatalogs(new java.util.LinkedHashSet<com.lqf.eshopdemo.domain.ProductCatalog>(that.getProductCatalogs()));
 		setOrderItemses(new java.util.LinkedHashSet<com.lqf.eshopdemo.domain.OrderItems>(that.getOrderItemses()));
 		setProductOffers(new java.util.LinkedHashSet<com.lqf.eshopdemo.domain.ProductOffer>(that.getProductOffers()));
@@ -278,6 +299,7 @@ public class ProductDetail implements Serializable {
 		buffer.append("price=[").append(price).append("] ");
 		buffer.append("quantity=[").append(quantity).append("] ");
 		buffer.append("description=[").append(description).append("] ");
+		buffer.append("picnum=[").append(picnum).append("] ");
 
 		return buffer.toString();
 	}

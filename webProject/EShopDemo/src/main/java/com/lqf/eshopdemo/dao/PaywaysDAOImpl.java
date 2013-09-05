@@ -67,31 +67,6 @@ public class PaywaysDAOImpl extends AbstractJpaDao<Payways> implements
 	}
 
 	/**
-	 * JPQL Query - findPaywaysByPrimaryKey
-	 *
-	 */
-	@Transactional
-	public Payways findPaywaysByPrimaryKey(String way) throws DataAccessException {
-
-		return findPaywaysByPrimaryKey(way, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findPaywaysByPrimaryKey
-	 *
-	 */
-
-	@Transactional
-	public Payways findPaywaysByPrimaryKey(String way, int startResult, int maxRows) throws DataAccessException {
-		try {
-			Query query = createNamedQuery("findPaywaysByPrimaryKey", startResult, maxRows, way);
-			return (com.lqf.eshopdemo.domain.Payways) query.getSingleResult();
-		} catch (NoResultException nre) {
-			return null;
-		}
-	}
-
-	/**
 	 * JPQL Query - findPaywaysByWay
 	 *
 	 */
@@ -110,6 +85,31 @@ public class PaywaysDAOImpl extends AbstractJpaDao<Payways> implements
 	public Payways findPaywaysByWay(String way, int startResult, int maxRows) throws DataAccessException {
 		try {
 			Query query = createNamedQuery("findPaywaysByWay", startResult, maxRows, way);
+			return (com.lqf.eshopdemo.domain.Payways) query.getSingleResult();
+		} catch (NoResultException nre) {
+			return null;
+		}
+	}
+
+	/**
+	 * JPQL Query - findPaywaysByPrimaryKey
+	 *
+	 */
+	@Transactional
+	public Payways findPaywaysByPrimaryKey(String way) throws DataAccessException {
+
+		return findPaywaysByPrimaryKey(way, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findPaywaysByPrimaryKey
+	 *
+	 */
+
+	@Transactional
+	public Payways findPaywaysByPrimaryKey(String way, int startResult, int maxRows) throws DataAccessException {
+		try {
+			Query query = createNamedQuery("findPaywaysByPrimaryKey", startResult, maxRows, way);
 			return (com.lqf.eshopdemo.domain.Payways) query.getSingleResult();
 		} catch (NoResultException nre) {
 			return null;

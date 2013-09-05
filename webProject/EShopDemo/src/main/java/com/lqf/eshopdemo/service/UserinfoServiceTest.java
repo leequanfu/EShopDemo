@@ -47,10 +47,10 @@ import org.springframework.web.context.request.SessionScope;
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class })
 @ContextConfiguration(locations = {
-		"file:./src/main/resources/EShopDemo-security-context.xml",
-		"file:./src/main/resources/EShopDemo-service-context.xml",
-		"file:./src/main/resources/EShopDemo-dao-context.xml",
-		"file:./src/main/resources/EShopDemo-web-context.xml" })
+		"file:./resources/t11-security-context.xml",
+		"file:./resources/t11-service-context.xml",
+		"file:./resources/t11-dao-context.xml",
+		"file:./resources/t11-web-context.xml" })
 @Transactional
 public class UserinfoServiceTest {
 
@@ -74,103 +74,6 @@ public class UserinfoServiceTest {
 	 */
 	public UserinfoServiceTest() {
 		setupRequestContext();
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Save an existing Order entity
-	 * 
-	 */
-	@Test
-	public void saveUserinfoOrders() {
-		// TODO: JUnit - Populate test inputs for operation: saveUserinfoOrders 
-		Integer id = 0;
-		Order related_orders = new com.lqf.eshopdemo.domain.Order();
-		Userinfo response = null;
-		response = service.saveUserinfoOrders(id, related_orders);
-		// TODO: JUnit - Add assertions to test outputs of operation: saveUserinfoOrders
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Delete an existing Userinfo entity
-	 * 
-	 */
-	@Test
-	public void deleteUserinfo() {
-		// TODO: JUnit - Populate test inputs for operation: deleteUserinfo 
-		Userinfo userinfo = new com.lqf.eshopdemo.domain.Userinfo();
-		service.deleteUserinfo(userinfo);
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Return all Userinfo entity
-	 * 
-	 */
-	@Test
-	public void findAllUserinfos() {
-		// TODO: JUnit - Populate test inputs for operation: findAllUserinfos 
-		Integer startResult = 0;
-		Integer maxRows = 0;
-		List<Userinfo> response = null;
-		response = service.findAllUserinfos(startResult, maxRows);
-		// TODO: JUnit - Add assertions to test outputs of operation: findAllUserinfos
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Save an existing Userinfo entity
-	 * 
-	 */
-	@Test
-	public void saveUserinfo() {
-		// TODO: JUnit - Populate test inputs for operation: saveUserinfo 
-		Userinfo userinfo_1 = new com.lqf.eshopdemo.domain.Userinfo();
-		service.saveUserinfo(userinfo_1);
-	}
-
-	/**
-	 * Operation Unit Test
-	 */
-	@Test
-	public void findUserinfoByPrimaryKey() {
-		// TODO: JUnit - Populate test inputs for operation: findUserinfoByPrimaryKey 
-		Integer id_1 = 0;
-		Userinfo response = null;
-		response = service.findUserinfoByPrimaryKey(id_1);
-		// TODO: JUnit - Add assertions to test outputs of operation: findUserinfoByPrimaryKey
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Delete an existing CustomerComment entity
-	 * 
-	 */
-	@Test
-	public void deleteUserinfoCustomerComments() {
-		// TODO: JUnit - Populate test inputs for operation: deleteUserinfoCustomerComments 
-		Integer userinfo_id = 0;
-		Integer related_customercomments_proId = 0;
-		Integer related_customercomments_userId = 0;
-		Userinfo response = null;
-		response = service.deleteUserinfoCustomerComments(userinfo_id, related_customercomments_proId, related_customercomments_userId);
-		// TODO: JUnit - Add assertions to test outputs of operation: deleteUserinfoCustomerComments
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Save an existing CustomerComment entity
-	 * 
-	 */
-	@Test
-	public void saveUserinfoCustomerComments() {
-		// TODO: JUnit - Populate test inputs for operation: saveUserinfoCustomerComments 
-		Integer id_2 = 0;
-		CustomerComment related_customercomments = new com.lqf.eshopdemo.domain.CustomerComment();
-		Userinfo response = null;
-		response = service.saveUserinfoCustomerComments(id_2, related_customercomments);
-		// TODO: JUnit - Add assertions to test outputs of operation: saveUserinfoCustomerComments
 	}
 
 	/**
@@ -199,17 +102,114 @@ public class UserinfoServiceTest {
 
 	/**
 	 * Operation Unit Test
+	 * Delete an existing Userinfo entity
+	 * 
+	 */
+	@Test
+	public void deleteUserinfo() {
+		// TODO: JUnit - Populate test inputs for operation: deleteUserinfo 
+		Userinfo userinfo = new com.lqf.eshopdemo.domain.Userinfo();
+		service.deleteUserinfo(userinfo);
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Save an existing Userinfo entity
+	 * 
+	 */
+	@Test
+	public void saveUserinfo() {
+		// TODO: JUnit - Populate test inputs for operation: saveUserinfo 
+		Userinfo userinfo_1 = new com.lqf.eshopdemo.domain.Userinfo();
+		service.saveUserinfo(userinfo_1);
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Save an existing CustomerComment entity
+	 * 
+	 */
+	@Test
+	public void saveUserinfoCustomerComments() {
+		// TODO: JUnit - Populate test inputs for operation: saveUserinfoCustomerComments 
+		Integer id = 0;
+		CustomerComment related_customercomments = new com.lqf.eshopdemo.domain.CustomerComment();
+		Userinfo response = null;
+		response = service.saveUserinfoCustomerComments(id, related_customercomments);
+		// TODO: JUnit - Add assertions to test outputs of operation: saveUserinfoCustomerComments
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Save an existing Order entity
+	 * 
+	 */
+	@Test
+	public void saveUserinfoOrders() {
+		// TODO: JUnit - Populate test inputs for operation: saveUserinfoOrders 
+		Integer id_1 = 0;
+		Order related_orders = new com.lqf.eshopdemo.domain.Order();
+		Userinfo response = null;
+		response = service.saveUserinfoOrders(id_1, related_orders);
+		// TODO: JUnit - Add assertions to test outputs of operation: saveUserinfoOrders
+	}
+
+	/**
+	 * Operation Unit Test
+	 */
+	@Test
+	public void findUserinfoByPrimaryKey() {
+		// TODO: JUnit - Populate test inputs for operation: findUserinfoByPrimaryKey 
+		Integer id_2 = 0;
+		Userinfo response = null;
+		response = service.findUserinfoByPrimaryKey(id_2);
+		// TODO: JUnit - Add assertions to test outputs of operation: findUserinfoByPrimaryKey
+	}
+
+	/**
+	 * Operation Unit Test
 	 * Delete an existing Order entity
 	 * 
 	 */
 	@Test
 	public void deleteUserinfoOrders() {
 		// TODO: JUnit - Populate test inputs for operation: deleteUserinfoOrders 
-		Integer userinfo_id_1 = 0;
+		Integer userinfo_id = 0;
 		Integer related_orders_id = 0;
 		Userinfo response = null;
-		response = service.deleteUserinfoOrders(userinfo_id_1, related_orders_id);
+		response = service.deleteUserinfoOrders(userinfo_id, related_orders_id);
 		// TODO: JUnit - Add assertions to test outputs of operation: deleteUserinfoOrders
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Return all Userinfo entity
+	 * 
+	 */
+	@Test
+	public void findAllUserinfos() {
+		// TODO: JUnit - Populate test inputs for operation: findAllUserinfos 
+		Integer startResult = 0;
+		Integer maxRows = 0;
+		List<Userinfo> response = null;
+		response = service.findAllUserinfos(startResult, maxRows);
+		// TODO: JUnit - Add assertions to test outputs of operation: findAllUserinfos
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Delete an existing CustomerComment entity
+	 * 
+	 */
+	@Test
+	public void deleteUserinfoCustomerComments() {
+		// TODO: JUnit - Populate test inputs for operation: deleteUserinfoCustomerComments 
+		Integer userinfo_id_1 = 0;
+		Integer related_customercomments_proId = 0;
+		Integer related_customercomments_userId = 0;
+		Userinfo response = null;
+		response = service.deleteUserinfoCustomerComments(userinfo_id_1, related_customercomments_proId, related_customercomments_userId);
+		// TODO: JUnit - Add assertions to test outputs of operation: deleteUserinfoCustomerComments
 	}
 
 	/**

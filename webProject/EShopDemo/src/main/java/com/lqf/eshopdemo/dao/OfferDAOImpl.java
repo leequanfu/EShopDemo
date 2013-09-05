@@ -66,6 +66,28 @@ public class OfferDAOImpl extends AbstractJpaDao<Offer> implements OfferDAO {
 	}
 
 	/**
+	 * JPQL Query - findOfferByDescription
+	 *
+	 */
+	@Transactional
+	public Set<Offer> findOfferByDescription(String description) throws DataAccessException {
+
+		return findOfferByDescription(description, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findOfferByDescription
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<Offer> findOfferByDescription(String description, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findOfferByDescription", startResult, maxRows, description);
+		return new LinkedHashSet<Offer>(query.getResultList());
+	}
+
+	/**
 	 * JPQL Query - findOfferById
 	 *
 	 */
@@ -88,28 +110,6 @@ public class OfferDAOImpl extends AbstractJpaDao<Offer> implements OfferDAO {
 		} catch (NoResultException nre) {
 			return null;
 		}
-	}
-
-	/**
-	 * JPQL Query - findOfferByDescriptionContaining
-	 *
-	 */
-	@Transactional
-	public Set<Offer> findOfferByDescriptionContaining(String description) throws DataAccessException {
-
-		return findOfferByDescriptionContaining(description, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findOfferByDescriptionContaining
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<Offer> findOfferByDescriptionContaining(String description, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findOfferByDescriptionContaining", startResult, maxRows, description);
-		return new LinkedHashSet<Offer>(query.getResultList());
 	}
 
 	/**
@@ -138,28 +138,6 @@ public class OfferDAOImpl extends AbstractJpaDao<Offer> implements OfferDAO {
 	}
 
 	/**
-	 * JPQL Query - findOfferByDescription
-	 *
-	 */
-	@Transactional
-	public Set<Offer> findOfferByDescription(String description) throws DataAccessException {
-
-		return findOfferByDescription(description, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findOfferByDescription
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<Offer> findOfferByDescription(String description, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findOfferByDescription", startResult, maxRows, description);
-		return new LinkedHashSet<Offer>(query.getResultList());
-	}
-
-	/**
 	 * JPQL Query - findAllOffers
 	 *
 	 */
@@ -178,6 +156,28 @@ public class OfferDAOImpl extends AbstractJpaDao<Offer> implements OfferDAO {
 	@Transactional
 	public Set<Offer> findAllOffers(int startResult, int maxRows) throws DataAccessException {
 		Query query = createNamedQuery("findAllOffers", startResult, maxRows);
+		return new LinkedHashSet<Offer>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findOfferByDescriptionContaining
+	 *
+	 */
+	@Transactional
+	public Set<Offer> findOfferByDescriptionContaining(String description) throws DataAccessException {
+
+		return findOfferByDescriptionContaining(description, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findOfferByDescriptionContaining
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<Offer> findOfferByDescriptionContaining(String description, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findOfferByDescriptionContaining", startResult, maxRows, description);
 		return new LinkedHashSet<Offer>(query.getResultList());
 	}
 

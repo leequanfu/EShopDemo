@@ -47,10 +47,10 @@ import org.springframework.web.context.request.SessionScope;
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class })
 @ContextConfiguration(locations = {
-		"file:./src/main/resources/EShopDemo-security-context.xml",
-		"file:./src/main/resources/EShopDemo-service-context.xml",
-		"file:./src/main/resources/EShopDemo-dao-context.xml",
-		"file:./src/main/resources/EShopDemo-web-context.xml" })
+		"file:./resources/t11-security-context.xml",
+		"file:./resources/t11-service-context.xml",
+		"file:./resources/t11-dao-context.xml",
+		"file:./resources/t11-web-context.xml" })
 @Transactional
 public class ProductOfferServiceTest {
 
@@ -78,79 +78,6 @@ public class ProductOfferServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Delete an existing Offer entity
-	 * 
-	 */
-	@Test
-	public void deleteProductOfferOffer() {
-		// TODO: JUnit - Populate test inputs for operation: deleteProductOfferOffer 
-		Integer productoffer_proId = 0;
-		Integer productoffer_offerId = 0;
-		Integer related_offer_id = 0;
-		ProductOffer response = null;
-		response = service.deleteProductOfferOffer(productoffer_proId, productoffer_offerId, related_offer_id);
-		// TODO: JUnit - Add assertions to test outputs of operation: deleteProductOfferOffer
-	}
-
-	/**
-	 * Operation Unit Test
-	 */
-	@Test
-	public void findProductOfferByPrimaryKey() {
-		// TODO: JUnit - Populate test inputs for operation: findProductOfferByPrimaryKey 
-		Integer proId = 0;
-		Integer offerId = 0;
-		ProductOffer response = null;
-		response = service.findProductOfferByPrimaryKey(proId, offerId);
-		// TODO: JUnit - Add assertions to test outputs of operation: findProductOfferByPrimaryKey
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Load an existing ProductOffer entity
-	 * 
-	 */
-	@Test
-	public void loadProductOffers() {
-		Set<ProductOffer> response = null;
-		response = service.loadProductOffers();
-		// TODO: JUnit - Add assertions to test outputs of operation: loadProductOffers
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Save an existing ProductDetail entity
-	 * 
-	 */
-	@Test
-	public void saveProductOfferProductDetail() {
-		// TODO: JUnit - Populate test inputs for operation: saveProductOfferProductDetail 
-		Integer proId_1 = 0;
-		Integer offerId_1 = 0;
-		ProductDetail related_productdetail = new com.lqf.eshopdemo.domain.ProductDetail();
-		ProductOffer response = null;
-		response = service.saveProductOfferProductDetail(proId_1, offerId_1, related_productdetail);
-		// TODO: JUnit - Add assertions to test outputs of operation: saveProductOfferProductDetail
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Save an existing Offer entity
-	 * 
-	 */
-	@Test
-	public void saveProductOfferOffer() {
-		// TODO: JUnit - Populate test inputs for operation: saveProductOfferOffer 
-		Integer proId_2 = 0;
-		Integer offerId_2 = 0;
-		Offer related_offer = new com.lqf.eshopdemo.domain.Offer();
-		ProductOffer response = null;
-		response = service.saveProductOfferOffer(proId_2, offerId_2, related_offer);
-		// TODO: JUnit - Add assertions to test outputs of operation: saveProductOfferOffer
-	}
-
-	/**
-	 * Operation Unit Test
 	 * Return all ProductOffer entity
 	 * 
 	 */
@@ -172,24 +99,40 @@ public class ProductOfferServiceTest {
 	@Test
 	public void deleteProductOfferProductDetail() {
 		// TODO: JUnit - Populate test inputs for operation: deleteProductOfferProductDetail 
-		Integer productoffer_proId_1 = 0;
-		Integer productoffer_offerId_1 = 0;
+		Integer productoffer_proId = 0;
+		Integer productoffer_offerId = 0;
 		Integer related_productdetail_id = 0;
 		ProductOffer response = null;
-		response = service.deleteProductOfferProductDetail(productoffer_proId_1, productoffer_offerId_1, related_productdetail_id);
+		response = service.deleteProductOfferProductDetail(productoffer_proId, productoffer_offerId, related_productdetail_id);
 		// TODO: JUnit - Add assertions to test outputs of operation: deleteProductOfferProductDetail
 	}
 
 	/**
 	 * Operation Unit Test
-	 * Delete an existing ProductOffer entity
+	 * Save an existing ProductOffer entity
 	 * 
 	 */
 	@Test
-	public void deleteProductOffer() {
-		// TODO: JUnit - Populate test inputs for operation: deleteProductOffer 
+	public void saveProductOffer() {
+		// TODO: JUnit - Populate test inputs for operation: saveProductOffer 
 		ProductOffer productoffer = new com.lqf.eshopdemo.domain.ProductOffer();
-		service.deleteProductOffer(productoffer);
+		service.saveProductOffer(productoffer);
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Save an existing ProductDetail entity
+	 * 
+	 */
+	@Test
+	public void saveProductOfferProductDetail() {
+		// TODO: JUnit - Populate test inputs for operation: saveProductOfferProductDetail 
+		Integer proId = 0;
+		Integer offerId = 0;
+		ProductDetail related_productdetail = new com.lqf.eshopdemo.domain.ProductDetail();
+		ProductOffer response = null;
+		response = service.saveProductOfferProductDetail(proId, offerId, related_productdetail);
+		// TODO: JUnit - Add assertions to test outputs of operation: saveProductOfferProductDetail
 	}
 
 	/**
@@ -206,14 +149,71 @@ public class ProductOfferServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Save an existing ProductOffer entity
+	 * Save an existing Offer entity
 	 * 
 	 */
 	@Test
-	public void saveProductOffer() {
-		// TODO: JUnit - Populate test inputs for operation: saveProductOffer 
+	public void saveProductOfferOffer() {
+		// TODO: JUnit - Populate test inputs for operation: saveProductOfferOffer 
+		Integer proId_1 = 0;
+		Integer offerId_1 = 0;
+		Offer related_offer = new com.lqf.eshopdemo.domain.Offer();
+		ProductOffer response = null;
+		response = service.saveProductOfferOffer(proId_1, offerId_1, related_offer);
+		// TODO: JUnit - Add assertions to test outputs of operation: saveProductOfferOffer
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Delete an existing Offer entity
+	 * 
+	 */
+	@Test
+	public void deleteProductOfferOffer() {
+		// TODO: JUnit - Populate test inputs for operation: deleteProductOfferOffer 
+		Integer productoffer_proId_1 = 0;
+		Integer productoffer_offerId_1 = 0;
+		Integer related_offer_id = 0;
+		ProductOffer response = null;
+		response = service.deleteProductOfferOffer(productoffer_proId_1, productoffer_offerId_1, related_offer_id);
+		// TODO: JUnit - Add assertions to test outputs of operation: deleteProductOfferOffer
+	}
+
+	/**
+	 * Operation Unit Test
+	 */
+	@Test
+	public void findProductOfferByPrimaryKey() {
+		// TODO: JUnit - Populate test inputs for operation: findProductOfferByPrimaryKey 
+		Integer proId_2 = 0;
+		Integer offerId_2 = 0;
+		ProductOffer response = null;
+		response = service.findProductOfferByPrimaryKey(proId_2, offerId_2);
+		// TODO: JUnit - Add assertions to test outputs of operation: findProductOfferByPrimaryKey
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Delete an existing ProductOffer entity
+	 * 
+	 */
+	@Test
+	public void deleteProductOffer() {
+		// TODO: JUnit - Populate test inputs for operation: deleteProductOffer 
 		ProductOffer productoffer_1 = new com.lqf.eshopdemo.domain.ProductOffer();
-		service.saveProductOffer(productoffer_1);
+		service.deleteProductOffer(productoffer_1);
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Load an existing ProductOffer entity
+	 * 
+	 */
+	@Test
+	public void loadProductOffers() {
+		Set<ProductOffer> response = null;
+		response = service.loadProductOffers();
+		// TODO: JUnit - Add assertions to test outputs of operation: loadProductOffers
 	}
 
 	/**

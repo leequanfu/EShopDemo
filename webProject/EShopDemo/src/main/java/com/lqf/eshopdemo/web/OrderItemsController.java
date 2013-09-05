@@ -63,19 +63,117 @@ public class OrderItemsController {
 	private OrderItemsService orderItemsService;
 
 	/**
-	 * Delete an existing ProductDetail entity
+	 * Edit an existing ProductDetail entity
 	 * 
 	 */
-	@RequestMapping("/deleteOrderItemsProductDetail")
-	public ModelAndView deleteOrderItemsProductDetail(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @RequestParam Integer related_productdetail_id) {
+	@RequestMapping("/editOrderItemsProductDetail")
+	public ModelAndView editOrderItemsProductDetail(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @RequestParam Integer productdetail_id) {
+		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("orderitems_orderId", orderitems_orderId);
+		mav.addObject("orderitems_productId", orderitems_productId);
+		mav.addObject("productdetail", productdetail);
+		mav.setViewName("orderitems/productdetail/editProductDetail.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Delete an existing Order entity
+	 * 
+	 */
+	@RequestMapping("/deleteOrderItemsOrder")
+	public ModelAndView deleteOrderItemsOrder(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @RequestParam Integer related_order_id) {
 		ModelAndView mav = new ModelAndView();
 
-		OrderItems orderitems = orderItemsService.deleteOrderItemsProductDetail(orderitems_orderId, orderitems_productId, related_productdetail_id);
+		OrderItems orderitems = orderItemsService.deleteOrderItemsOrder(orderitems_orderId, orderitems_productId, related_order_id);
 
 		mav.addObject("orderitems_orderId", orderitems_orderId);
 		mav.addObject("orderitems_productId", orderitems_productId);
 		mav.addObject("orderitems", orderitems);
 		mav.setViewName("orderitems/viewOrderItems.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Select the child ProductDetail entity for display allowing the user to confirm that they would like to delete the entity
+	 * 
+	 */
+	@RequestMapping("/confirmDeleteOrderItemsProductDetail")
+	public ModelAndView confirmDeleteOrderItemsProductDetail(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @RequestParam Integer related_productdetail_id) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productdetail", productDetailDAO.findProductDetailByPrimaryKey(related_productdetail_id));
+		mav.addObject("orderitems_orderId", orderitems_orderId);
+		mav.addObject("orderitems_productId", orderitems_productId);
+		mav.setViewName("orderitems/productdetail/deleteProductDetail.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Register custom, context-specific property editors
+	 * 
+	 */
+	@InitBinder
+	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
+		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
+		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
+		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
+		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
+		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
+		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
+		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
+		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
+		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
+		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
+	}
+
+	/**
+	 * View an existing Order entity
+	 * 
+	 */
+	@RequestMapping("/selectOrderItemsOrder")
+	public ModelAndView selectOrderItemsOrder(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @RequestParam Integer order_id) {
+		Order order = orderDAO.findOrderByPrimaryKey(order_id, -1, -1);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("orderitems_orderId", orderitems_orderId);
+		mav.addObject("orderitems_productId", orderitems_productId);
+		mav.addObject("order", order);
+		mav.setViewName("orderitems/order/viewOrder.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Create a new Order entity
+	 * 
+	 */
+	@RequestMapping("/newOrderItemsOrder")
+	public ModelAndView newOrderItemsOrder(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("orderitems_orderId", orderitems_orderId);
+		mav.addObject("orderitems_productId", orderitems_productId);
+		mav.addObject("order", new Order());
+		mav.addObject("newFlag", true);
+		mav.setViewName("orderitems/order/editOrder.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Edit an existing OrderItems entity
+	 * 
+	 */
+	@RequestMapping("/editOrderItems")
+	public ModelAndView editOrderItems(@RequestParam Integer orderIdKey, @RequestParam Integer productIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("orderitems", orderItemsDAO.findOrderItemsByPrimaryKey(orderIdKey, productIdKey));
+		mav.setViewName("orderitems/editOrderItems.jsp");
 
 		return mav;
 	}
@@ -98,29 +196,92 @@ public class OrderItemsController {
 	}
 
 	/**
-	 * Select the child ProductDetail entity for display allowing the user to confirm that they would like to delete the entity
+	 */
+	@RequestMapping("/orderitemsController/binary.action")
+	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("streamedBinaryContentView");
+		return mav;
+
+	}
+
+	/**
+	 * Save an existing Order entity
 	 * 
 	 */
-	@RequestMapping("/confirmDeleteOrderItemsProductDetail")
-	public ModelAndView confirmDeleteOrderItemsProductDetail(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @RequestParam Integer related_productdetail_id) {
-		ModelAndView mav = new ModelAndView();
+	@RequestMapping("/saveOrderItemsOrder")
+	public ModelAndView saveOrderItemsOrder(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @ModelAttribute Order order) {
+		OrderItems parent_orderitems = orderItemsService.saveOrderItemsOrder(orderitems_orderId, orderitems_productId, order);
 
-		mav.addObject("productdetail", productDetailDAO.findProductDetailByPrimaryKey(related_productdetail_id));
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("orderitems_orderId", orderitems_orderId);
 		mav.addObject("orderitems_productId", orderitems_productId);
-		mav.setViewName("orderitems/productdetail/deleteProductDetail.jsp");
+		mav.addObject("orderitems", parent_orderitems);
+		mav.setViewName("orderitems/viewOrderItems.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Save an existing OrderItems entity
+	 * Select the child Order entity for display allowing the user to confirm that they would like to delete the entity
 	 * 
 	 */
-	@RequestMapping("/saveOrderItems")
-	public String saveOrderItems(@ModelAttribute OrderItems orderitems) {
-		orderItemsService.saveOrderItems(orderitems);
-		return "forward:/indexOrderItems";
+	@RequestMapping("/confirmDeleteOrderItemsOrder")
+	public ModelAndView confirmDeleteOrderItemsOrder(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @RequestParam Integer related_order_id) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("order", orderDAO.findOrderByPrimaryKey(related_order_id));
+		mav.addObject("orderitems_orderId", orderitems_orderId);
+		mav.addObject("orderitems_productId", orderitems_productId);
+		mav.setViewName("orderitems/order/deleteOrder.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Save an existing ProductDetail entity
+	 * 
+	 */
+	@RequestMapping("/saveOrderItemsProductDetail")
+	public ModelAndView saveOrderItemsProductDetail(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @ModelAttribute ProductDetail productdetail) {
+		OrderItems parent_orderitems = orderItemsService.saveOrderItemsProductDetail(orderitems_orderId, orderitems_productId, productdetail);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("orderitems_orderId", orderitems_orderId);
+		mav.addObject("orderitems_productId", orderitems_productId);
+		mav.addObject("orderitems", parent_orderitems);
+		mav.setViewName("orderitems/viewOrderItems.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Show all ProductDetail entities by OrderItems
+	 * 
+	 */
+	@RequestMapping("/listOrderItemsProductDetail")
+	public ModelAndView listOrderItemsProductDetail(@RequestParam Integer orderIdKey, @RequestParam Integer productIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("orderitems", orderItemsDAO.findOrderItemsByPrimaryKey(orderIdKey, productIdKey));
+		mav.setViewName("orderitems/productdetail/listProductDetail.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Show all OrderItems entities
+	 * 
+	 */
+	@RequestMapping("/indexOrderItems")
+	public ModelAndView listOrderItemss() {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("orderitemss", orderItemsService.loadOrderItemss());
+
+		mav.setViewName("orderitems/listOrderItemss.jsp");
+
+		return mav;
 	}
 
 	/**
@@ -138,27 +299,13 @@ public class OrderItemsController {
 	}
 
 	/**
-	 * Create a new ProductDetail entity
+	 * Save an existing OrderItems entity
 	 * 
 	 */
-	@RequestMapping("/newOrderItemsProductDetail")
-	public ModelAndView newOrderItemsProductDetail(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId) {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("orderitems_orderId", orderitems_orderId);
-		mav.addObject("orderitems_productId", orderitems_productId);
-		mav.addObject("productdetail", new ProductDetail());
-		mav.addObject("newFlag", true);
-		mav.setViewName("orderitems/productdetail/editProductDetail.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Entry point to show all OrderItems entities
-	 * 
-	 */
-	public String indexOrderItems() {
-		return "redirect:/indexOrderItems";
+	@RequestMapping("/saveOrderItems")
+	public String saveOrderItems(@ModelAttribute OrderItems orderitems) {
+		orderItemsService.saveOrderItems(orderitems);
+		return "forward:/indexOrderItems";
 	}
 
 	/**
@@ -194,37 +341,6 @@ public class OrderItemsController {
 	}
 
 	/**
-	 * Edit an existing ProductDetail entity
-	 * 
-	 */
-	@RequestMapping("/editOrderItemsProductDetail")
-	public ModelAndView editOrderItemsProductDetail(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @RequestParam Integer productdetail_id) {
-		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("orderitems_orderId", orderitems_orderId);
-		mav.addObject("orderitems_productId", orderitems_productId);
-		mav.addObject("productdetail", productdetail);
-		mav.setViewName("orderitems/productdetail/editProductDetail.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Edit an existing OrderItems entity
-	 * 
-	 */
-	@RequestMapping("/editOrderItems")
-	public ModelAndView editOrderItems(@RequestParam Integer orderIdKey, @RequestParam Integer productIdKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("orderitems", orderItemsDAO.findOrderItemsByPrimaryKey(orderIdKey, productIdKey));
-		mav.setViewName("orderitems/editOrderItems.jsp");
-
-		return mav;
-	}
-
-	/**
 	 * Delete an existing OrderItems entity
 	 * 
 	 */
@@ -236,65 +352,39 @@ public class OrderItemsController {
 	}
 
 	/**
-	 * Register custom, context-specific property editors
+	 * Create a new ProductDetail entity
 	 * 
 	 */
-	@InitBinder
-	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
-		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
-		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
-		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
-		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
-		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
-		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
-		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
-		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
-		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
-		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
-	}
-
-	/**
-	 * Save an existing ProductDetail entity
-	 * 
-	 */
-	@RequestMapping("/saveOrderItemsProductDetail")
-	public ModelAndView saveOrderItemsProductDetail(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @ModelAttribute ProductDetail productdetail) {
-		OrderItems parent_orderitems = orderItemsService.saveOrderItemsProductDetail(orderitems_orderId, orderitems_productId, productdetail);
-
+	@RequestMapping("/newOrderItemsProductDetail")
+	public ModelAndView newOrderItemsProductDetail(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("orderitems_orderId", orderitems_orderId);
 		mav.addObject("orderitems_productId", orderitems_productId);
-		mav.addObject("orderitems", parent_orderitems);
-		mav.setViewName("orderitems/viewOrderItems.jsp");
+		mav.addObject("productdetail", new ProductDetail());
+		mav.addObject("newFlag", true);
+		mav.setViewName("orderitems/productdetail/editProductDetail.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Show all OrderItems entities
+	 * Entry point to show all OrderItems entities
 	 * 
 	 */
-	@RequestMapping("/indexOrderItems")
-	public ModelAndView listOrderItemss() {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("orderitemss", orderItemsService.loadOrderItemss());
-
-		mav.setViewName("orderitems/listOrderItemss.jsp");
-
-		return mav;
+	public String indexOrderItems() {
+		return "redirect:/indexOrderItems";
 	}
 
 	/**
-	 * Show all ProductDetail entities by OrderItems
+	 * Select an existing OrderItems entity
 	 * 
 	 */
-	@RequestMapping("/listOrderItemsProductDetail")
-	public ModelAndView listOrderItemsProductDetail(@RequestParam Integer orderIdKey, @RequestParam Integer productIdKey) {
+	@RequestMapping("/selectOrderItems")
+	public ModelAndView selectOrderItems(@RequestParam Integer orderIdKey, @RequestParam Integer productIdKey) {
 		ModelAndView mav = new ModelAndView();
 
 		mav.addObject("orderitems", orderItemsDAO.findOrderItemsByPrimaryKey(orderIdKey, productIdKey));
-		mav.setViewName("orderitems/productdetail/listProductDetail.jsp");
+		mav.setViewName("orderitems/viewOrderItems.jsp");
 
 		return mav;
 	}
@@ -314,61 +404,14 @@ public class OrderItemsController {
 	}
 
 	/**
-	 * Select an existing OrderItems entity
+	 * Delete an existing ProductDetail entity
 	 * 
 	 */
-	@RequestMapping("/selectOrderItems")
-	public ModelAndView selectOrderItems(@RequestParam Integer orderIdKey, @RequestParam Integer productIdKey) {
+	@RequestMapping("/deleteOrderItemsProductDetail")
+	public ModelAndView deleteOrderItemsProductDetail(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @RequestParam Integer related_productdetail_id) {
 		ModelAndView mav = new ModelAndView();
 
-		mav.addObject("orderitems", orderItemsDAO.findOrderItemsByPrimaryKey(orderIdKey, productIdKey));
-		mav.setViewName("orderitems/viewOrderItems.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Select the child Order entity for display allowing the user to confirm that they would like to delete the entity
-	 * 
-	 */
-	@RequestMapping("/confirmDeleteOrderItemsOrder")
-	public ModelAndView confirmDeleteOrderItemsOrder(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @RequestParam Integer related_order_id) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("order", orderDAO.findOrderByPrimaryKey(related_order_id));
-		mav.addObject("orderitems_orderId", orderitems_orderId);
-		mav.addObject("orderitems_productId", orderitems_productId);
-		mav.setViewName("orderitems/order/deleteOrder.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * View an existing Order entity
-	 * 
-	 */
-	@RequestMapping("/selectOrderItemsOrder")
-	public ModelAndView selectOrderItemsOrder(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @RequestParam Integer order_id) {
-		Order order = orderDAO.findOrderByPrimaryKey(order_id, -1, -1);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("orderitems_orderId", orderitems_orderId);
-		mav.addObject("orderitems_productId", orderitems_productId);
-		mav.addObject("order", order);
-		mav.setViewName("orderitems/order/viewOrder.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Delete an existing Order entity
-	 * 
-	 */
-	@RequestMapping("/deleteOrderItemsOrder")
-	public ModelAndView deleteOrderItemsOrder(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @RequestParam Integer related_order_id) {
-		ModelAndView mav = new ModelAndView();
-
-		OrderItems orderitems = orderItemsService.deleteOrderItemsOrder(orderitems_orderId, orderitems_productId, related_order_id);
+		OrderItems orderitems = orderItemsService.deleteOrderItemsProductDetail(orderitems_orderId, orderitems_productId, related_productdetail_id);
 
 		mav.addObject("orderitems_orderId", orderitems_orderId);
 		mav.addObject("orderitems_productId", orderitems_productId);
@@ -376,48 +419,5 @@ public class OrderItemsController {
 		mav.setViewName("orderitems/viewOrderItems.jsp");
 
 		return mav;
-	}
-
-	/**
-	 * Create a new Order entity
-	 * 
-	 */
-	@RequestMapping("/newOrderItemsOrder")
-	public ModelAndView newOrderItemsOrder(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId) {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("orderitems_orderId", orderitems_orderId);
-		mav.addObject("orderitems_productId", orderitems_productId);
-		mav.addObject("order", new Order());
-		mav.addObject("newFlag", true);
-		mav.setViewName("orderitems/order/editOrder.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Save an existing Order entity
-	 * 
-	 */
-	@RequestMapping("/saveOrderItemsOrder")
-	public ModelAndView saveOrderItemsOrder(@RequestParam Integer orderitems_orderId, @RequestParam Integer orderitems_productId, @ModelAttribute Order order) {
-		OrderItems parent_orderitems = orderItemsService.saveOrderItemsOrder(orderitems_orderId, orderitems_productId, order);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("orderitems_orderId", orderitems_orderId);
-		mav.addObject("orderitems_productId", orderitems_productId);
-		mav.addObject("orderitems", parent_orderitems);
-		mav.setViewName("orderitems/viewOrderItems.jsp");
-
-		return mav;
-	}
-
-	/**
-	 */
-	@RequestMapping("/orderitemsController/binary.action")
-	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("streamedBinaryContentView");
-		return mav;
-
 	}
 }

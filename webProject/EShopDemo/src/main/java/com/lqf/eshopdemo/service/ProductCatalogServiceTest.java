@@ -47,10 +47,10 @@ import org.springframework.web.context.request.SessionScope;
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class })
 @ContextConfiguration(locations = {
-		"file:./src/main/resources/EShopDemo-security-context.xml",
-		"file:./src/main/resources/EShopDemo-service-context.xml",
-		"file:./src/main/resources/EShopDemo-dao-context.xml",
-		"file:./src/main/resources/EShopDemo-web-context.xml" })
+		"file:./resources/t11-security-context.xml",
+		"file:./resources/t11-service-context.xml",
+		"file:./resources/t11-dao-context.xml",
+		"file:./resources/t11-web-context.xml" })
 @Transactional
 public class ProductCatalogServiceTest {
 
@@ -93,38 +93,6 @@ public class ProductCatalogServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Save an existing ProductDetail entity
-	 * 
-	 */
-	@Test
-	public void saveProductCatalogProductDetail() {
-		// TODO: JUnit - Populate test inputs for operation: saveProductCatalogProductDetail 
-		Integer productId = 0;
-		Integer catalogId = 0;
-		ProductDetail related_productdetail = new com.lqf.eshopdemo.domain.ProductDetail();
-		ProductCatalog response = null;
-		response = service.saveProductCatalogProductDetail(productId, catalogId, related_productdetail);
-		// TODO: JUnit - Add assertions to test outputs of operation: saveProductCatalogProductDetail
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Delete an existing ProductDetail entity
-	 * 
-	 */
-	@Test
-	public void deleteProductCatalogProductDetail() {
-		// TODO: JUnit - Populate test inputs for operation: deleteProductCatalogProductDetail 
-		Integer productcatalog_productId = 0;
-		Integer productcatalog_catalogId = 0;
-		Integer related_productdetail_id = 0;
-		ProductCatalog response = null;
-		response = service.deleteProductCatalogProductDetail(productcatalog_productId, productcatalog_catalogId, related_productdetail_id);
-		// TODO: JUnit - Add assertions to test outputs of operation: deleteProductCatalogProductDetail
-	}
-
-	/**
-	 * Operation Unit Test
 	 * Delete an existing ProductCatalog entity
 	 * 
 	 */
@@ -143,12 +111,24 @@ public class ProductCatalogServiceTest {
 	@Test
 	public void deleteProductCatalogCatalog() {
 		// TODO: JUnit - Populate test inputs for operation: deleteProductCatalogCatalog 
-		Integer productcatalog_productId_1 = 0;
-		Integer productcatalog_catalogId_1 = 0;
+		Integer productcatalog_productId = 0;
+		Integer productcatalog_catalogId = 0;
 		Integer related_catalog_id = 0;
 		ProductCatalog response = null;
-		response = service.deleteProductCatalogCatalog(productcatalog_productId_1, productcatalog_catalogId_1, related_catalog_id);
+		response = service.deleteProductCatalogCatalog(productcatalog_productId, productcatalog_catalogId, related_catalog_id);
 		// TODO: JUnit - Add assertions to test outputs of operation: deleteProductCatalogCatalog
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Save an existing ProductCatalog entity
+	 * 
+	 */
+	@Test
+	public void saveProductCatalog() {
+		// TODO: JUnit - Populate test inputs for operation: saveProductCatalog 
+		ProductCatalog productcatalog_1 = new com.lqf.eshopdemo.domain.ProductCatalog();
+		service.saveProductCatalog(productcatalog_1);
 	}
 
 	/**
@@ -159,24 +139,25 @@ public class ProductCatalogServiceTest {
 	@Test
 	public void saveProductCatalogCatalog() {
 		// TODO: JUnit - Populate test inputs for operation: saveProductCatalogCatalog 
-		Integer productId_1 = 0;
-		Integer catalogId_1 = 0;
+		Integer productId = 0;
+		Integer catalogId = 0;
 		Catalog related_catalog = new com.lqf.eshopdemo.domain.Catalog();
 		ProductCatalog response = null;
-		response = service.saveProductCatalogCatalog(productId_1, catalogId_1, related_catalog);
+		response = service.saveProductCatalogCatalog(productId, catalogId, related_catalog);
 		// TODO: JUnit - Add assertions to test outputs of operation: saveProductCatalogCatalog
 	}
 
 	/**
 	 * Operation Unit Test
-	 * Load an existing ProductCatalog entity
-	 * 
 	 */
 	@Test
-	public void loadProductCatalogs() {
-		Set<ProductCatalog> response = null;
-		response = service.loadProductCatalogs();
-		// TODO: JUnit - Add assertions to test outputs of operation: loadProductCatalogs
+	public void findProductCatalogByPrimaryKey() {
+		// TODO: JUnit - Populate test inputs for operation: findProductCatalogByPrimaryKey 
+		Integer productId_1 = 0;
+		Integer catalogId_1 = 0;
+		ProductCatalog response = null;
+		response = service.findProductCatalogByPrimaryKey(productId_1, catalogId_1);
+		// TODO: JUnit - Add assertions to test outputs of operation: findProductCatalogByPrimaryKey
 	}
 
 	/**
@@ -193,27 +174,46 @@ public class ProductCatalogServiceTest {
 
 	/**
 	 * Operation Unit Test
+	 * Save an existing ProductDetail entity
+	 * 
 	 */
 	@Test
-	public void findProductCatalogByPrimaryKey() {
-		// TODO: JUnit - Populate test inputs for operation: findProductCatalogByPrimaryKey 
+	public void saveProductCatalogProductDetail() {
+		// TODO: JUnit - Populate test inputs for operation: saveProductCatalogProductDetail 
 		Integer productId_2 = 0;
 		Integer catalogId_2 = 0;
+		ProductDetail related_productdetail = new com.lqf.eshopdemo.domain.ProductDetail();
 		ProductCatalog response = null;
-		response = service.findProductCatalogByPrimaryKey(productId_2, catalogId_2);
-		// TODO: JUnit - Add assertions to test outputs of operation: findProductCatalogByPrimaryKey
+		response = service.saveProductCatalogProductDetail(productId_2, catalogId_2, related_productdetail);
+		// TODO: JUnit - Add assertions to test outputs of operation: saveProductCatalogProductDetail
 	}
 
 	/**
 	 * Operation Unit Test
-	 * Save an existing ProductCatalog entity
+	 * Delete an existing ProductDetail entity
 	 * 
 	 */
 	@Test
-	public void saveProductCatalog() {
-		// TODO: JUnit - Populate test inputs for operation: saveProductCatalog 
-		ProductCatalog productcatalog_1 = new com.lqf.eshopdemo.domain.ProductCatalog();
-		service.saveProductCatalog(productcatalog_1);
+	public void deleteProductCatalogProductDetail() {
+		// TODO: JUnit - Populate test inputs for operation: deleteProductCatalogProductDetail 
+		Integer productcatalog_productId_1 = 0;
+		Integer productcatalog_catalogId_1 = 0;
+		Integer related_productdetail_id = 0;
+		ProductCatalog response = null;
+		response = service.deleteProductCatalogProductDetail(productcatalog_productId_1, productcatalog_catalogId_1, related_productdetail_id);
+		// TODO: JUnit - Add assertions to test outputs of operation: deleteProductCatalogProductDetail
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Load an existing ProductCatalog entity
+	 * 
+	 */
+	@Test
+	public void loadProductCatalogs() {
+		Set<ProductCatalog> response = null;
+		response = service.loadProductCatalogs();
+		// TODO: JUnit - Add assertions to test outputs of operation: loadProductCatalogs
 	}
 
 	/**

@@ -17,40 +17,56 @@ import java.util.Set;
 public interface ProductDetailService {
 
 	/**
-	 * Delete an existing ProductProperty entity
+	 * Delete an existing ProductOffer entity
 	 * 
 	 */
-	public ProductDetail deleteProductDetailProductProperties(Integer productdetail_id, Integer related_productproperties_proId, String related_productproperties_key);
+	public ProductDetail deleteProductDetailProductOffers(Integer productdetail_id, Integer related_productoffers_proId, Integer related_productoffers_offerId);
 
 	/**
-	 * Delete an existing ProductCatalog entity
-	 * 
 	 */
-	public ProductDetail deleteProductDetailProductCatalogs(Integer productdetail_id_1, Integer related_productcatalogs_productId, Integer related_productcatalogs_catalogId);
+	public ProductDetail findProductDetailByPrimaryKey(Integer id);
 
 	/**
-	 * Save an existing OrderItems entity
+	 * Save an existing ProductDetail entity
 	 * 
 	 */
-	public ProductDetail saveProductDetailOrderItemses(Integer id, OrderItems related_orderitemses);
+	public void saveProductDetail(ProductDetail productdetail);
 
 	/**
 	 * Delete an existing ProductDetail entity
 	 * 
 	 */
-	public void deleteProductDetail(ProductDetail productdetail);
-
-	/**
-	 * Save an existing ProductOffer entity
-	 * 
-	 */
-	public ProductDetail saveProductDetailProductOffers(Integer id_1, ProductOffer related_productoffers);
+	public void deleteProductDetail(ProductDetail productdetail_1);
 
 	/**
 	 * Load an existing ProductDetail entity
 	 * 
 	 */
 	public Set<ProductDetail> loadProductDetails();
+
+	/**
+	 * Save an existing OrderItems entity
+	 * 
+	 */
+	public ProductDetail saveProductDetailOrderItemses(Integer id_1, OrderItems related_orderitemses);
+
+	/**
+	 * Save an existing ProductOffer entity
+	 * 
+	 */
+	public ProductDetail saveProductDetailProductOffers(Integer id_2, ProductOffer related_productoffers);
+
+	/**
+	 * Delete an existing CustomerComment entity
+	 * 
+	 */
+	public ProductDetail deleteProductDetailCustomerComments(Integer productdetail_id_1, Integer related_customercomments_proId, Integer related_customercomments_userId);
+
+	/**
+	 * Delete an existing ProductProperty entity
+	 * 
+	 */
+	public ProductDetail deleteProductDetailProductProperties(Integer productdetail_id_2, Integer related_productproperties_proId, String related_productproperties_key);
 
 	/**
 	 * Return a count of all ProductDetail entity
@@ -65,48 +81,32 @@ public interface ProductDetailService {
 	public List<ProductDetail> findAllProductDetails(Integer startResult, Integer maxRows);
 
 	/**
-	 * Delete an existing OrderItems entity
-	 * 
-	 */
-	public ProductDetail deleteProductDetailOrderItemses(Integer productdetail_id_2, Integer related_orderitemses_orderId, Integer related_orderitemses_productId);
-
-	/**
-	 * Save an existing ProductDetail entity
-	 * 
-	 */
-	public void saveProductDetail(ProductDetail productdetail_1);
-
-	/**
-	 */
-	public ProductDetail findProductDetailByPrimaryKey(Integer id_2);
-
-	/**
-	 * Delete an existing ProductOffer entity
-	 * 
-	 */
-	public ProductDetail deleteProductDetailProductOffers(Integer productdetail_id_3, Integer related_productoffers_proId, Integer related_productoffers_offerId);
-
-	/**
 	 * Save an existing ProductCatalog entity
 	 * 
 	 */
 	public ProductDetail saveProductDetailProductCatalogs(Integer id_3, ProductCatalog related_productcatalogs);
 
 	/**
-	 * Save an existing ProductProperty entity
-	 * 
-	 */
-	public ProductDetail saveProductDetailProductProperties(Integer id_4, ProductProperty related_productproperties);
-
-	/**
 	 * Save an existing CustomerComment entity
 	 * 
 	 */
-	public ProductDetail saveProductDetailCustomerComments(Integer id_5, CustomerComment related_customercomments);
+	public ProductDetail saveProductDetailCustomerComments(Integer id_4, CustomerComment related_customercomments);
 
 	/**
-	 * Delete an existing CustomerComment entity
+	 * Delete an existing OrderItems entity
 	 * 
 	 */
-	public ProductDetail deleteProductDetailCustomerComments(Integer productdetail_id_4, Integer related_customercomments_proId, Integer related_customercomments_userId);
+	public ProductDetail deleteProductDetailOrderItemses(Integer productdetail_id_3, Integer related_orderitemses_orderId, Integer related_orderitemses_productId);
+
+	/**
+	 * Save an existing ProductProperty entity
+	 * 
+	 */
+	public ProductDetail saveProductDetailProductProperties(Integer id_5, ProductProperty related_productproperties);
+
+	/**
+	 * Delete an existing ProductCatalog entity
+	 * 
+	 */
+	public ProductDetail deleteProductDetailProductCatalogs(Integer productdetail_id_4, Integer related_productcatalogs_productId, Integer related_productcatalogs_catalogId);
 }

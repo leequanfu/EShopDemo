@@ -46,10 +46,10 @@ import org.springframework.web.context.request.SessionScope;
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class })
 @ContextConfiguration(locations = {
-		"file:./src/main/resources/EShopDemo-security-context.xml",
-		"file:./src/main/resources/EShopDemo-service-context.xml",
-		"file:./src/main/resources/EShopDemo-dao-context.xml",
-		"file:./src/main/resources/EShopDemo-web-context.xml" })
+		"file:./resources/t11-security-context.xml",
+		"file:./resources/t11-service-context.xml",
+		"file:./resources/t11-dao-context.xml",
+		"file:./resources/t11-web-context.xml" })
 @Transactional
 public class ProductPropertyServiceTest {
 
@@ -77,19 +77,6 @@ public class ProductPropertyServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 */
-	@Test
-	public void findProductPropertyByPrimaryKey() {
-		// TODO: JUnit - Populate test inputs for operation: findProductPropertyByPrimaryKey 
-		Integer proId = 0;
-		String key = null;
-		ProductProperty response = null;
-		response = service.findProductPropertyByPrimaryKey(proId, key);
-		// TODO: JUnit - Add assertions to test outputs of operation: findProductPropertyByPrimaryKey
-	}
-
-	/**
-	 * Operation Unit Test
 	 * Return a count of all ProductProperty entity
 	 * 
 	 */
@@ -102,18 +89,15 @@ public class ProductPropertyServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Save an existing ProductDetail entity
-	 * 
 	 */
 	@Test
-	public void saveProductPropertyProductDetail() {
-		// TODO: JUnit - Populate test inputs for operation: saveProductPropertyProductDetail 
-		Integer proId_1 = 0;
-		String key_1 = null;
-		ProductDetail related_productdetail = new com.lqf.eshopdemo.domain.ProductDetail();
+	public void findProductPropertyByPrimaryKey() {
+		// TODO: JUnit - Populate test inputs for operation: findProductPropertyByPrimaryKey 
+		Integer proId = 0;
+		String key = null;
 		ProductProperty response = null;
-		response = service.saveProductPropertyProductDetail(proId_1, key_1, related_productdetail);
-		// TODO: JUnit - Add assertions to test outputs of operation: saveProductPropertyProductDetail
+		response = service.findProductPropertyByPrimaryKey(proId, key);
+		// TODO: JUnit - Add assertions to test outputs of operation: findProductPropertyByPrimaryKey
 	}
 
 	/**
@@ -145,6 +129,18 @@ public class ProductPropertyServiceTest {
 
 	/**
 	 * Operation Unit Test
+	 * Load an existing ProductProperty entity
+	 * 
+	 */
+	@Test
+	public void loadProductPropertys() {
+		Set<ProductProperty> response = null;
+		response = service.loadProductPropertys();
+		// TODO: JUnit - Add assertions to test outputs of operation: loadProductPropertys
+	}
+
+	/**
+	 * Operation Unit Test
 	 * Delete an existing ProductDetail entity
 	 * 
 	 */
@@ -161,18 +157,6 @@ public class ProductPropertyServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Load an existing ProductProperty entity
-	 * 
-	 */
-	@Test
-	public void loadProductPropertys() {
-		Set<ProductProperty> response = null;
-		response = service.loadProductPropertys();
-		// TODO: JUnit - Add assertions to test outputs of operation: loadProductPropertys
-	}
-
-	/**
-	 * Operation Unit Test
 	 * Delete an existing ProductProperty entity
 	 * 
 	 */
@@ -181,6 +165,22 @@ public class ProductPropertyServiceTest {
 		// TODO: JUnit - Populate test inputs for operation: deleteProductProperty 
 		ProductProperty productproperty_1 = new com.lqf.eshopdemo.domain.ProductProperty();
 		service.deleteProductProperty(productproperty_1);
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Save an existing ProductDetail entity
+	 * 
+	 */
+	@Test
+	public void saveProductPropertyProductDetail() {
+		// TODO: JUnit - Populate test inputs for operation: saveProductPropertyProductDetail 
+		Integer proId_1 = 0;
+		String key_1 = null;
+		ProductDetail related_productdetail = new com.lqf.eshopdemo.domain.ProductDetail();
+		ProductProperty response = null;
+		response = service.saveProductPropertyProductDetail(proId_1, key_1, related_productdetail);
+		// TODO: JUnit - Add assertions to test outputs of operation: saveProductPropertyProductDetail
 	}
 
 	/**

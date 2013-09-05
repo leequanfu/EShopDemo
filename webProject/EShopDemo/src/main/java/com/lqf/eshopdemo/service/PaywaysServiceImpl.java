@@ -37,16 +37,6 @@ public class PaywaysServiceImpl implements PaywaysService {
 	}
 
 	/**
-	 * Delete an existing Payways entity
-	 * 
-	 */
-	@Transactional
-	public void deletePayways(Payways payways) {
-		paywaysDAO.remove(payways);
-		paywaysDAO.flush();
-	}
-
-	/**
 	 * Save an existing Payways entity
 	 * 
 	 */
@@ -66,10 +56,29 @@ public class PaywaysServiceImpl implements PaywaysService {
 	}
 
 	/**
+	 * Load an existing Payways entity
+	 * 
+	 */
+	@Transactional
+	public Set<Payways> loadPaywayss() {
+		return paywaysDAO.findAllPaywayss();
+	}
+
+	/**
 	 */
 	@Transactional
 	public Payways findPaywaysByPrimaryKey(String way) {
 		return paywaysDAO.findPaywaysByPrimaryKey(way);
+	}
+
+	/**
+	 * Delete an existing Payways entity
+	 * 
+	 */
+	@Transactional
+	public void deletePayways(Payways payways) {
+		paywaysDAO.remove(payways);
+		paywaysDAO.flush();
 	}
 
 	/**
@@ -79,15 +88,6 @@ public class PaywaysServiceImpl implements PaywaysService {
 	@Transactional
 	public List<Payways> findAllPaywayss(Integer startResult, Integer maxRows) {
 		return new java.util.ArrayList<Payways>(paywaysDAO.findAllPaywayss(startResult, maxRows));
-	}
-
-	/**
-	 * Load an existing Payways entity
-	 * 
-	 */
-	@Transactional
-	public Set<Payways> loadPaywayss() {
-		return paywaysDAO.findAllPaywayss();
 	}
 
 	/**

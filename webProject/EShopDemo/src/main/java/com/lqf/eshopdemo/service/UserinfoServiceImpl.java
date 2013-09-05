@@ -55,32 +55,21 @@ public class UserinfoServiceImpl implements UserinfoService {
 	}
 
 	/**
-	 * Save an existing Order entity
+	 * Load an existing Userinfo entity
 	 * 
 	 */
 	@Transactional
-	public Userinfo saveUserinfoOrders(Integer id, Order related_orders) {
-		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(id, -1, -1);
-		Order existingorders = orderDAO.findOrderByPrimaryKey(related_orders.getId());
+	public Set<Userinfo> loadUserinfos() {
+		return userinfoDAO.findAllUserinfos();
+	}
 
-		// copy into the existing record to preserve existing relationships
-		if (existingorders != null) {
-			existingorders.setId(related_orders.getId());
-			existingorders.setAddress(related_orders.getAddress());
-			existingorders.setPhone(related_orders.getPhone());
-			existingorders.setPayway(related_orders.getPayway());
-			related_orders = existingorders;
-		}
-
-		related_orders.setUserinfo(userinfo);
-		userinfo.getOrders().add(related_orders);
-		related_orders = orderDAO.store(related_orders);
-		orderDAO.flush();
-
-		userinfo = userinfoDAO.store(userinfo);
-		userinfoDAO.flush();
-
-		return userinfo;
+	/**
+	 * Return a count of all Userinfo entity
+	 * 
+	 */
+	@Transactional
+	public Integer countUserinfos() {
+		return ((Long) userinfoDAO.createQuerySingleResult("select count(o) from Userinfo o").getSingleResult()).intValue();
 	}
 
 	/**
@@ -91,15 +80,6 @@ public class UserinfoServiceImpl implements UserinfoService {
 	public void deleteUserinfo(Userinfo userinfo) {
 		userinfoDAO.remove(userinfo);
 		userinfoDAO.flush();
-	}
-
-	/**
-	 * Return all Userinfo entity
-	 * 
-	 */
-	@Transactional
-	public List<Userinfo> findAllUserinfos(Integer startResult, Integer maxRows) {
-		return new java.util.ArrayList<Userinfo>(userinfoDAO.findAllUserinfos(startResult, maxRows));
 	}
 
 	/**
@@ -129,32 +109,6 @@ public class UserinfoServiceImpl implements UserinfoService {
 			userinfo = userinfoDAO.store(userinfo);
 		}
 		userinfoDAO.flush();
-	}
-
-	/**
-	 */
-	@Transactional
-	public Userinfo findUserinfoByPrimaryKey(Integer id) {
-		return userinfoDAO.findUserinfoByPrimaryKey(id);
-	}
-
-	/**
-	 * Delete an existing CustomerComment entity
-	 * 
-	 */
-	@Transactional
-	public Userinfo deleteUserinfoCustomerComments(Integer userinfo_id, Integer related_customercomments_proId, Integer related_customercomments_userId) {
-		CustomerComment related_customercomments = customerCommentDAO.findCustomerCommentByPrimaryKey(related_customercomments_proId, related_customercomments_userId, -1, -1);
-
-		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(userinfo_id, -1, -1);
-
-		related_customercomments.setUserinfo(null);
-		userinfo.getCustomerComments().remove(related_customercomments);
-
-		customerCommentDAO.remove(related_customercomments);
-		customerCommentDAO.flush();
-
-		return userinfo;
 	}
 
 	/**
@@ -190,21 +144,39 @@ public class UserinfoServiceImpl implements UserinfoService {
 	}
 
 	/**
-	 * Load an existing Userinfo entity
+	 * Save an existing Order entity
 	 * 
 	 */
 	@Transactional
-	public Set<Userinfo> loadUserinfos() {
-		return userinfoDAO.findAllUserinfos();
+	public Userinfo saveUserinfoOrders(Integer id, Order related_orders) {
+		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(id, -1, -1);
+		Order existingorders = orderDAO.findOrderByPrimaryKey(related_orders.getId());
+
+		// copy into the existing record to preserve existing relationships
+		if (existingorders != null) {
+			existingorders.setId(related_orders.getId());
+			existingorders.setAddress(related_orders.getAddress());
+			existingorders.setPhone(related_orders.getPhone());
+			existingorders.setPayway(related_orders.getPayway());
+			related_orders = existingorders;
+		}
+
+		related_orders.setUserinfo(userinfo);
+		userinfo.getOrders().add(related_orders);
+		related_orders = orderDAO.store(related_orders);
+		orderDAO.flush();
+
+		userinfo = userinfoDAO.store(userinfo);
+		userinfoDAO.flush();
+
+		return userinfo;
 	}
 
 	/**
-	 * Return a count of all Userinfo entity
-	 * 
 	 */
 	@Transactional
-	public Integer countUserinfos() {
-		return ((Long) userinfoDAO.createQuerySingleResult("select count(o) from Userinfo o").getSingleResult()).intValue();
+	public Userinfo findUserinfoByPrimaryKey(Integer id) {
+		return userinfoDAO.findUserinfoByPrimaryKey(id);
 	}
 
 	/**
@@ -222,6 +194,34 @@ public class UserinfoServiceImpl implements UserinfoService {
 
 		orderDAO.remove(related_orders);
 		orderDAO.flush();
+
+		return userinfo;
+	}
+
+	/**
+	 * Return all Userinfo entity
+	 * 
+	 */
+	@Transactional
+	public List<Userinfo> findAllUserinfos(Integer startResult, Integer maxRows) {
+		return new java.util.ArrayList<Userinfo>(userinfoDAO.findAllUserinfos(startResult, maxRows));
+	}
+
+	/**
+	 * Delete an existing CustomerComment entity
+	 * 
+	 */
+	@Transactional
+	public Userinfo deleteUserinfoCustomerComments(Integer userinfo_id, Integer related_customercomments_proId, Integer related_customercomments_userId) {
+		CustomerComment related_customercomments = customerCommentDAO.findCustomerCommentByPrimaryKey(related_customercomments_proId, related_customercomments_userId, -1, -1);
+
+		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(userinfo_id, -1, -1);
+
+		related_customercomments.setUserinfo(null);
+		userinfo.getCustomerComments().remove(related_customercomments);
+
+		customerCommentDAO.remove(related_customercomments);
+		customerCommentDAO.flush();
 
 		return userinfo;
 	}

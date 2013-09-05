@@ -15,40 +15,16 @@ import org.springframework.dao.DataAccessException;
 public interface OrderDAO extends JpaDao<Order> {
 
 	/**
-	 * JPQL Query - findOrderByPhone
+	 * JPQL Query - findAllOrders
 	 *
 	 */
-	public Set<Order> findOrderByPhone(String phone) throws DataAccessException;
+	public Set<Order> findAllOrders() throws DataAccessException;
 
 	/**
-	 * JPQL Query - findOrderByPhone
+	 * JPQL Query - findAllOrders
 	 *
 	 */
-	public Set<Order> findOrderByPhone(String phone, int startResult, int maxRows) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findOrderByPaywayContaining
-	 *
-	 */
-	public Set<Order> findOrderByPaywayContaining(String payway) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findOrderByPaywayContaining
-	 *
-	 */
-	public Set<Order> findOrderByPaywayContaining(String payway, int startResult, int maxRows) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findOrderById
-	 *
-	 */
-	public Order findOrderById(Integer id) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findOrderById
-	 *
-	 */
-	public Order findOrderById(Integer id, int startResult, int maxRows) throws DataAccessException;
+	public Set<Order> findAllOrders(int startResult, int maxRows) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findOrderByAddressContaining
@@ -63,6 +39,42 @@ public interface OrderDAO extends JpaDao<Order> {
 	public Set<Order> findOrderByAddressContaining(String address, int startResult, int maxRows) throws DataAccessException;
 
 	/**
+	 * JPQL Query - findOrderByPhoneContaining
+	 *
+	 */
+	public Set<Order> findOrderByPhoneContaining(String phone) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findOrderByPhoneContaining
+	 *
+	 */
+	public Set<Order> findOrderByPhoneContaining(String phone, int startResult, int maxRows) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findOrderByPayway
+	 *
+	 */
+	public Set<Order> findOrderByPayway(String payway) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findOrderByPayway
+	 *
+	 */
+	public Set<Order> findOrderByPayway(String payway, int startResult, int maxRows) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findOrderById
+	 *
+	 */
+	public Order findOrderById(Integer id) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findOrderById
+	 *
+	 */
+	public Order findOrderById(Integer id, int startResult, int maxRows) throws DataAccessException;
+
+	/**
 	 * JPQL Query - findOrderByAddress
 	 *
 	 */
@@ -75,28 +87,28 @@ public interface OrderDAO extends JpaDao<Order> {
 	public Set<Order> findOrderByAddress(String address_1, int startResult, int maxRows) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findAllOrders
+	 * JPQL Query - findOrderByPaywayContaining
 	 *
 	 */
-	public Set<Order> findAllOrders() throws DataAccessException;
+	public Set<Order> findOrderByPaywayContaining(String payway_1) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findAllOrders
+	 * JPQL Query - findOrderByPaywayContaining
 	 *
 	 */
-	public Set<Order> findAllOrders(int startResult, int maxRows) throws DataAccessException;
+	public Set<Order> findOrderByPaywayContaining(String payway_1, int startResult, int maxRows) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findOrderByPayway
+	 * JPQL Query - findOrderByPhone
 	 *
 	 */
-	public Set<Order> findOrderByPayway(String payway_1) throws DataAccessException;
+	public Set<Order> findOrderByPhone(String phone_1) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findOrderByPayway
+	 * JPQL Query - findOrderByPhone
 	 *
 	 */
-	public Set<Order> findOrderByPayway(String payway_1, int startResult, int maxRows) throws DataAccessException;
+	public Set<Order> findOrderByPhone(String phone_1, int startResult, int maxRows) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findOrderByPrimaryKey
@@ -109,17 +121,5 @@ public interface OrderDAO extends JpaDao<Order> {
 	 *
 	 */
 	public Order findOrderByPrimaryKey(Integer id_1, int startResult, int maxRows) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findOrderByPhoneContaining
-	 *
-	 */
-	public Set<Order> findOrderByPhoneContaining(String phone_1) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findOrderByPhoneContaining
-	 *
-	 */
-	public Set<Order> findOrderByPhoneContaining(String phone_1, int startResult, int maxRows) throws DataAccessException;
 
 }

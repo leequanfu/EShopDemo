@@ -46,26 +46,6 @@ public class PaywaysRestController {
 	private PaywaysService paywaysService;
 
 	/**
-	 * Show all Payways entities
-	 * 
-	 */
-	@RequestMapping(value = "/Payways", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Payways> listPaywayss() {
-		return new java.util.ArrayList<Payways>(paywaysService.loadPaywayss());
-	}
-
-	/**
-	 * Select an existing Payways entity
-	 * 
-	 */
-	@RequestMapping(value = "/Payways/{payways_way}", method = RequestMethod.GET)
-	@ResponseBody
-	public Payways loadPayways(@PathVariable String payways_way) {
-		return paywaysDAO.findPaywaysByPrimaryKey(payways_way);
-	}
-
-	/**
 	 * Delete an existing Payways entity
 	 * 
 	 */
@@ -74,28 +54,6 @@ public class PaywaysRestController {
 	public void deletePayways(@PathVariable String payways_way) {
 		Payways payways = paywaysDAO.findPaywaysByPrimaryKey(payways_way);
 		paywaysService.deletePayways(payways);
-	}
-
-	/**
-	 * Save an existing Payways entity
-	 * 
-	 */
-	@RequestMapping(value = "/Payways", method = RequestMethod.PUT)
-	@ResponseBody
-	public Payways savePayways(@RequestBody Payways payways) {
-		paywaysService.savePayways(payways);
-		return paywaysDAO.findPaywaysByPrimaryKey(payways.getWay());
-	}
-
-	/**
-	 * Create a new Payways entity
-	 * 
-	 */
-	@RequestMapping(value = "/Payways", method = RequestMethod.POST)
-	@ResponseBody
-	public Payways newPayways(@RequestBody Payways payways) {
-		paywaysService.savePayways(payways);
-		return paywaysDAO.findPaywaysByPrimaryKey(payways.getWay());
 	}
 
 	/**
@@ -114,5 +72,47 @@ public class PaywaysRestController {
 		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
 		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
 		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
+	}
+
+	/**
+	 * Select an existing Payways entity
+	 * 
+	 */
+	@RequestMapping(value = "/Payways/{payways_way}", method = RequestMethod.GET)
+	@ResponseBody
+	public Payways loadPayways(@PathVariable String payways_way) {
+		return paywaysDAO.findPaywaysByPrimaryKey(payways_way);
+	}
+
+	/**
+	 * Create a new Payways entity
+	 * 
+	 */
+	@RequestMapping(value = "/Payways", method = RequestMethod.POST)
+	@ResponseBody
+	public Payways newPayways(@RequestBody Payways payways) {
+		paywaysService.savePayways(payways);
+		return paywaysDAO.findPaywaysByPrimaryKey(payways.getWay());
+	}
+
+	/**
+	 * Show all Payways entities
+	 * 
+	 */
+	@RequestMapping(value = "/Payways", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Payways> listPaywayss() {
+		return new java.util.ArrayList<Payways>(paywaysService.loadPaywayss());
+	}
+
+	/**
+	 * Save an existing Payways entity
+	 * 
+	 */
+	@RequestMapping(value = "/Payways", method = RequestMethod.PUT)
+	@ResponseBody
+	public Payways savePayways(@RequestBody Payways payways) {
+		paywaysService.savePayways(payways);
+		return paywaysDAO.findPaywaysByPrimaryKey(payways.getWay());
 	}
 }

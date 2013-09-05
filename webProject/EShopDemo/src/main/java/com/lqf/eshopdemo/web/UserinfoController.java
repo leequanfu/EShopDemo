@@ -63,54 +63,20 @@ public class UserinfoController {
 	private UserinfoService userinfoService;
 
 	/**
-	 * Show all Userinfo entities
+	 * Delete an existing Order entity
 	 * 
 	 */
-	@RequestMapping("/indexUserinfo")
-	public ModelAndView listUserinfos() {
+	@RequestMapping("/deleteUserinfoOrders")
+	public ModelAndView deleteUserinfoOrders(@RequestParam Integer userinfo_id, @RequestParam Integer related_orders_id) {
 		ModelAndView mav = new ModelAndView();
 
-		mav.addObject("userinfos", userinfoService.loadUserinfos());
+		Userinfo userinfo = userinfoService.deleteUserinfoOrders(userinfo_id, related_orders_id);
 
-		mav.setViewName("userinfo/listUserinfos.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * View an existing CustomerComment entity
-	 * 
-	 */
-	@RequestMapping("/selectUserinfoCustomerComments")
-	public ModelAndView selectUserinfoCustomerComments(@RequestParam Integer userinfo_id, @RequestParam Integer customercomments_proId, @RequestParam Integer customercomments_userId) {
-		CustomerComment customercomment = customerCommentDAO.findCustomerCommentByPrimaryKey(customercomments_proId, customercomments_userId, -1, -1);
-
-		ModelAndView mav = new ModelAndView();
 		mav.addObject("userinfo_id", userinfo_id);
-		mav.addObject("customercomment", customercomment);
-		mav.setViewName("userinfo/customercomments/viewCustomerComments.jsp");
+		mav.addObject("userinfo", userinfo);
+		mav.setViewName("userinfo/viewUserinfo.jsp");
 
 		return mav;
-	}
-
-	/**
-	 * Save an existing Userinfo entity
-	 * 
-	 */
-	@RequestMapping("/saveUserinfo")
-	public String saveUserinfo(@ModelAttribute Userinfo userinfo) {
-		userinfoService.saveUserinfo(userinfo);
-		return "forward:/indexUserinfo";
-	}
-
-	/**
-	 */
-	@RequestMapping("/userinfoController/binary.action")
-	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("streamedBinaryContentView");
-		return mav;
-
 	}
 
 	/**
@@ -125,21 +91,6 @@ public class UserinfoController {
 		mav.addObject("userinfo_id", userinfo_id);
 		mav.addObject("order", order);
 		mav.setViewName("userinfo/orders/editOrders.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Select the child CustomerComment entity for display allowing the user to confirm that they would like to delete the entity
-	 * 
-	 */
-	@RequestMapping("/confirmDeleteUserinfoCustomerComments")
-	public ModelAndView confirmDeleteUserinfoCustomerComments(@RequestParam Integer userinfo_id, @RequestParam Integer related_customercomments_proId, @RequestParam Integer related_customercomments_userId) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("customercomment", customerCommentDAO.findCustomerCommentByPrimaryKey(related_customercomments_proId, related_customercomments_userId));
-		mav.addObject("userinfo_id", userinfo_id);
-		mav.setViewName("userinfo/customercomments/deleteCustomerComments.jsp");
 
 		return mav;
 	}
@@ -161,84 +112,47 @@ public class UserinfoController {
 	}
 
 	/**
-	 * Delete an existing CustomerComment entity
+	 * Create a new Userinfo entity
 	 * 
 	 */
-	@RequestMapping("/deleteUserinfoCustomerComments")
-	public ModelAndView deleteUserinfoCustomerComments(@RequestParam Integer userinfo_id, @RequestParam Integer related_customercomments_proId, @RequestParam Integer related_customercomments_userId) {
+	@RequestMapping("/newUserinfo")
+	public ModelAndView newUserinfo() {
 		ModelAndView mav = new ModelAndView();
 
-		Userinfo userinfo = userinfoService.deleteUserinfoCustomerComments(userinfo_id, related_customercomments_proId, related_customercomments_userId);
-
-		mav.addObject("userinfo_id", userinfo_id);
-		mav.addObject("userinfo", userinfo);
-		mav.setViewName("userinfo/viewUserinfo.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Create a new CustomerComment entity
-	 * 
-	 */
-	@RequestMapping("/newUserinfoCustomerComments")
-	public ModelAndView newUserinfoCustomerComments(@RequestParam Integer userinfo_id) {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("userinfo_id", userinfo_id);
-		mav.addObject("customercomment", new CustomerComment());
+		mav.addObject("userinfo", new Userinfo());
 		mav.addObject("newFlag", true);
-		mav.setViewName("userinfo/customercomments/editCustomerComments.jsp");
+		mav.setViewName("userinfo/editUserinfo.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Register custom, context-specific property editors
+	 * Delete an existing Userinfo entity
 	 * 
 	 */
-	@InitBinder
-	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
-		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
-		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
-		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
-		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
-		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
-		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
-		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
-		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
-		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
-		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
+	@RequestMapping("/deleteUserinfo")
+	public String deleteUserinfo(@RequestParam Integer idKey) {
+		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(idKey);
+		userinfoService.deleteUserinfo(userinfo);
+		return "forward:/indexUserinfo";
 	}
 
 	/**
-	 * Select the child Order entity for display allowing the user to confirm that they would like to delete the entity
+	 * Save an existing Userinfo entity
 	 * 
 	 */
-	@RequestMapping("/confirmDeleteUserinfoOrders")
-	public ModelAndView confirmDeleteUserinfoOrders(@RequestParam Integer userinfo_id, @RequestParam Integer related_orders_id) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("order", orderDAO.findOrderByPrimaryKey(related_orders_id));
-		mav.addObject("userinfo_id", userinfo_id);
-		mav.setViewName("userinfo/orders/deleteOrders.jsp");
-
-		return mav;
+	@RequestMapping("/saveUserinfo")
+	public String saveUserinfo(@ModelAttribute Userinfo userinfo) {
+		userinfoService.saveUserinfo(userinfo);
+		return "forward:/indexUserinfo";
 	}
 
 	/**
-	 * Edit an existing CustomerComment entity
+	 * Entry point to show all Userinfo entities
 	 * 
 	 */
-	@RequestMapping("/editUserinfoCustomerComments")
-	public ModelAndView editUserinfoCustomerComments(@RequestParam Integer userinfo_id, @RequestParam Integer customercomments_proId, @RequestParam Integer customercomments_userId) {
-		CustomerComment customercomment = customerCommentDAO.findCustomerCommentByPrimaryKey(customercomments_proId, customercomments_userId, -1, -1);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("userinfo_id", userinfo_id);
-		mav.addObject("customercomment", customercomment);
-		mav.setViewName("userinfo/customercomments/editCustomerComments.jsp");
-
-		return mav;
+	public String indexUserinfo() {
+		return "redirect:/indexUserinfo";
 	}
 
 	/**
@@ -257,15 +171,17 @@ public class UserinfoController {
 	}
 
 	/**
-	 * Show all CustomerComment entities by Userinfo
+	 * View an existing Order entity
 	 * 
 	 */
-	@RequestMapping("/listUserinfoCustomerComments")
-	public ModelAndView listUserinfoCustomerComments(@RequestParam Integer idKey) {
-		ModelAndView mav = new ModelAndView();
+	@RequestMapping("/selectUserinfoOrders")
+	public ModelAndView selectUserinfoOrders(@RequestParam Integer userinfo_id, @RequestParam Integer orders_id) {
+		Order order = orderDAO.findOrderByPrimaryKey(orders_id, -1, -1);
 
-		mav.addObject("userinfo", userinfoDAO.findUserinfoByPrimaryKey(idKey));
-		mav.setViewName("userinfo/customercomments/listCustomerComments.jsp");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("userinfo_id", userinfo_id);
+		mav.addObject("order", order);
+		mav.setViewName("userinfo/orders/viewOrders.jsp");
 
 		return mav;
 	}
@@ -299,70 +215,113 @@ public class UserinfoController {
 	}
 
 	/**
-	 * Show all Order entities by Userinfo
+	 * Select the child CustomerComment entity for display allowing the user to confirm that they would like to delete the entity
 	 * 
 	 */
-	@RequestMapping("/listUserinfoOrders")
-	public ModelAndView listUserinfoOrders(@RequestParam Integer idKey) {
+	@RequestMapping("/confirmDeleteUserinfoCustomerComments")
+	public ModelAndView confirmDeleteUserinfoCustomerComments(@RequestParam Integer userinfo_id, @RequestParam Integer related_customercomments_proId, @RequestParam Integer related_customercomments_userId) {
 		ModelAndView mav = new ModelAndView();
 
-		mav.addObject("userinfo", userinfoDAO.findUserinfoByPrimaryKey(idKey));
-		mav.setViewName("userinfo/orders/listOrders.jsp");
+		mav.addObject("customercomment", customerCommentDAO.findCustomerCommentByPrimaryKey(related_customercomments_proId, related_customercomments_userId));
+		mav.addObject("userinfo_id", userinfo_id);
+		mav.setViewName("userinfo/customercomments/deleteCustomerComments.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Save an existing Order entity
+	 * Edit an existing CustomerComment entity
 	 * 
 	 */
-	@RequestMapping("/saveUserinfoOrders")
-	public ModelAndView saveUserinfoOrders(@RequestParam Integer userinfo_id, @ModelAttribute Order orders) {
-		Userinfo parent_userinfo = userinfoService.saveUserinfoOrders(userinfo_id, orders);
+	@RequestMapping("/editUserinfoCustomerComments")
+	public ModelAndView editUserinfoCustomerComments(@RequestParam Integer userinfo_id, @RequestParam Integer customercomments_proId, @RequestParam Integer customercomments_userId) {
+		CustomerComment customercomment = customerCommentDAO.findCustomerCommentByPrimaryKey(customercomments_proId, customercomments_userId, -1, -1);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("userinfo_id", userinfo_id);
-		mav.addObject("userinfo", parent_userinfo);
+		mav.addObject("customercomment", customercomment);
+		mav.setViewName("userinfo/customercomments/editCustomerComments.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Register custom, context-specific property editors
+	 * 
+	 */
+	@InitBinder
+	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
+		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
+		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
+		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
+		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
+		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
+		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
+		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
+		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
+		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
+		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
+	}
+
+	/**
+	 * Delete an existing CustomerComment entity
+	 * 
+	 */
+	@RequestMapping("/deleteUserinfoCustomerComments")
+	public ModelAndView deleteUserinfoCustomerComments(@RequestParam Integer userinfo_id, @RequestParam Integer related_customercomments_proId, @RequestParam Integer related_customercomments_userId) {
+		ModelAndView mav = new ModelAndView();
+
+		Userinfo userinfo = userinfoService.deleteUserinfoCustomerComments(userinfo_id, related_customercomments_proId, related_customercomments_userId);
+
+		mav.addObject("userinfo_id", userinfo_id);
+		mav.addObject("userinfo", userinfo);
 		mav.setViewName("userinfo/viewUserinfo.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Create a new Userinfo entity
+	 * Show all Userinfo entities
 	 * 
 	 */
-	@RequestMapping("/newUserinfo")
-	public ModelAndView newUserinfo() {
+	@RequestMapping("/indexUserinfo")
+	public ModelAndView listUserinfos() {
 		ModelAndView mav = new ModelAndView();
 
-		mav.addObject("userinfo", new Userinfo());
-		mav.addObject("newFlag", true);
-		mav.setViewName("userinfo/editUserinfo.jsp");
+		mav.addObject("userinfos", userinfoService.loadUserinfos());
+
+		mav.setViewName("userinfo/listUserinfos.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Entry point to show all Userinfo entities
+	 * View an existing CustomerComment entity
 	 * 
 	 */
-	public String indexUserinfo() {
-		return "redirect:/indexUserinfo";
-	}
-
-	/**
-	 * View an existing Order entity
-	 * 
-	 */
-	@RequestMapping("/selectUserinfoOrders")
-	public ModelAndView selectUserinfoOrders(@RequestParam Integer userinfo_id, @RequestParam Integer orders_id) {
-		Order order = orderDAO.findOrderByPrimaryKey(orders_id, -1, -1);
+	@RequestMapping("/selectUserinfoCustomerComments")
+	public ModelAndView selectUserinfoCustomerComments(@RequestParam Integer userinfo_id, @RequestParam Integer customercomments_proId, @RequestParam Integer customercomments_userId) {
+		CustomerComment customercomment = customerCommentDAO.findCustomerCommentByPrimaryKey(customercomments_proId, customercomments_userId, -1, -1);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("userinfo_id", userinfo_id);
-		mav.addObject("order", order);
-		mav.setViewName("userinfo/orders/viewOrders.jsp");
+		mav.addObject("customercomment", customercomment);
+		mav.setViewName("userinfo/customercomments/viewCustomerComments.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Create a new CustomerComment entity
+	 * 
+	 */
+	@RequestMapping("/newUserinfoCustomerComments")
+	public ModelAndView newUserinfoCustomerComments(@RequestParam Integer userinfo_id) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("userinfo_id", userinfo_id);
+		mav.addObject("customercomment", new CustomerComment());
+		mav.addObject("newFlag", true);
+		mav.setViewName("userinfo/customercomments/editCustomerComments.jsp");
 
 		return mav;
 	}
@@ -382,30 +341,71 @@ public class UserinfoController {
 	}
 
 	/**
-	 * Delete an existing Order entity
+	 * Show all CustomerComment entities by Userinfo
 	 * 
 	 */
-	@RequestMapping("/deleteUserinfoOrders")
-	public ModelAndView deleteUserinfoOrders(@RequestParam Integer userinfo_id, @RequestParam Integer related_orders_id) {
+	@RequestMapping("/listUserinfoCustomerComments")
+	public ModelAndView listUserinfoCustomerComments(@RequestParam Integer idKey) {
 		ModelAndView mav = new ModelAndView();
 
-		Userinfo userinfo = userinfoService.deleteUserinfoOrders(userinfo_id, related_orders_id);
+		mav.addObject("userinfo", userinfoDAO.findUserinfoByPrimaryKey(idKey));
+		mav.setViewName("userinfo/customercomments/listCustomerComments.jsp");
 
+		return mav;
+	}
+
+	/**
+	 * Show all Order entities by Userinfo
+	 * 
+	 */
+	@RequestMapping("/listUserinfoOrders")
+	public ModelAndView listUserinfoOrders(@RequestParam Integer idKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("userinfo", userinfoDAO.findUserinfoByPrimaryKey(idKey));
+		mav.setViewName("userinfo/orders/listOrders.jsp");
+
+		return mav;
+	}
+
+	/**
+	 */
+	@RequestMapping("/userinfoController/binary.action")
+	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("streamedBinaryContentView");
+		return mav;
+
+	}
+
+	/**
+	 * Save an existing Order entity
+	 * 
+	 */
+	@RequestMapping("/saveUserinfoOrders")
+	public ModelAndView saveUserinfoOrders(@RequestParam Integer userinfo_id, @ModelAttribute Order orders) {
+		Userinfo parent_userinfo = userinfoService.saveUserinfoOrders(userinfo_id, orders);
+
+		ModelAndView mav = new ModelAndView();
 		mav.addObject("userinfo_id", userinfo_id);
-		mav.addObject("userinfo", userinfo);
+		mav.addObject("userinfo", parent_userinfo);
 		mav.setViewName("userinfo/viewUserinfo.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Delete an existing Userinfo entity
+	 * Select the child Order entity for display allowing the user to confirm that they would like to delete the entity
 	 * 
 	 */
-	@RequestMapping("/deleteUserinfo")
-	public String deleteUserinfo(@RequestParam Integer idKey) {
-		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(idKey);
-		userinfoService.deleteUserinfo(userinfo);
-		return "forward:/indexUserinfo";
+	@RequestMapping("/confirmDeleteUserinfoOrders")
+	public ModelAndView confirmDeleteUserinfoOrders(@RequestParam Integer userinfo_id, @RequestParam Integer related_orders_id) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("order", orderDAO.findOrderByPrimaryKey(related_orders_id));
+		mav.addObject("userinfo_id", userinfo_id);
+		mav.setViewName("userinfo/orders/deleteOrders.jsp");
+
+		return mav;
 	}
 }

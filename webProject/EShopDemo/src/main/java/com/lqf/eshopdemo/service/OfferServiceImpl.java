@@ -46,86 +46,12 @@ public class OfferServiceImpl implements OfferService {
 	}
 
 	/**
-	 */
-	@Transactional
-	public Offer findOfferByPrimaryKey(Integer id) {
-		return offerDAO.findOfferByPrimaryKey(id);
-	}
-
-	/**
 	 * Load an existing Offer entity
 	 * 
 	 */
 	@Transactional
 	public Set<Offer> loadOffers() {
 		return offerDAO.findAllOffers();
-	}
-
-	/**
-	 * Delete an existing Offer entity
-	 * 
-	 */
-	@Transactional
-	public void deleteOffer(Offer offer) {
-		offerDAO.remove(offer);
-		offerDAO.flush();
-	}
-
-	/**
-	 * Return all Offer entity
-	 * 
-	 */
-	@Transactional
-	public List<Offer> findAllOffers(Integer startResult, Integer maxRows) {
-		return new java.util.ArrayList<Offer>(offerDAO.findAllOffers(startResult, maxRows));
-	}
-
-	/**
-	 * Delete an existing ProductOffer entity
-	 * 
-	 */
-	@Transactional
-	public Offer deleteOfferProductOffers(Integer offer_id, Integer related_productoffers_proId, Integer related_productoffers_offerId) {
-		ProductOffer related_productoffers = productOfferDAO.findProductOfferByPrimaryKey(related_productoffers_proId, related_productoffers_offerId, -1, -1);
-
-		Offer offer = offerDAO.findOfferByPrimaryKey(offer_id, -1, -1);
-
-		related_productoffers.setOffer(null);
-		offer.getProductOffers().remove(related_productoffers);
-
-		productOfferDAO.remove(related_productoffers);
-		productOfferDAO.flush();
-
-		return offer;
-	}
-
-	/**
-	 * Save an existing Offer entity
-	 * 
-	 */
-	@Transactional
-	public void saveOffer(Offer offer) {
-		Offer existingOffer = offerDAO.findOfferByPrimaryKey(offer.getId());
-
-		if (existingOffer != null) {
-			if (existingOffer != offer) {
-				existingOffer.setId(offer.getId());
-				existingOffer.setDescription(offer.getDescription());
-			}
-			offer = offerDAO.store(existingOffer);
-		} else {
-			offer = offerDAO.store(offer);
-		}
-		offerDAO.flush();
-	}
-
-	/**
-	 * Return a count of all Offer entity
-	 * 
-	 */
-	@Transactional
-	public Integer countOffers() {
-		return ((Long) offerDAO.createQuerySingleResult("select count(o) from Offer o").getSingleResult()).intValue();
 	}
 
 	/**
@@ -156,5 +82,79 @@ public class OfferServiceImpl implements OfferService {
 		offerDAO.flush();
 
 		return offer;
+	}
+
+	/**
+	 * Return all Offer entity
+	 * 
+	 */
+	@Transactional
+	public List<Offer> findAllOffers(Integer startResult, Integer maxRows) {
+		return new java.util.ArrayList<Offer>(offerDAO.findAllOffers(startResult, maxRows));
+	}
+
+	/**
+	 * Delete an existing Offer entity
+	 * 
+	 */
+	@Transactional
+	public void deleteOffer(Offer offer) {
+		offerDAO.remove(offer);
+		offerDAO.flush();
+	}
+
+	/**
+	 */
+	@Transactional
+	public Offer findOfferByPrimaryKey(Integer id) {
+		return offerDAO.findOfferByPrimaryKey(id);
+	}
+
+	/**
+	 * Delete an existing ProductOffer entity
+	 * 
+	 */
+	@Transactional
+	public Offer deleteOfferProductOffers(Integer offer_id, Integer related_productoffers_proId, Integer related_productoffers_offerId) {
+		ProductOffer related_productoffers = productOfferDAO.findProductOfferByPrimaryKey(related_productoffers_proId, related_productoffers_offerId, -1, -1);
+
+		Offer offer = offerDAO.findOfferByPrimaryKey(offer_id, -1, -1);
+
+		related_productoffers.setOffer(null);
+		offer.getProductOffers().remove(related_productoffers);
+
+		productOfferDAO.remove(related_productoffers);
+		productOfferDAO.flush();
+
+		return offer;
+	}
+
+	/**
+	 * Return a count of all Offer entity
+	 * 
+	 */
+	@Transactional
+	public Integer countOffers() {
+		return ((Long) offerDAO.createQuerySingleResult("select count(o) from Offer o").getSingleResult()).intValue();
+	}
+
+	/**
+	 * Save an existing Offer entity
+	 * 
+	 */
+	@Transactional
+	public void saveOffer(Offer offer) {
+		Offer existingOffer = offerDAO.findOfferByPrimaryKey(offer.getId());
+
+		if (existingOffer != null) {
+			if (existingOffer != offer) {
+				existingOffer.setId(offer.getId());
+				existingOffer.setDescription(offer.getDescription());
+			}
+			offer = offerDAO.store(existingOffer);
+		} else {
+			offer = offerDAO.store(offer);
+		}
+		offerDAO.flush();
 	}
 }

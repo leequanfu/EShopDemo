@@ -47,10 +47,10 @@ import javax.persistence.*;
 		@NamedQuery(name = "findUserinfoBySecondnameContaining", query = "select myUserinfo from Userinfo myUserinfo where myUserinfo.secondname like ?1"),
 		@NamedQuery(name = "findUserinfoByUsername", query = "select myUserinfo from Userinfo myUserinfo where myUserinfo.username = ?1"),
 		@NamedQuery(name = "findUserinfoByUsernameContaining", query = "select myUserinfo from Userinfo myUserinfo where myUserinfo.username like ?1") })
-@Table(catalog = "EShopDemo", name = "userinfo")
+@Table(catalog = "eshopdemo", name = "userinfo")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = "EShopDemo/com/lqf/eshopdemo/domain", name = "Userinfo")
-@XmlRootElement(namespace = "EShopDemo/com/lqf/eshopdemo/domain")
+@XmlType(namespace = "t11/com/lqf/eshopdemo/domain", name = "Userinfo")
+@XmlRootElement(namespace = "t11/com/lqf/eshopdemo/domain")
 public class Userinfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -55,10 +55,35 @@ public class CustomerCommentServiceImpl implements CustomerCommentService {
 	}
 
 	/**
+	 * Delete an existing Userinfo entity
+	 * 
 	 */
 	@Transactional
-	public CustomerComment findCustomerCommentByPrimaryKey(Integer proId, Integer userId) {
-		return customerCommentDAO.findCustomerCommentByPrimaryKey(proId, userId);
+	public CustomerComment deleteCustomerCommentUserinfo(Integer customercomment_proId, Integer customercomment_userId, Integer related_userinfo_id) {
+		CustomerComment customercomment = customerCommentDAO.findCustomerCommentByPrimaryKey(customercomment_proId, customercomment_userId, -1, -1);
+		Userinfo related_userinfo = userinfoDAO.findUserinfoByPrimaryKey(related_userinfo_id, -1, -1);
+
+		customercomment.setUserinfo(null);
+		related_userinfo.getCustomerComments().remove(customercomment);
+		customercomment = customerCommentDAO.store(customercomment);
+		customerCommentDAO.flush();
+
+		related_userinfo = userinfoDAO.store(related_userinfo);
+		userinfoDAO.flush();
+
+		userinfoDAO.remove(related_userinfo);
+		userinfoDAO.flush();
+
+		return customercomment;
+	}
+
+	/**
+	 * Load an existing CustomerComment entity
+	 * 
+	 */
+	@Transactional
+	public Set<CustomerComment> loadCustomerComments() {
+		return customerCommentDAO.findAllCustomerComments();
 	}
 
 	/**
@@ -101,6 +126,22 @@ public class CustomerCommentServiceImpl implements CustomerCommentService {
 	}
 
 	/**
+	 * Return a count of all CustomerComment entity
+	 * 
+	 */
+	@Transactional
+	public Integer countCustomerComments() {
+		return ((Long) customerCommentDAO.createQuerySingleResult("select count(*) from CustomerComment o").getSingleResult()).intValue();
+	}
+
+	/**
+	 */
+	@Transactional
+	public CustomerComment findCustomerCommentByPrimaryKey(Integer proId, Integer userId) {
+		return customerCommentDAO.findCustomerCommentByPrimaryKey(proId, userId);
+	}
+
+	/**
 	 * Save an existing CustomerComment entity
 	 * 
 	 */
@@ -120,99 +161,6 @@ public class CustomerCommentServiceImpl implements CustomerCommentService {
 			customercomment = customerCommentDAO.store(customercomment);
 		}
 		customerCommentDAO.flush();
-	}
-
-	/**
-	 * Return all CustomerComment entity
-	 * 
-	 */
-	@Transactional
-	public List<CustomerComment> findAllCustomerComments(Integer startResult, Integer maxRows) {
-		return new java.util.ArrayList<CustomerComment>(customerCommentDAO.findAllCustomerComments(startResult, maxRows));
-	}
-
-	/**
-	 * Save an existing ProductDetail entity
-	 * 
-	 */
-	@Transactional
-	public CustomerComment saveCustomerCommentProductDetail(Integer proId, Integer userId, ProductDetail related_productdetail) {
-		CustomerComment customercomment = customerCommentDAO.findCustomerCommentByPrimaryKey(proId, userId, -1, -1);
-		ProductDetail existingproductDetail = productDetailDAO.findProductDetailByPrimaryKey(related_productdetail.getId());
-
-		// copy into the existing record to preserve existing relationships
-		if (existingproductDetail != null) {
-			existingproductDetail.setId(related_productdetail.getId());
-			existingproductDetail.setTitle(related_productdetail.getTitle());
-			existingproductDetail.setPrice(related_productdetail.getPrice());
-			existingproductDetail.setQuantity(related_productdetail.getQuantity());
-			existingproductDetail.setDescription(related_productdetail.getDescription());
-			related_productdetail = existingproductDetail;
-		} else {
-			related_productdetail = productDetailDAO.store(related_productdetail);
-			productDetailDAO.flush();
-		}
-
-		customercomment.setProductDetail(related_productdetail);
-		related_productdetail.getCustomerComments().add(customercomment);
-		customercomment = customerCommentDAO.store(customercomment);
-		customerCommentDAO.flush();
-
-		related_productdetail = productDetailDAO.store(related_productdetail);
-		productDetailDAO.flush();
-
-		return customercomment;
-	}
-
-	/**
-	 * Delete an existing CustomerComment entity
-	 * 
-	 */
-	@Transactional
-	public void deleteCustomerComment(CustomerComment customercomment) {
-		customerCommentDAO.remove(customercomment);
-		customerCommentDAO.flush();
-	}
-
-	/**
-	 * Delete an existing Userinfo entity
-	 * 
-	 */
-	@Transactional
-	public CustomerComment deleteCustomerCommentUserinfo(Integer customercomment_proId, Integer customercomment_userId, Integer related_userinfo_id) {
-		CustomerComment customercomment = customerCommentDAO.findCustomerCommentByPrimaryKey(customercomment_proId, customercomment_userId, -1, -1);
-		Userinfo related_userinfo = userinfoDAO.findUserinfoByPrimaryKey(related_userinfo_id, -1, -1);
-
-		customercomment.setUserinfo(null);
-		related_userinfo.getCustomerComments().remove(customercomment);
-		customercomment = customerCommentDAO.store(customercomment);
-		customerCommentDAO.flush();
-
-		related_userinfo = userinfoDAO.store(related_userinfo);
-		userinfoDAO.flush();
-
-		userinfoDAO.remove(related_userinfo);
-		userinfoDAO.flush();
-
-		return customercomment;
-	}
-
-	/**
-	 * Load an existing CustomerComment entity
-	 * 
-	 */
-	@Transactional
-	public Set<CustomerComment> loadCustomerComments() {
-		return customerCommentDAO.findAllCustomerComments();
-	}
-
-	/**
-	 * Return a count of all CustomerComment entity
-	 * 
-	 */
-	@Transactional
-	public Integer countCustomerComments() {
-		return ((Long) customerCommentDAO.createQuerySingleResult("select count(*) from CustomerComment o").getSingleResult()).intValue();
 	}
 
 	/**
@@ -236,5 +184,58 @@ public class CustomerCommentServiceImpl implements CustomerCommentService {
 		productDetailDAO.flush();
 
 		return customercomment;
+	}
+
+	/**
+	 * Save an existing ProductDetail entity
+	 * 
+	 */
+	@Transactional
+	public CustomerComment saveCustomerCommentProductDetail(Integer proId, Integer userId, ProductDetail related_productdetail) {
+		CustomerComment customercomment = customerCommentDAO.findCustomerCommentByPrimaryKey(proId, userId, -1, -1);
+		ProductDetail existingproductDetail = productDetailDAO.findProductDetailByPrimaryKey(related_productdetail.getId());
+
+		// copy into the existing record to preserve existing relationships
+		if (existingproductDetail != null) {
+			existingproductDetail.setId(related_productdetail.getId());
+			existingproductDetail.setTitle(related_productdetail.getTitle());
+			existingproductDetail.setPrice(related_productdetail.getPrice());
+			existingproductDetail.setQuantity(related_productdetail.getQuantity());
+			existingproductDetail.setDescription(related_productdetail.getDescription());
+			existingproductDetail.setPicnum(related_productdetail.getPicnum());
+			related_productdetail = existingproductDetail;
+		} else {
+			related_productdetail = productDetailDAO.store(related_productdetail);
+			productDetailDAO.flush();
+		}
+
+		customercomment.setProductDetail(related_productdetail);
+		related_productdetail.getCustomerComments().add(customercomment);
+		customercomment = customerCommentDAO.store(customercomment);
+		customerCommentDAO.flush();
+
+		related_productdetail = productDetailDAO.store(related_productdetail);
+		productDetailDAO.flush();
+
+		return customercomment;
+	}
+
+	/**
+	 * Return all CustomerComment entity
+	 * 
+	 */
+	@Transactional
+	public List<CustomerComment> findAllCustomerComments(Integer startResult, Integer maxRows) {
+		return new java.util.ArrayList<CustomerComment>(customerCommentDAO.findAllCustomerComments(startResult, maxRows));
+	}
+
+	/**
+	 * Delete an existing CustomerComment entity
+	 * 
+	 */
+	@Transactional
+	public void deleteCustomerComment(CustomerComment customercomment) {
+		customerCommentDAO.remove(customercomment);
+		customerCommentDAO.flush();
 	}
 }

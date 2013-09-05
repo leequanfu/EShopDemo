@@ -46,10 +46,10 @@ import org.springframework.web.context.request.SessionScope;
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class })
 @ContextConfiguration(locations = {
-		"file:./src/main/resources/EShopDemo-security-context.xml",
-		"file:./src/main/resources/EShopDemo-service-context.xml",
-		"file:./src/main/resources/EShopDemo-dao-context.xml",
-		"file:./src/main/resources/EShopDemo-web-context.xml" })
+		"file:./resources/t11-security-context.xml",
+		"file:./resources/t11-service-context.xml",
+		"file:./resources/t11-dao-context.xml",
+		"file:./resources/t11-web-context.xml" })
 @Transactional
 public class OfferServiceTest {
 
@@ -77,18 +77,6 @@ public class OfferServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 */
-	@Test
-	public void findOfferByPrimaryKey() {
-		// TODO: JUnit - Populate test inputs for operation: findOfferByPrimaryKey 
-		Integer id = 0;
-		Offer response = null;
-		response = service.findOfferByPrimaryKey(id);
-		// TODO: JUnit - Add assertions to test outputs of operation: findOfferByPrimaryKey
-	}
-
-	/**
-	 * Operation Unit Test
 	 * Load an existing Offer entity
 	 * 
 	 */
@@ -97,6 +85,36 @@ public class OfferServiceTest {
 		Set<Offer> response = null;
 		response = service.loadOffers();
 		// TODO: JUnit - Add assertions to test outputs of operation: loadOffers
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Save an existing ProductOffer entity
+	 * 
+	 */
+	@Test
+	public void saveOfferProductOffers() {
+		// TODO: JUnit - Populate test inputs for operation: saveOfferProductOffers 
+		Integer id = 0;
+		ProductOffer related_productoffers = new com.lqf.eshopdemo.domain.ProductOffer();
+		Offer response = null;
+		response = service.saveOfferProductOffers(id, related_productoffers);
+		// TODO: JUnit - Add assertions to test outputs of operation: saveOfferProductOffers
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Return all Offer entity
+	 * 
+	 */
+	@Test
+	public void findAllOffers() {
+		// TODO: JUnit - Populate test inputs for operation: findAllOffers 
+		Integer startResult = 0;
+		Integer maxRows = 0;
+		List<Offer> response = null;
+		response = service.findAllOffers(startResult, maxRows);
+		// TODO: JUnit - Add assertions to test outputs of operation: findAllOffers
 	}
 
 	/**
@@ -113,17 +131,14 @@ public class OfferServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Return all Offer entity
-	 * 
 	 */
 	@Test
-	public void findAllOffers() {
-		// TODO: JUnit - Populate test inputs for operation: findAllOffers 
-		Integer startResult = 0;
-		Integer maxRows = 0;
-		List<Offer> response = null;
-		response = service.findAllOffers(startResult, maxRows);
-		// TODO: JUnit - Add assertions to test outputs of operation: findAllOffers
+	public void findOfferByPrimaryKey() {
+		// TODO: JUnit - Populate test inputs for operation: findOfferByPrimaryKey 
+		Integer id_1 = 0;
+		Offer response = null;
+		response = service.findOfferByPrimaryKey(id_1);
+		// TODO: JUnit - Add assertions to test outputs of operation: findOfferByPrimaryKey
 	}
 
 	/**
@@ -144,18 +159,6 @@ public class OfferServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Save an existing Offer entity
-	 * 
-	 */
-	@Test
-	public void saveOffer() {
-		// TODO: JUnit - Populate test inputs for operation: saveOffer 
-		Offer offer_1 = new com.lqf.eshopdemo.domain.Offer();
-		service.saveOffer(offer_1);
-	}
-
-	/**
-	 * Operation Unit Test
 	 * Return a count of all Offer entity
 	 * 
 	 */
@@ -168,17 +171,14 @@ public class OfferServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Save an existing ProductOffer entity
+	 * Save an existing Offer entity
 	 * 
 	 */
 	@Test
-	public void saveOfferProductOffers() {
-		// TODO: JUnit - Populate test inputs for operation: saveOfferProductOffers 
-		Integer id_1 = 0;
-		ProductOffer related_productoffers = new com.lqf.eshopdemo.domain.ProductOffer();
-		Offer response = null;
-		response = service.saveOfferProductOffers(id_1, related_productoffers);
-		// TODO: JUnit - Add assertions to test outputs of operation: saveOfferProductOffers
+	public void saveOffer() {
+		// TODO: JUnit - Populate test inputs for operation: saveOffer 
+		Offer offer_1 = new com.lqf.eshopdemo.domain.Offer();
+		service.saveOffer(offer_1);
 	}
 
 	/**

@@ -47,10 +47,10 @@ import org.springframework.web.context.request.SessionScope;
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class })
 @ContextConfiguration(locations = {
-		"file:./src/main/resources/EShopDemo-security-context.xml",
-		"file:./src/main/resources/EShopDemo-service-context.xml",
-		"file:./src/main/resources/EShopDemo-dao-context.xml",
-		"file:./src/main/resources/EShopDemo-web-context.xml" })
+		"file:./resources/t11-security-context.xml",
+		"file:./resources/t11-service-context.xml",
+		"file:./resources/t11-dao-context.xml",
+		"file:./resources/t11-web-context.xml" })
 @Transactional
 public class CustomerCommentServiceTest {
 
@@ -74,90 +74,6 @@ public class CustomerCommentServiceTest {
 	 */
 	public CustomerCommentServiceTest() {
 		setupRequestContext();
-	}
-
-	/**
-	 * Operation Unit Test
-	 */
-	@Test
-	public void findCustomerCommentByPrimaryKey() {
-		// TODO: JUnit - Populate test inputs for operation: findCustomerCommentByPrimaryKey 
-		Integer proId = 0;
-		Integer userId = 0;
-		CustomerComment response = null;
-		response = service.findCustomerCommentByPrimaryKey(proId, userId);
-		// TODO: JUnit - Add assertions to test outputs of operation: findCustomerCommentByPrimaryKey
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Save an existing Userinfo entity
-	 * 
-	 */
-	@Test
-	public void saveCustomerCommentUserinfo() {
-		// TODO: JUnit - Populate test inputs for operation: saveCustomerCommentUserinfo 
-		Integer proId_1 = 0;
-		Integer userId_1 = 0;
-		Userinfo related_userinfo = new com.lqf.eshopdemo.domain.Userinfo();
-		CustomerComment response = null;
-		response = service.saveCustomerCommentUserinfo(proId_1, userId_1, related_userinfo);
-		// TODO: JUnit - Add assertions to test outputs of operation: saveCustomerCommentUserinfo
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Save an existing CustomerComment entity
-	 * 
-	 */
-	@Test
-	public void saveCustomerComment() {
-		// TODO: JUnit - Populate test inputs for operation: saveCustomerComment 
-		CustomerComment customercomment = new com.lqf.eshopdemo.domain.CustomerComment();
-		service.saveCustomerComment(customercomment);
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Return all CustomerComment entity
-	 * 
-	 */
-	@Test
-	public void findAllCustomerComments() {
-		// TODO: JUnit - Populate test inputs for operation: findAllCustomerComments 
-		Integer startResult = 0;
-		Integer maxRows = 0;
-		List<CustomerComment> response = null;
-		response = service.findAllCustomerComments(startResult, maxRows);
-		// TODO: JUnit - Add assertions to test outputs of operation: findAllCustomerComments
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Save an existing ProductDetail entity
-	 * 
-	 */
-	@Test
-	public void saveCustomerCommentProductDetail() {
-		// TODO: JUnit - Populate test inputs for operation: saveCustomerCommentProductDetail 
-		Integer proId_2 = 0;
-		Integer userId_2 = 0;
-		ProductDetail related_productdetail = new com.lqf.eshopdemo.domain.ProductDetail();
-		CustomerComment response = null;
-		response = service.saveCustomerCommentProductDetail(proId_2, userId_2, related_productdetail);
-		// TODO: JUnit - Add assertions to test outputs of operation: saveCustomerCommentProductDetail
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Delete an existing CustomerComment entity
-	 * 
-	 */
-	@Test
-	public void deleteCustomerComment() {
-		// TODO: JUnit - Populate test inputs for operation: deleteCustomerComment 
-		CustomerComment customercomment_1 = new com.lqf.eshopdemo.domain.CustomerComment();
-		service.deleteCustomerComment(customercomment_1);
 	}
 
 	/**
@@ -190,6 +106,22 @@ public class CustomerCommentServiceTest {
 
 	/**
 	 * Operation Unit Test
+	 * Save an existing Userinfo entity
+	 * 
+	 */
+	@Test
+	public void saveCustomerCommentUserinfo() {
+		// TODO: JUnit - Populate test inputs for operation: saveCustomerCommentUserinfo 
+		Integer proId = 0;
+		Integer userId = 0;
+		Userinfo related_userinfo = new com.lqf.eshopdemo.domain.Userinfo();
+		CustomerComment response = null;
+		response = service.saveCustomerCommentUserinfo(proId, userId, related_userinfo);
+		// TODO: JUnit - Add assertions to test outputs of operation: saveCustomerCommentUserinfo
+	}
+
+	/**
+	 * Operation Unit Test
 	 * Return a count of all CustomerComment entity
 	 * 
 	 */
@@ -198,6 +130,31 @@ public class CustomerCommentServiceTest {
 		Integer response = null;
 		response = service.countCustomerComments();
 		// TODO: JUnit - Add assertions to test outputs of operation: countCustomerComments
+	}
+
+	/**
+	 * Operation Unit Test
+	 */
+	@Test
+	public void findCustomerCommentByPrimaryKey() {
+		// TODO: JUnit - Populate test inputs for operation: findCustomerCommentByPrimaryKey 
+		Integer proId_1 = 0;
+		Integer userId_1 = 0;
+		CustomerComment response = null;
+		response = service.findCustomerCommentByPrimaryKey(proId_1, userId_1);
+		// TODO: JUnit - Add assertions to test outputs of operation: findCustomerCommentByPrimaryKey
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Save an existing CustomerComment entity
+	 * 
+	 */
+	@Test
+	public void saveCustomerComment() {
+		// TODO: JUnit - Populate test inputs for operation: saveCustomerComment 
+		CustomerComment customercomment = new com.lqf.eshopdemo.domain.CustomerComment();
+		service.saveCustomerComment(customercomment);
 	}
 
 	/**
@@ -214,6 +171,49 @@ public class CustomerCommentServiceTest {
 		CustomerComment response = null;
 		response = service.deleteCustomerCommentProductDetail(customercomment_proId_1, customercomment_userId_1, related_productdetail_id);
 		// TODO: JUnit - Add assertions to test outputs of operation: deleteCustomerCommentProductDetail
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Save an existing ProductDetail entity
+	 * 
+	 */
+	@Test
+	public void saveCustomerCommentProductDetail() {
+		// TODO: JUnit - Populate test inputs for operation: saveCustomerCommentProductDetail 
+		Integer proId_2 = 0;
+		Integer userId_2 = 0;
+		ProductDetail related_productdetail = new com.lqf.eshopdemo.domain.ProductDetail();
+		CustomerComment response = null;
+		response = service.saveCustomerCommentProductDetail(proId_2, userId_2, related_productdetail);
+		// TODO: JUnit - Add assertions to test outputs of operation: saveCustomerCommentProductDetail
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Return all CustomerComment entity
+	 * 
+	 */
+	@Test
+	public void findAllCustomerComments() {
+		// TODO: JUnit - Populate test inputs for operation: findAllCustomerComments 
+		Integer startResult = 0;
+		Integer maxRows = 0;
+		List<CustomerComment> response = null;
+		response = service.findAllCustomerComments(startResult, maxRows);
+		// TODO: JUnit - Add assertions to test outputs of operation: findAllCustomerComments
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Delete an existing CustomerComment entity
+	 * 
+	 */
+	@Test
+	public void deleteCustomerComment() {
+		// TODO: JUnit - Populate test inputs for operation: deleteCustomerComment 
+		CustomerComment customercomment_1 = new com.lqf.eshopdemo.domain.CustomerComment();
+		service.deleteCustomerComment(customercomment_1);
 	}
 
 	/**

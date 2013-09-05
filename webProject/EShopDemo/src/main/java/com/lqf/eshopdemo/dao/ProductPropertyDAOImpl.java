@@ -67,28 +67,6 @@ public class ProductPropertyDAOImpl extends AbstractJpaDao<ProductProperty>
 	}
 
 	/**
-	 * JPQL Query - findProductPropertyByValue
-	 *
-	 */
-	@Transactional
-	public Set<ProductProperty> findProductPropertyByValue(String value) throws DataAccessException {
-
-		return findProductPropertyByValue(value, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findProductPropertyByValue
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<ProductProperty> findProductPropertyByValue(String value, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findProductPropertyByValue", startResult, maxRows, value);
-		return new LinkedHashSet<ProductProperty>(query.getResultList());
-	}
-
-	/**
 	 * JPQL Query - findProductPropertyByProId
 	 *
 	 */
@@ -111,50 +89,6 @@ public class ProductPropertyDAOImpl extends AbstractJpaDao<ProductProperty>
 	}
 
 	/**
-	 * JPQL Query - findProductPropertyByKey
-	 *
-	 */
-	@Transactional
-	public Set<ProductProperty> findProductPropertyByKey(String key) throws DataAccessException {
-
-		return findProductPropertyByKey(key, -1, -1);
-	}
-
-	/**
-	 * JPQL Query - findProductPropertyByKey
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<ProductProperty> findProductPropertyByKey(String key, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findProductPropertyByKey", startResult, maxRows, key);
-		return new LinkedHashSet<ProductProperty>(query.getResultList());
-	}
-
-	/**
-	 * JPQL Query - findAllProductPropertys
-	 *
-	 */
-	@Transactional
-	public Set<ProductProperty> findAllProductPropertys() throws DataAccessException {
-
-		return findAllProductPropertys(-1, -1);
-	}
-
-	/**
-	 * JPQL Query - findAllProductPropertys
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<ProductProperty> findAllProductPropertys(int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findAllProductPropertys", startResult, maxRows);
-		return new LinkedHashSet<ProductProperty>(query.getResultList());
-	}
-
-	/**
 	 * JPQL Query - findProductPropertyByValueContaining
 	 *
 	 */
@@ -173,6 +107,28 @@ public class ProductPropertyDAOImpl extends AbstractJpaDao<ProductProperty>
 	@Transactional
 	public Set<ProductProperty> findProductPropertyByValueContaining(String value, int startResult, int maxRows) throws DataAccessException {
 		Query query = createNamedQuery("findProductPropertyByValueContaining", startResult, maxRows, value);
+		return new LinkedHashSet<ProductProperty>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findProductPropertyByKeyContaining
+	 *
+	 */
+	@Transactional
+	public Set<ProductProperty> findProductPropertyByKeyContaining(String key) throws DataAccessException {
+
+		return findProductPropertyByKeyContaining(key, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findProductPropertyByKeyContaining
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<ProductProperty> findProductPropertyByKeyContaining(String key, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findProductPropertyByKeyContaining", startResult, maxRows, key);
 		return new LinkedHashSet<ProductProperty>(query.getResultList());
 	}
 
@@ -202,24 +158,68 @@ public class ProductPropertyDAOImpl extends AbstractJpaDao<ProductProperty>
 	}
 
 	/**
-	 * JPQL Query - findProductPropertyByKeyContaining
+	 * JPQL Query - findProductPropertyByKey
 	 *
 	 */
 	@Transactional
-	public Set<ProductProperty> findProductPropertyByKeyContaining(String key) throws DataAccessException {
+	public Set<ProductProperty> findProductPropertyByKey(String key) throws DataAccessException {
 
-		return findProductPropertyByKeyContaining(key, -1, -1);
+		return findProductPropertyByKey(key, -1, -1);
 	}
 
 	/**
-	 * JPQL Query - findProductPropertyByKeyContaining
+	 * JPQL Query - findProductPropertyByKey
 	 *
 	 */
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Set<ProductProperty> findProductPropertyByKeyContaining(String key, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findProductPropertyByKeyContaining", startResult, maxRows, key);
+	public Set<ProductProperty> findProductPropertyByKey(String key, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findProductPropertyByKey", startResult, maxRows, key);
+		return new LinkedHashSet<ProductProperty>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findProductPropertyByValue
+	 *
+	 */
+	@Transactional
+	public Set<ProductProperty> findProductPropertyByValue(String value) throws DataAccessException {
+
+		return findProductPropertyByValue(value, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findProductPropertyByValue
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<ProductProperty> findProductPropertyByValue(String value, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findProductPropertyByValue", startResult, maxRows, value);
+		return new LinkedHashSet<ProductProperty>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findAllProductPropertys
+	 *
+	 */
+	@Transactional
+	public Set<ProductProperty> findAllProductPropertys() throws DataAccessException {
+
+		return findAllProductPropertys(-1, -1);
+	}
+
+	/**
+	 * JPQL Query - findAllProductPropertys
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<ProductProperty> findAllProductPropertys(int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findAllProductPropertys", startResult, maxRows);
 		return new LinkedHashSet<ProductProperty>(query.getResultList());
 	}
 

@@ -54,6 +54,87 @@ public class CatalogController {
 	private CatalogService catalogService;
 
 	/**
+	 * Show all Catalog entities
+	 * 
+	 */
+	@RequestMapping("/indexCatalog")
+	public ModelAndView listCatalogs() {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("catalogs", catalogService.loadCatalogs());
+
+		mav.setViewName("catalog/listCatalogs.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Save an existing Catalog entity
+	 * 
+	 */
+	@RequestMapping("/saveCatalog")
+	public String saveCatalog(@ModelAttribute Catalog catalog) {
+		catalogService.saveCatalog(catalog);
+		return "forward:/indexCatalog";
+	}
+
+	/**
+	 * Edit an existing ProductCatalog entity
+	 * 
+	 */
+	@RequestMapping("/editCatalogProductCatalogs")
+	public ModelAndView editCatalogProductCatalogs(@RequestParam Integer catalog_id, @RequestParam Integer productcatalogs_productId, @RequestParam Integer productcatalogs_catalogId) {
+		ProductCatalog productcatalog = productCatalogDAO.findProductCatalogByPrimaryKey(productcatalogs_productId, productcatalogs_catalogId, -1, -1);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("catalog_id", catalog_id);
+		mav.addObject("productcatalog", productcatalog);
+		mav.setViewName("catalog/productcatalogs/editProductCatalogs.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Delete an existing Catalog entity
+	 * 
+	 */
+	@RequestMapping("/deleteCatalog")
+	public String deleteCatalog(@RequestParam Integer idKey) {
+		Catalog catalog = catalogDAO.findCatalogByPrimaryKey(idKey);
+		catalogService.deleteCatalog(catalog);
+		return "forward:/indexCatalog";
+	}
+
+	/**
+	 * Select the child ProductCatalog entity for display allowing the user to confirm that they would like to delete the entity
+	 * 
+	 */
+	@RequestMapping("/confirmDeleteCatalogProductCatalogs")
+	public ModelAndView confirmDeleteCatalogProductCatalogs(@RequestParam Integer catalog_id, @RequestParam Integer related_productcatalogs_productId, @RequestParam Integer related_productcatalogs_catalogId) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productcatalog", productCatalogDAO.findProductCatalogByPrimaryKey(related_productcatalogs_productId, related_productcatalogs_catalogId));
+		mav.addObject("catalog_id", catalog_id);
+		mav.setViewName("catalog/productcatalogs/deleteProductCatalogs.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Select an existing Catalog entity
+	 * 
+	 */
+	@RequestMapping("/selectCatalog")
+	public ModelAndView selectCatalog(@RequestParam Integer idKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("catalog", catalogDAO.findCatalogByPrimaryKey(idKey));
+		mav.setViewName("catalog/viewCatalog.jsp");
+
+		return mav;
+	}
+
+	/**
 	 * Create a new Catalog entity
 	 * 
 	 */
@@ -69,14 +150,30 @@ public class CatalogController {
 	}
 
 	/**
-	 * Select an existing Catalog entity
+	 * Edit an existing Catalog entity
 	 * 
 	 */
-	@RequestMapping("/selectCatalog")
-	public ModelAndView selectCatalog(@RequestParam Integer idKey) {
+	@RequestMapping("/editCatalog")
+	public ModelAndView editCatalog(@RequestParam Integer idKey) {
 		ModelAndView mav = new ModelAndView();
 
 		mav.addObject("catalog", catalogDAO.findCatalogByPrimaryKey(idKey));
+		mav.setViewName("catalog/editCatalog.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Save an existing ProductCatalog entity
+	 * 
+	 */
+	@RequestMapping("/saveCatalogProductCatalogs")
+	public ModelAndView saveCatalogProductCatalogs(@RequestParam Integer catalog_id, @ModelAttribute ProductCatalog productcatalogs) {
+		Catalog parent_catalog = catalogService.saveCatalogProductCatalogs(catalog_id, productcatalogs);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("catalog_id", catalog_id);
+		mav.addObject("catalog", parent_catalog);
 		mav.setViewName("catalog/viewCatalog.jsp");
 
 		return mav;
@@ -100,6 +197,20 @@ public class CatalogController {
 	}
 
 	/**
+	 * Show all ProductCatalog entities by Catalog
+	 * 
+	 */
+	@RequestMapping("/listCatalogProductCatalogs")
+	public ModelAndView listCatalogProductCatalogs(@RequestParam Integer idKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("catalog", catalogDAO.findCatalogByPrimaryKey(idKey));
+		mav.setViewName("catalog/productcatalogs/listProductCatalogs.jsp");
+
+		return mav;
+	}
+
+	/**
 	 * View an existing ProductCatalog entity
 	 * 
 	 */
@@ -116,6 +227,14 @@ public class CatalogController {
 	}
 
 	/**
+	 * Entry point to show all Catalog entities
+	 * 
+	 */
+	public String indexCatalog() {
+		return "redirect:/indexCatalog";
+	}
+
+	/**
 	 * Select the Catalog entity for display allowing the user to confirm that they would like to delete the entity
 	 * 
 	 */
@@ -125,30 +244,6 @@ public class CatalogController {
 
 		mav.addObject("catalog", catalogDAO.findCatalogByPrimaryKey(idKey));
 		mav.setViewName("catalog/deleteCatalog.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Save an existing Catalog entity
-	 * 
-	 */
-	@RequestMapping("/saveCatalog")
-	public String saveCatalog(@ModelAttribute Catalog catalog) {
-		catalogService.saveCatalog(catalog);
-		return "forward:/indexCatalog";
-	}
-
-	/**
-	 * Edit an existing Catalog entity
-	 * 
-	 */
-	@RequestMapping("/editCatalog")
-	public ModelAndView editCatalog(@RequestParam Integer idKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("catalog", catalogDAO.findCatalogByPrimaryKey(idKey));
-		mav.setViewName("catalog/editCatalog.jsp");
 
 		return mav;
 	}
@@ -172,70 +267,6 @@ public class CatalogController {
 	}
 
 	/**
-	 * Save an existing ProductCatalog entity
-	 * 
-	 */
-	@RequestMapping("/saveCatalogProductCatalogs")
-	public ModelAndView saveCatalogProductCatalogs(@RequestParam Integer catalog_id, @ModelAttribute ProductCatalog productcatalogs) {
-		Catalog parent_catalog = catalogService.saveCatalogProductCatalogs(catalog_id, productcatalogs);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("catalog_id", catalog_id);
-		mav.addObject("catalog", parent_catalog);
-		mav.setViewName("catalog/viewCatalog.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Edit an existing ProductCatalog entity
-	 * 
-	 */
-	@RequestMapping("/editCatalogProductCatalogs")
-	public ModelAndView editCatalogProductCatalogs(@RequestParam Integer catalog_id, @RequestParam Integer productcatalogs_productId, @RequestParam Integer productcatalogs_catalogId) {
-		ProductCatalog productcatalog = productCatalogDAO.findProductCatalogByPrimaryKey(productcatalogs_productId, productcatalogs_catalogId, -1, -1);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("catalog_id", catalog_id);
-		mav.addObject("productcatalog", productcatalog);
-		mav.setViewName("catalog/productcatalogs/editProductCatalogs.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Show all ProductCatalog entities by Catalog
-	 * 
-	 */
-	@RequestMapping("/listCatalogProductCatalogs")
-	public ModelAndView listCatalogProductCatalogs(@RequestParam Integer idKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("catalog", catalogDAO.findCatalogByPrimaryKey(idKey));
-		mav.setViewName("catalog/productcatalogs/listProductCatalogs.jsp");
-
-		return mav;
-	}
-
-	/**
-	 */
-	@RequestMapping("/catalogController/binary.action")
-	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("streamedBinaryContentView");
-		return mav;
-
-	}
-
-	/**
-	 * Entry point to show all Catalog entities
-	 * 
-	 */
-	public String indexCatalog() {
-		return "redirect:/indexCatalog";
-	}
-
-	/**
 	 * Create a new ProductCatalog entity
 	 * 
 	 */
@@ -251,43 +282,12 @@ public class CatalogController {
 	}
 
 	/**
-	 * Delete an existing Catalog entity
-	 * 
 	 */
-	@RequestMapping("/deleteCatalog")
-	public String deleteCatalog(@RequestParam Integer idKey) {
-		Catalog catalog = catalogDAO.findCatalogByPrimaryKey(idKey);
-		catalogService.deleteCatalog(catalog);
-		return "forward:/indexCatalog";
-	}
-
-	/**
-	 * Show all Catalog entities
-	 * 
-	 */
-	@RequestMapping("/indexCatalog")
-	public ModelAndView listCatalogs() {
+	@RequestMapping("/catalogController/binary.action")
+	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("catalogs", catalogService.loadCatalogs());
-
-		mav.setViewName("catalog/listCatalogs.jsp");
-
+		mav.setViewName("streamedBinaryContentView");
 		return mav;
-	}
 
-	/**
-	 * Select the child ProductCatalog entity for display allowing the user to confirm that they would like to delete the entity
-	 * 
-	 */
-	@RequestMapping("/confirmDeleteCatalogProductCatalogs")
-	public ModelAndView confirmDeleteCatalogProductCatalogs(@RequestParam Integer catalog_id, @RequestParam Integer related_productcatalogs_productId, @RequestParam Integer related_productcatalogs_catalogId) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productcatalog", productCatalogDAO.findProductCatalogByPrimaryKey(related_productcatalogs_productId, related_productcatalogs_catalogId));
-		mav.addObject("catalog_id", catalog_id);
-		mav.setViewName("catalog/productcatalogs/deleteProductCatalogs.jsp");
-
-		return mav;
 	}
 }

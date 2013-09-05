@@ -55,42 +55,55 @@ public class ProductOfferServiceImpl implements ProductOfferService {
 	}
 
 	/**
-	 * Delete an existing Offer entity
+	 * Return all ProductOffer entity
 	 * 
 	 */
 	@Transactional
-	public ProductOffer deleteProductOfferOffer(Integer productoffer_proId, Integer productoffer_offerId, Integer related_offer_id) {
-		ProductOffer productoffer = productOfferDAO.findProductOfferByPrimaryKey(productoffer_proId, productoffer_offerId, -1, -1);
-		Offer related_offer = offerDAO.findOfferByPrimaryKey(related_offer_id, -1, -1);
+	public List<ProductOffer> findAllProductOffers(Integer startResult, Integer maxRows) {
+		return new java.util.ArrayList<ProductOffer>(productOfferDAO.findAllProductOffers(startResult, maxRows));
+	}
 
-		productoffer.setOffer(null);
-		related_offer.getProductOffers().remove(productoffer);
+	/**
+	 * Delete an existing ProductDetail entity
+	 * 
+	 */
+	@Transactional
+	public ProductOffer deleteProductOfferProductDetail(Integer productoffer_proId, Integer productoffer_offerId, Integer related_productdetail_id) {
+		ProductOffer productoffer = productOfferDAO.findProductOfferByPrimaryKey(productoffer_proId, productoffer_offerId, -1, -1);
+		ProductDetail related_productdetail = productDetailDAO.findProductDetailByPrimaryKey(related_productdetail_id, -1, -1);
+
+		productoffer.setProductDetail(null);
+		related_productdetail.getProductOffers().remove(productoffer);
 		productoffer = productOfferDAO.store(productoffer);
 		productOfferDAO.flush();
 
-		related_offer = offerDAO.store(related_offer);
-		offerDAO.flush();
+		related_productdetail = productDetailDAO.store(related_productdetail);
+		productDetailDAO.flush();
 
-		offerDAO.remove(related_offer);
-		offerDAO.flush();
+		productDetailDAO.remove(related_productdetail);
+		productDetailDAO.flush();
 
 		return productoffer;
 	}
 
 	/**
-	 */
-	@Transactional
-	public ProductOffer findProductOfferByPrimaryKey(Integer proId, Integer offerId) {
-		return productOfferDAO.findProductOfferByPrimaryKey(proId, offerId);
-	}
-
-	/**
-	 * Load an existing ProductOffer entity
+	 * Save an existing ProductOffer entity
 	 * 
 	 */
 	@Transactional
-	public Set<ProductOffer> loadProductOffers() {
-		return productOfferDAO.findAllProductOffers();
+	public void saveProductOffer(ProductOffer productoffer) {
+		ProductOffer existingProductOffer = productOfferDAO.findProductOfferByPrimaryKey(productoffer.getProId(), productoffer.getOfferId());
+
+		if (existingProductOffer != null) {
+			if (existingProductOffer != productoffer) {
+				existingProductOffer.setProId(productoffer.getProId());
+				existingProductOffer.setOfferId(productoffer.getOfferId());
+			}
+			productoffer = productOfferDAO.store(existingProductOffer);
+		} else {
+			productoffer = productOfferDAO.store(productoffer);
+		}
+		productOfferDAO.flush();
 	}
 
 	/**
@@ -109,6 +122,7 @@ public class ProductOfferServiceImpl implements ProductOfferService {
 			existingproductDetail.setPrice(related_productdetail.getPrice());
 			existingproductDetail.setQuantity(related_productdetail.getQuantity());
 			existingproductDetail.setDescription(related_productdetail.getDescription());
+			existingproductDetail.setPicnum(related_productdetail.getPicnum());
 			related_productdetail = existingproductDetail;
 		} else {
 			related_productdetail = productDetailDAO.store(related_productdetail);
@@ -124,6 +138,15 @@ public class ProductOfferServiceImpl implements ProductOfferService {
 		productDetailDAO.flush();
 
 		return productoffer;
+	}
+
+	/**
+	 * Return a count of all ProductOffer entity
+	 * 
+	 */
+	@Transactional
+	public Integer countProductOffers() {
+		return ((Long) productOfferDAO.createQuerySingleResult("select count(*) from ProductOffer o").getSingleResult()).intValue();
 	}
 
 	/**
@@ -157,35 +180,33 @@ public class ProductOfferServiceImpl implements ProductOfferService {
 	}
 
 	/**
-	 * Return all ProductOffer entity
+	 * Delete an existing Offer entity
 	 * 
 	 */
 	@Transactional
-	public List<ProductOffer> findAllProductOffers(Integer startResult, Integer maxRows) {
-		return new java.util.ArrayList<ProductOffer>(productOfferDAO.findAllProductOffers(startResult, maxRows));
-	}
-
-	/**
-	 * Delete an existing ProductDetail entity
-	 * 
-	 */
-	@Transactional
-	public ProductOffer deleteProductOfferProductDetail(Integer productoffer_proId, Integer productoffer_offerId, Integer related_productdetail_id) {
+	public ProductOffer deleteProductOfferOffer(Integer productoffer_proId, Integer productoffer_offerId, Integer related_offer_id) {
 		ProductOffer productoffer = productOfferDAO.findProductOfferByPrimaryKey(productoffer_proId, productoffer_offerId, -1, -1);
-		ProductDetail related_productdetail = productDetailDAO.findProductDetailByPrimaryKey(related_productdetail_id, -1, -1);
+		Offer related_offer = offerDAO.findOfferByPrimaryKey(related_offer_id, -1, -1);
 
-		productoffer.setProductDetail(null);
-		related_productdetail.getProductOffers().remove(productoffer);
+		productoffer.setOffer(null);
+		related_offer.getProductOffers().remove(productoffer);
 		productoffer = productOfferDAO.store(productoffer);
 		productOfferDAO.flush();
 
-		related_productdetail = productDetailDAO.store(related_productdetail);
-		productDetailDAO.flush();
+		related_offer = offerDAO.store(related_offer);
+		offerDAO.flush();
 
-		productDetailDAO.remove(related_productdetail);
-		productDetailDAO.flush();
+		offerDAO.remove(related_offer);
+		offerDAO.flush();
 
 		return productoffer;
+	}
+
+	/**
+	 */
+	@Transactional
+	public ProductOffer findProductOfferByPrimaryKey(Integer proId, Integer offerId) {
+		return productOfferDAO.findProductOfferByPrimaryKey(proId, offerId);
 	}
 
 	/**
@@ -199,31 +220,11 @@ public class ProductOfferServiceImpl implements ProductOfferService {
 	}
 
 	/**
-	 * Return a count of all ProductOffer entity
+	 * Load an existing ProductOffer entity
 	 * 
 	 */
 	@Transactional
-	public Integer countProductOffers() {
-		return ((Long) productOfferDAO.createQuerySingleResult("select count(*) from ProductOffer o").getSingleResult()).intValue();
-	}
-
-	/**
-	 * Save an existing ProductOffer entity
-	 * 
-	 */
-	@Transactional
-	public void saveProductOffer(ProductOffer productoffer) {
-		ProductOffer existingProductOffer = productOfferDAO.findProductOfferByPrimaryKey(productoffer.getProId(), productoffer.getOfferId());
-
-		if (existingProductOffer != null) {
-			if (existingProductOffer != productoffer) {
-				existingProductOffer.setProId(productoffer.getProId());
-				existingProductOffer.setOfferId(productoffer.getOfferId());
-			}
-			productoffer = productOfferDAO.store(existingProductOffer);
-		} else {
-			productoffer = productOfferDAO.store(productoffer);
-		}
-		productOfferDAO.flush();
+	public Set<ProductOffer> loadProductOffers() {
+		return productOfferDAO.findAllProductOffers();
 	}
 }

@@ -15,18 +15,6 @@ import org.springframework.dao.DataAccessException;
 public interface ProductPropertyDAO extends JpaDao<ProductProperty> {
 
 	/**
-	 * JPQL Query - findProductPropertyByValue
-	 *
-	 */
-	public Set<ProductProperty> findProductPropertyByValue(String value) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findProductPropertyByValue
-	 *
-	 */
-	public Set<ProductProperty> findProductPropertyByValue(String value, int startResult, int maxRows) throws DataAccessException;
-
-	/**
 	 * JPQL Query - findProductPropertyByProId
 	 *
 	 */
@@ -39,40 +27,28 @@ public interface ProductPropertyDAO extends JpaDao<ProductProperty> {
 	public Set<ProductProperty> findProductPropertyByProId(Integer proId, int startResult, int maxRows) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findProductPropertyByKey
+	 * JPQL Query - findProductPropertyByValueContaining
 	 *
 	 */
-	public Set<ProductProperty> findProductPropertyByKey(String key) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findProductPropertyByKey
-	 *
-	 */
-	public Set<ProductProperty> findProductPropertyByKey(String key, int startResult, int maxRows) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findAllProductPropertys
-	 *
-	 */
-	public Set<ProductProperty> findAllProductPropertys() throws DataAccessException;
-
-	/**
-	 * JPQL Query - findAllProductPropertys
-	 *
-	 */
-	public Set<ProductProperty> findAllProductPropertys(int startResult, int maxRows) throws DataAccessException;
+	public Set<ProductProperty> findProductPropertyByValueContaining(String value) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findProductPropertyByValueContaining
 	 *
 	 */
-	public Set<ProductProperty> findProductPropertyByValueContaining(String value_1) throws DataAccessException;
+	public Set<ProductProperty> findProductPropertyByValueContaining(String value, int startResult, int maxRows) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findProductPropertyByValueContaining
+	 * JPQL Query - findProductPropertyByKeyContaining
 	 *
 	 */
-	public Set<ProductProperty> findProductPropertyByValueContaining(String value_1, int startResult, int maxRows) throws DataAccessException;
+	public Set<ProductProperty> findProductPropertyByKeyContaining(String key) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findProductPropertyByKeyContaining
+	 *
+	 */
+	public Set<ProductProperty> findProductPropertyByKeyContaining(String key, int startResult, int maxRows) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findProductPropertyByPrimaryKey
@@ -87,15 +63,39 @@ public interface ProductPropertyDAO extends JpaDao<ProductProperty> {
 	public ProductProperty findProductPropertyByPrimaryKey(Integer proId_1, String key_1, int startResult, int maxRows) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findProductPropertyByKeyContaining
+	 * JPQL Query - findProductPropertyByKey
 	 *
 	 */
-	public Set<ProductProperty> findProductPropertyByKeyContaining(String key_2) throws DataAccessException;
+	public Set<ProductProperty> findProductPropertyByKey(String key_2) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findProductPropertyByKeyContaining
+	 * JPQL Query - findProductPropertyByKey
 	 *
 	 */
-	public Set<ProductProperty> findProductPropertyByKeyContaining(String key_2, int startResult, int maxRows) throws DataAccessException;
+	public Set<ProductProperty> findProductPropertyByKey(String key_2, int startResult, int maxRows) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findProductPropertyByValue
+	 *
+	 */
+	public Set<ProductProperty> findProductPropertyByValue(String value_1) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findProductPropertyByValue
+	 *
+	 */
+	public Set<ProductProperty> findProductPropertyByValue(String value_1, int startResult, int maxRows) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findAllProductPropertys
+	 *
+	 */
+	public Set<ProductProperty> findAllProductPropertys() throws DataAccessException;
+
+	/**
+	 * JPQL Query - findAllProductPropertys
+	 *
+	 */
+	public Set<ProductProperty> findAllProductPropertys(int startResult, int maxRows) throws DataAccessException;
 
 }

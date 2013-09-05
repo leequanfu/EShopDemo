@@ -15,16 +15,40 @@ import org.springframework.dao.DataAccessException;
 public interface ProductOfferDAO extends JpaDao<ProductOffer> {
 
 	/**
-	 * JPQL Query - findProductOfferByPrimaryKey
+	 * JPQL Query - findProductOfferByProId
 	 *
 	 */
-	public ProductOffer findProductOfferByPrimaryKey(Integer proId, Integer offerId) throws DataAccessException;
+	public Set<ProductOffer> findProductOfferByProId(Integer proId) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findProductOfferByProId
+	 *
+	 */
+	public Set<ProductOffer> findProductOfferByProId(Integer proId, int startResult, int maxRows) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findProductOfferByOfferId
+	 *
+	 */
+	public Set<ProductOffer> findProductOfferByOfferId(Integer offerId) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findProductOfferByOfferId
+	 *
+	 */
+	public Set<ProductOffer> findProductOfferByOfferId(Integer offerId, int startResult, int maxRows) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findProductOfferByPrimaryKey
 	 *
 	 */
-	public ProductOffer findProductOfferByPrimaryKey(Integer proId, Integer offerId, int startResult, int maxRows) throws DataAccessException;
+	public ProductOffer findProductOfferByPrimaryKey(Integer proId_1, Integer offerId_1) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findProductOfferByPrimaryKey
+	 *
+	 */
+	public ProductOffer findProductOfferByPrimaryKey(Integer proId_1, Integer offerId_1, int startResult, int maxRows) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findAllProductOffers
@@ -37,29 +61,5 @@ public interface ProductOfferDAO extends JpaDao<ProductOffer> {
 	 *
 	 */
 	public Set<ProductOffer> findAllProductOffers(int startResult, int maxRows) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findProductOfferByProId
-	 *
-	 */
-	public Set<ProductOffer> findProductOfferByProId(Integer proId_1) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findProductOfferByProId
-	 *
-	 */
-	public Set<ProductOffer> findProductOfferByProId(Integer proId_1, int startResult, int maxRows) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findProductOfferByOfferId
-	 *
-	 */
-	public Set<ProductOffer> findProductOfferByOfferId(Integer offerId_1) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findProductOfferByOfferId
-	 *
-	 */
-	public Set<ProductOffer> findProductOfferByOfferId(Integer offerId_1, int startResult, int maxRows) throws DataAccessException;
 
 }

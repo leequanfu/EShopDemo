@@ -46,13 +46,6 @@ public class ProductPropertyServiceImpl implements ProductPropertyService {
 	}
 
 	/**
-	 */
-	@Transactional
-	public ProductProperty findProductPropertyByPrimaryKey(Integer proId, String key) {
-		return productPropertyDAO.findProductPropertyByPrimaryKey(proId, key);
-	}
-
-	/**
 	 * Return a count of all ProductProperty entity
 	 * 
 	 */
@@ -62,36 +55,10 @@ public class ProductPropertyServiceImpl implements ProductPropertyService {
 	}
 
 	/**
-	 * Save an existing ProductDetail entity
-	 * 
 	 */
 	@Transactional
-	public ProductProperty saveProductPropertyProductDetail(Integer proId, String key, ProductDetail related_productdetail) {
-		ProductProperty productproperty = productPropertyDAO.findProductPropertyByPrimaryKey(proId, key, -1, -1);
-		ProductDetail existingproductDetail = productDetailDAO.findProductDetailByPrimaryKey(related_productdetail.getId());
-
-		// copy into the existing record to preserve existing relationships
-		if (existingproductDetail != null) {
-			existingproductDetail.setId(related_productdetail.getId());
-			existingproductDetail.setTitle(related_productdetail.getTitle());
-			existingproductDetail.setPrice(related_productdetail.getPrice());
-			existingproductDetail.setQuantity(related_productdetail.getQuantity());
-			existingproductDetail.setDescription(related_productdetail.getDescription());
-			related_productdetail = existingproductDetail;
-		} else {
-			related_productdetail = productDetailDAO.store(related_productdetail);
-			productDetailDAO.flush();
-		}
-
-		productproperty.setProductDetail(related_productdetail);
-		related_productdetail.getProductProperties().add(productproperty);
-		productproperty = productPropertyDAO.store(productproperty);
-		productPropertyDAO.flush();
-
-		related_productdetail = productDetailDAO.store(related_productdetail);
-		productDetailDAO.flush();
-
-		return productproperty;
+	public ProductProperty findProductPropertyByPrimaryKey(Integer proId, String key) {
+		return productPropertyDAO.findProductPropertyByPrimaryKey(proId, key);
 	}
 
 	/**
@@ -125,6 +92,15 @@ public class ProductPropertyServiceImpl implements ProductPropertyService {
 	}
 
 	/**
+	 * Load an existing ProductProperty entity
+	 * 
+	 */
+	@Transactional
+	public Set<ProductProperty> loadProductPropertys() {
+		return productPropertyDAO.findAllProductPropertys();
+	}
+
+	/**
 	 * Delete an existing ProductDetail entity
 	 * 
 	 */
@@ -148,15 +124,6 @@ public class ProductPropertyServiceImpl implements ProductPropertyService {
 	}
 
 	/**
-	 * Load an existing ProductProperty entity
-	 * 
-	 */
-	@Transactional
-	public Set<ProductProperty> loadProductPropertys() {
-		return productPropertyDAO.findAllProductPropertys();
-	}
-
-	/**
 	 * Delete an existing ProductProperty entity
 	 * 
 	 */
@@ -164,5 +131,39 @@ public class ProductPropertyServiceImpl implements ProductPropertyService {
 	public void deleteProductProperty(ProductProperty productproperty) {
 		productPropertyDAO.remove(productproperty);
 		productPropertyDAO.flush();
+	}
+
+	/**
+	 * Save an existing ProductDetail entity
+	 * 
+	 */
+	@Transactional
+	public ProductProperty saveProductPropertyProductDetail(Integer proId, String key, ProductDetail related_productdetail) {
+		ProductProperty productproperty = productPropertyDAO.findProductPropertyByPrimaryKey(proId, key, -1, -1);
+		ProductDetail existingproductDetail = productDetailDAO.findProductDetailByPrimaryKey(related_productdetail.getId());
+
+		// copy into the existing record to preserve existing relationships
+		if (existingproductDetail != null) {
+			existingproductDetail.setId(related_productdetail.getId());
+			existingproductDetail.setTitle(related_productdetail.getTitle());
+			existingproductDetail.setPrice(related_productdetail.getPrice());
+			existingproductDetail.setQuantity(related_productdetail.getQuantity());
+			existingproductDetail.setDescription(related_productdetail.getDescription());
+			existingproductDetail.setPicnum(related_productdetail.getPicnum());
+			related_productdetail = existingproductDetail;
+		} else {
+			related_productdetail = productDetailDAO.store(related_productdetail);
+			productDetailDAO.flush();
+		}
+
+		productproperty.setProductDetail(related_productdetail);
+		related_productdetail.getProductProperties().add(productproperty);
+		productproperty = productPropertyDAO.store(productproperty);
+		productPropertyDAO.flush();
+
+		related_productdetail = productDetailDAO.store(related_productdetail);
+		productDetailDAO.flush();
+
+		return productproperty;
 	}
 }

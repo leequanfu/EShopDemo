@@ -295,17 +295,17 @@
 
 * html .u53_mouseOver {
     background-image: none;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u41_mouseOver.png");
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u53_mouseOver.png");
 }
 
 * html .u53_selected {
     background-image: none;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u41_selected.png");
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u53_selected.png");
 }
 
 * html .u53_normal {
     background-image: none;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u49_normal.png");
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u53_normal.png");
 }
 
 * html .u55_menu {
@@ -325,7 +325,7 @@
 
 * html .u57_normal {
     background-image: none;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u41_normal.png");
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u49_normal.png");
 }
 
 * html .u59_mouseOver {
@@ -340,22 +340,22 @@
 
 * html .u59_normal {
     background-image: none;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u41_normal.png");
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u49_normal.png");
 }
 
 * html .u61_mouseOver {
     background-image: none;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u61_mouseOver.png");
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u41_mouseOver.png");
 }
 
 * html .u61_selected {
     background-image: none;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u61_selected.png");
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u41_selected.png");
 }
 
 * html .u61_normal {
     background-image: none;
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u61_normal.png");
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="UserHome_files/u49_normal.png");
 }
 
 * html .u64_normal {

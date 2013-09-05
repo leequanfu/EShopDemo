@@ -64,45 +64,24 @@ public class OrderRestController {
 	private OrderService orderService;
 
 	/**
+	 * View an existing OrderItems entity
+	 * 
+	 */
+	@RequestMapping(value = "/Order/{order_id}/orderItemses/{orderitems_orderId}/{orderitems_productId}", method = RequestMethod.GET)
+	@ResponseBody
+	public OrderItems loadOrderOrderItemses(@PathVariable Integer order_id, @PathVariable Integer related_orderitemses_orderId, @PathVariable Integer related_orderitemses_productId) {
+		OrderItems orderitems = orderItemsDAO.findOrderItemsByPrimaryKey(related_orderitemses_orderId, related_orderitemses_productId, -1, -1);
+
+		return orderitems;
+	}
+
+	/**
 	 * Create a new Order entity
 	 * 
 	 */
 	@RequestMapping(value = "/Order", method = RequestMethod.POST)
 	@ResponseBody
 	public Order newOrder(@RequestBody Order order) {
-		orderService.saveOrder(order);
-		return orderDAO.findOrderByPrimaryKey(order.getId());
-	}
-
-	/**
-	 * View an existing Userinfo entity
-	 * 
-	 */
-	@RequestMapping(value = "/Order/{order_id}/userinfo/{userinfo_id}", method = RequestMethod.GET)
-	@ResponseBody
-	public Userinfo loadOrderUserinfo(@PathVariable Integer order_id, @PathVariable Integer related_userinfo_id) {
-		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(related_userinfo_id, -1, -1);
-
-		return userinfo;
-	}
-
-	/**
-	 * Delete an existing Userinfo entity
-	 * 
-	 */
-	@RequestMapping(value = "/Order/{order_id}/userinfo/{userinfo_id}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public void deleteOrderUserinfo(@PathVariable Integer order_id, @PathVariable Integer related_userinfo_id) {
-		orderService.deleteOrderUserinfo(order_id, related_userinfo_id);
-	}
-
-	/**
-	 * Save an existing Order entity
-	 * 
-	 */
-	@RequestMapping(value = "/Order", method = RequestMethod.PUT)
-	@ResponseBody
-	public Order saveOrder(@RequestBody Order order) {
 		orderService.saveOrder(order);
 		return orderDAO.findOrderByPrimaryKey(order.getId());
 	}
@@ -115,6 +94,109 @@ public class OrderRestController {
 	@ResponseBody
 	public List<OrderItems> getOrderOrderItemses(@PathVariable Integer order_id) {
 		return new java.util.ArrayList<OrderItems>(orderDAO.findOrderByPrimaryKey(order_id).getOrderItemses());
+	}
+
+	/**
+	 * Create a new Userinfo entity
+	 * 
+	 */
+	@RequestMapping(value = "/Order/{order_id}/userinfo", method = RequestMethod.POST)
+	@ResponseBody
+	public Userinfo newOrderUserinfo(@PathVariable Integer order_id, @RequestBody Userinfo userinfo) {
+		orderService.saveOrderUserinfo(order_id, userinfo);
+		return userinfoDAO.findUserinfoByPrimaryKey(userinfo.getId());
+	}
+
+	/**
+	 * Create a new OrderItems entity
+	 * 
+	 */
+	@RequestMapping(value = "/Order/{order_id}/orderItemses", method = RequestMethod.POST)
+	@ResponseBody
+	public OrderItems newOrderOrderItemses(@PathVariable Integer order_id, @RequestBody OrderItems orderitems) {
+		orderService.saveOrderOrderItemses(order_id, orderitems);
+		return orderItemsDAO.findOrderItemsByPrimaryKey(orderitems.getOrderId(), orderitems.getProductId());
+	}
+
+	/**
+	 * Save an existing OrderItems entity
+	 * 
+	 */
+	@RequestMapping(value = "/Order/{order_id}/orderItemses", method = RequestMethod.PUT)
+	@ResponseBody
+	public OrderItems saveOrderOrderItemses(@PathVariable Integer order_id, @RequestBody OrderItems orderitemses) {
+		orderService.saveOrderOrderItemses(order_id, orderitemses);
+		return orderItemsDAO.findOrderItemsByPrimaryKey(orderitemses.getOrderId(), orderitemses.getProductId());
+	}
+
+	/**
+	 * Delete an existing Order entity
+	 * 
+	 */
+	@RequestMapping(value = "/Order/{order_id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public void deleteOrder(@PathVariable Integer order_id) {
+		Order order = orderDAO.findOrderByPrimaryKey(order_id);
+		orderService.deleteOrder(order);
+	}
+
+	/**
+	 * Register custom, context-specific property editors
+	 * 
+	 */
+	@InitBinder
+	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
+		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
+		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
+		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
+		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
+		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
+		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
+		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
+		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
+		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
+		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
+	}
+
+	/**
+	 * Delete an existing OrderItems entity
+	 * 
+	 */
+	@RequestMapping(value = "/Order/{order_id}/orderItemses/{orderitems_orderId}/{orderitems_productId}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public void deleteOrderOrderItemses(@PathVariable Integer order_id, @PathVariable Integer related_orderitemses_orderId, @PathVariable Integer related_orderitemses_productId) {
+		orderService.deleteOrderOrderItemses(order_id, related_orderitemses_orderId, related_orderitemses_productId);
+	}
+
+	/**
+	 * Select an existing Order entity
+	 * 
+	 */
+	@RequestMapping(value = "/Order/{order_id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Order loadOrder(@PathVariable Integer order_id) {
+		return orderDAO.findOrderByPrimaryKey(order_id);
+	}
+
+	/**
+	 * Save an existing Userinfo entity
+	 * 
+	 */
+	@RequestMapping(value = "/Order/{order_id}/userinfo", method = RequestMethod.PUT)
+	@ResponseBody
+	public Userinfo saveOrderUserinfo(@PathVariable Integer order_id, @RequestBody Userinfo userinfo) {
+		orderService.saveOrderUserinfo(order_id, userinfo);
+		return userinfoDAO.findUserinfoByPrimaryKey(userinfo.getId());
+	}
+
+	/**
+	 * Delete an existing Userinfo entity
+	 * 
+	 */
+	@RequestMapping(value = "/Order/{order_id}/userinfo/{userinfo_id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public void deleteOrderUserinfo(@PathVariable Integer order_id, @PathVariable Integer related_userinfo_id) {
+		orderService.deleteOrderUserinfo(order_id, related_userinfo_id);
 	}
 
 	/**
@@ -138,107 +220,25 @@ public class OrderRestController {
 	}
 
 	/**
-	 * View an existing OrderItems entity
+	 * Save an existing Order entity
 	 * 
 	 */
-	@RequestMapping(value = "/Order/{order_id}/orderItemses/{orderitems_orderId}/{orderitems_productId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/Order", method = RequestMethod.PUT)
 	@ResponseBody
-	public OrderItems loadOrderOrderItemses(@PathVariable Integer order_id, @PathVariable Integer related_orderitemses_orderId, @PathVariable Integer related_orderitemses_productId) {
-		OrderItems orderitems = orderItemsDAO.findOrderItemsByPrimaryKey(related_orderitemses_orderId, related_orderitemses_productId, -1, -1);
-
-		return orderitems;
+	public Order saveOrder(@RequestBody Order order) {
+		orderService.saveOrder(order);
+		return orderDAO.findOrderByPrimaryKey(order.getId());
 	}
 
 	/**
-	 * Delete an existing Order entity
+	 * View an existing Userinfo entity
 	 * 
 	 */
-	@RequestMapping(value = "/Order/{order_id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/Order/{order_id}/userinfo/{userinfo_id}", method = RequestMethod.GET)
 	@ResponseBody
-	public void deleteOrder(@PathVariable Integer order_id) {
-		Order order = orderDAO.findOrderByPrimaryKey(order_id);
-		orderService.deleteOrder(order);
-	}
+	public Userinfo loadOrderUserinfo(@PathVariable Integer order_id, @PathVariable Integer related_userinfo_id) {
+		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(related_userinfo_id, -1, -1);
 
-	/**
-	 * Create a new OrderItems entity
-	 * 
-	 */
-	@RequestMapping(value = "/Order/{order_id}/orderItemses", method = RequestMethod.POST)
-	@ResponseBody
-	public OrderItems newOrderOrderItemses(@PathVariable Integer order_id, @RequestBody OrderItems orderitems) {
-		orderService.saveOrderOrderItemses(order_id, orderitems);
-		return orderItemsDAO.findOrderItemsByPrimaryKey(orderitems.getOrderId(), orderitems.getProductId());
-	}
-
-	/**
-	 * Create a new Userinfo entity
-	 * 
-	 */
-	@RequestMapping(value = "/Order/{order_id}/userinfo", method = RequestMethod.POST)
-	@ResponseBody
-	public Userinfo newOrderUserinfo(@PathVariable Integer order_id, @RequestBody Userinfo userinfo) {
-		orderService.saveOrderUserinfo(order_id, userinfo);
-		return userinfoDAO.findUserinfoByPrimaryKey(userinfo.getId());
-	}
-
-	/**
-	 * Delete an existing OrderItems entity
-	 * 
-	 */
-	@RequestMapping(value = "/Order/{order_id}/orderItemses/{orderitems_orderId}/{orderitems_productId}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public void deleteOrderOrderItemses(@PathVariable Integer order_id, @PathVariable Integer related_orderitemses_orderId, @PathVariable Integer related_orderitemses_productId) {
-		orderService.deleteOrderOrderItemses(order_id, related_orderitemses_orderId, related_orderitemses_productId);
-	}
-
-	/**
-	 * Save an existing OrderItems entity
-	 * 
-	 */
-	@RequestMapping(value = "/Order/{order_id}/orderItemses", method = RequestMethod.PUT)
-	@ResponseBody
-	public OrderItems saveOrderOrderItemses(@PathVariable Integer order_id, @RequestBody OrderItems orderitemses) {
-		orderService.saveOrderOrderItemses(order_id, orderitemses);
-		return orderItemsDAO.findOrderItemsByPrimaryKey(orderitemses.getOrderId(), orderitemses.getProductId());
-	}
-
-	/**
-	 * Register custom, context-specific property editors
-	 * 
-	 */
-	@InitBinder
-	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
-		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
-		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
-		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
-		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
-		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
-		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
-		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
-		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
-		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
-		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
-	}
-
-	/**
-	 * Select an existing Order entity
-	 * 
-	 */
-	@RequestMapping(value = "/Order/{order_id}", method = RequestMethod.GET)
-	@ResponseBody
-	public Order loadOrder(@PathVariable Integer order_id) {
-		return orderDAO.findOrderByPrimaryKey(order_id);
-	}
-
-	/**
-	 * Save an existing Userinfo entity
-	 * 
-	 */
-	@RequestMapping(value = "/Order/{order_id}/userinfo", method = RequestMethod.PUT)
-	@ResponseBody
-	public Userinfo saveOrderUserinfo(@PathVariable Integer order_id, @RequestBody Userinfo userinfo) {
-		orderService.saveOrderUserinfo(order_id, userinfo);
-		return userinfoDAO.findUserinfoByPrimaryKey(userinfo.getId());
+		return userinfo;
 	}
 }

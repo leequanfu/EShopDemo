@@ -27,10 +27,10 @@ import javax.persistence.*;
 		@NamedQuery(name = "findOfferByDescriptionContaining", query = "select myOffer from Offer myOffer where myOffer.description like ?1"),
 		@NamedQuery(name = "findOfferById", query = "select myOffer from Offer myOffer where myOffer.id = ?1"),
 		@NamedQuery(name = "findOfferByPrimaryKey", query = "select myOffer from Offer myOffer where myOffer.id = ?1") })
-@Table(catalog = "EShopDemo", name = "offer")
+@Table(catalog = "eshopdemo", name = "offer")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = "EShopDemo/com/lqf/eshopdemo/domain", name = "Offer")
-@XmlRootElement(namespace = "EShopDemo/com/lqf/eshopdemo/domain")
+@XmlType(namespace = "t11/com/lqf/eshopdemo/domain", name = "Offer")
+@XmlRootElement(namespace = "t11/com/lqf/eshopdemo/domain")
 public class Offer implements Serializable {
 	private static final long serialVersionUID = 1L;
 

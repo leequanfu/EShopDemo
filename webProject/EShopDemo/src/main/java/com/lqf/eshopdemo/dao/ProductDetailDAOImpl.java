@@ -67,24 +67,46 @@ public class ProductDetailDAOImpl extends AbstractJpaDao<ProductDetail>
 	}
 
 	/**
-	 * JPQL Query - findProductDetailByPrice
+	 * JPQL Query - findAllProductDetails
 	 *
 	 */
 	@Transactional
-	public Set<ProductDetail> findProductDetailByPrice(java.math.BigDecimal price) throws DataAccessException {
+	public Set<ProductDetail> findAllProductDetails() throws DataAccessException {
 
-		return findProductDetailByPrice(price, -1, -1);
+		return findAllProductDetails(-1, -1);
 	}
 
 	/**
-	 * JPQL Query - findProductDetailByPrice
+	 * JPQL Query - findAllProductDetails
 	 *
 	 */
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Set<ProductDetail> findProductDetailByPrice(java.math.BigDecimal price, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findProductDetailByPrice", startResult, maxRows, price);
+	public Set<ProductDetail> findAllProductDetails(int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findAllProductDetails", startResult, maxRows);
+		return new LinkedHashSet<ProductDetail>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findProductDetailByQuantity
+	 *
+	 */
+	@Transactional
+	public Set<ProductDetail> findProductDetailByQuantity(Integer quantity) throws DataAccessException {
+
+		return findProductDetailByQuantity(quantity, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findProductDetailByQuantity
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<ProductDetail> findProductDetailByQuantity(Integer quantity, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findProductDetailByQuantity", startResult, maxRows, quantity);
 		return new LinkedHashSet<ProductDetail>(query.getResultList());
 	}
 
@@ -111,24 +133,24 @@ public class ProductDetailDAOImpl extends AbstractJpaDao<ProductDetail>
 	}
 
 	/**
-	 * JPQL Query - findProductDetailByQuantity
+	 * JPQL Query - findProductDetailByTitleContaining
 	 *
 	 */
 	@Transactional
-	public Set<ProductDetail> findProductDetailByQuantity(Integer quantity) throws DataAccessException {
+	public Set<ProductDetail> findProductDetailByTitleContaining(String title) throws DataAccessException {
 
-		return findProductDetailByQuantity(quantity, -1, -1);
+		return findProductDetailByTitleContaining(title, -1, -1);
 	}
 
 	/**
-	 * JPQL Query - findProductDetailByQuantity
+	 * JPQL Query - findProductDetailByTitleContaining
 	 *
 	 */
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Set<ProductDetail> findProductDetailByQuantity(Integer quantity, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findProductDetailByQuantity", startResult, maxRows, quantity);
+	public Set<ProductDetail> findProductDetailByTitleContaining(String title, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findProductDetailByTitleContaining", startResult, maxRows, title);
 		return new LinkedHashSet<ProductDetail>(query.getResultList());
 	}
 
@@ -158,28 +180,6 @@ public class ProductDetailDAOImpl extends AbstractJpaDao<ProductDetail>
 	}
 
 	/**
-	 * JPQL Query - findAllProductDetails
-	 *
-	 */
-	@Transactional
-	public Set<ProductDetail> findAllProductDetails() throws DataAccessException {
-
-		return findAllProductDetails(-1, -1);
-	}
-
-	/**
-	 * JPQL Query - findAllProductDetails
-	 *
-	 */
-
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public Set<ProductDetail> findAllProductDetails(int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findAllProductDetails", startResult, maxRows);
-		return new LinkedHashSet<ProductDetail>(query.getResultList());
-	}
-
-	/**
 	 * JPQL Query - findProductDetailByTitle
 	 *
 	 */
@@ -198,6 +198,28 @@ public class ProductDetailDAOImpl extends AbstractJpaDao<ProductDetail>
 	@Transactional
 	public Set<ProductDetail> findProductDetailByTitle(String title, int startResult, int maxRows) throws DataAccessException {
 		Query query = createNamedQuery("findProductDetailByTitle", startResult, maxRows, title);
+		return new LinkedHashSet<ProductDetail>(query.getResultList());
+	}
+
+	/**
+	 * JPQL Query - findProductDetailByPrice
+	 *
+	 */
+	@Transactional
+	public Set<ProductDetail> findProductDetailByPrice(java.math.BigDecimal price) throws DataAccessException {
+
+		return findProductDetailByPrice(price, -1, -1);
+	}
+
+	/**
+	 * JPQL Query - findProductDetailByPrice
+	 *
+	 */
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Set<ProductDetail> findProductDetailByPrice(java.math.BigDecimal price, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findProductDetailByPrice", startResult, maxRows, price);
 		return new LinkedHashSet<ProductDetail>(query.getResultList());
 	}
 
@@ -227,24 +249,24 @@ public class ProductDetailDAOImpl extends AbstractJpaDao<ProductDetail>
 	}
 
 	/**
-	 * JPQL Query - findProductDetailByTitleContaining
+	 * JPQL Query - findProductDetailByPicnum
 	 *
 	 */
 	@Transactional
-	public Set<ProductDetail> findProductDetailByTitleContaining(String title) throws DataAccessException {
+	public Set<ProductDetail> findProductDetailByPicnum(Integer picnum) throws DataAccessException {
 
-		return findProductDetailByTitleContaining(title, -1, -1);
+		return findProductDetailByPicnum(picnum, -1, -1);
 	}
 
 	/**
-	 * JPQL Query - findProductDetailByTitleContaining
+	 * JPQL Query - findProductDetailByPicnum
 	 *
 	 */
 
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Set<ProductDetail> findProductDetailByTitleContaining(String title, int startResult, int maxRows) throws DataAccessException {
-		Query query = createNamedQuery("findProductDetailByTitleContaining", startResult, maxRows, title);
+	public Set<ProductDetail> findProductDetailByPicnum(Integer picnum, int startResult, int maxRows) throws DataAccessException {
+		Query query = createNamedQuery("findProductDetailByPicnum", startResult, maxRows, picnum);
 		return new LinkedHashSet<ProductDetail>(query.getResultList());
 	}
 

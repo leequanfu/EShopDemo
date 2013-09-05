@@ -28,9 +28,9 @@ import javax.persistence.*;
 		@NamedQuery(name = "findCustomerCommentByProId", query = "select myCustomerComment from CustomerComment myCustomerComment where myCustomerComment.proId = ?1"),
 		@NamedQuery(name = "findCustomerCommentByRate", query = "select myCustomerComment from CustomerComment myCustomerComment where myCustomerComment.rate = ?1"),
 		@NamedQuery(name = "findCustomerCommentByUserId", query = "select myCustomerComment from CustomerComment myCustomerComment where myCustomerComment.userId = ?1") })
-@Table(catalog = "EShopDemo", name = "customer_comment")
+@Table(catalog = "eshopdemo", name = "customer_comment")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = "EShopDemo/com/lqf/eshopdemo/domain", name = "CustomerComment")
+@XmlType(namespace = "t11/com/lqf/eshopdemo/domain", name = "CustomerComment")
 public class CustomerComment implements Serializable {
 	private static final long serialVersionUID = 1L;
 

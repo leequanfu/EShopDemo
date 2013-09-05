@@ -15,16 +15,40 @@ import org.springframework.dao.DataAccessException;
 public interface CustomerCommentDAO extends JpaDao<CustomerComment> {
 
 	/**
-	 * JPQL Query - findCustomerCommentByUserId
+	 * JPQL Query - findCustomerCommentByComment
 	 *
 	 */
-	public Set<CustomerComment> findCustomerCommentByUserId(Integer userId) throws DataAccessException;
+	public Set<CustomerComment> findCustomerCommentByComment(String comment) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findCustomerCommentByUserId
+	 * JPQL Query - findCustomerCommentByComment
 	 *
 	 */
-	public Set<CustomerComment> findCustomerCommentByUserId(Integer userId, int startResult, int maxRows) throws DataAccessException;
+	public Set<CustomerComment> findCustomerCommentByComment(String comment, int startResult, int maxRows) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findCustomerCommentByCommentContaining
+	 *
+	 */
+	public Set<CustomerComment> findCustomerCommentByCommentContaining(String comment_1) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findCustomerCommentByCommentContaining
+	 *
+	 */
+	public Set<CustomerComment> findCustomerCommentByCommentContaining(String comment_1, int startResult, int maxRows) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findCustomerCommentByPrimaryKey
+	 *
+	 */
+	public CustomerComment findCustomerCommentByPrimaryKey(Integer proId, Integer userId) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findCustomerCommentByPrimaryKey
+	 *
+	 */
+	public CustomerComment findCustomerCommentByPrimaryKey(Integer proId, Integer userId, int startResult, int maxRows) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findAllCustomerComments
@@ -39,30 +63,6 @@ public interface CustomerCommentDAO extends JpaDao<CustomerComment> {
 	public Set<CustomerComment> findAllCustomerComments(int startResult, int maxRows) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findCustomerCommentByComment
-	 *
-	 */
-	public Set<CustomerComment> findCustomerCommentByComment(String comment) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findCustomerCommentByComment
-	 *
-	 */
-	public Set<CustomerComment> findCustomerCommentByComment(String comment, int startResult, int maxRows) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findCustomerCommentByProId
-	 *
-	 */
-	public Set<CustomerComment> findCustomerCommentByProId(Integer proId) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findCustomerCommentByProId
-	 *
-	 */
-	public Set<CustomerComment> findCustomerCommentByProId(Integer proId, int startResult, int maxRows) throws DataAccessException;
-
-	/**
 	 * JPQL Query - findCustomerCommentByRate
 	 *
 	 */
@@ -75,27 +75,27 @@ public interface CustomerCommentDAO extends JpaDao<CustomerComment> {
 	public Set<CustomerComment> findCustomerCommentByRate(Integer rate, int startResult, int maxRows) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findCustomerCommentByPrimaryKey
+	 * JPQL Query - findCustomerCommentByProId
 	 *
 	 */
-	public CustomerComment findCustomerCommentByPrimaryKey(Integer proId_1, Integer userId_1) throws DataAccessException;
+	public Set<CustomerComment> findCustomerCommentByProId(Integer proId_1) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findCustomerCommentByPrimaryKey
+	 * JPQL Query - findCustomerCommentByProId
 	 *
 	 */
-	public CustomerComment findCustomerCommentByPrimaryKey(Integer proId_1, Integer userId_1, int startResult, int maxRows) throws DataAccessException;
+	public Set<CustomerComment> findCustomerCommentByProId(Integer proId_1, int startResult, int maxRows) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findCustomerCommentByCommentContaining
+	 * JPQL Query - findCustomerCommentByUserId
 	 *
 	 */
-	public Set<CustomerComment> findCustomerCommentByCommentContaining(String comment_1) throws DataAccessException;
+	public Set<CustomerComment> findCustomerCommentByUserId(Integer userId_1) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findCustomerCommentByCommentContaining
+	 * JPQL Query - findCustomerCommentByUserId
 	 *
 	 */
-	public Set<CustomerComment> findCustomerCommentByCommentContaining(String comment_1, int startResult, int maxRows) throws DataAccessException;
+	public Set<CustomerComment> findCustomerCommentByUserId(Integer userId_1, int startResult, int maxRows) throws DataAccessException;
 
 }

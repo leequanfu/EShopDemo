@@ -15,28 +15,28 @@ import org.springframework.dao.DataAccessException;
 public interface PaywaysDAO extends JpaDao<Payways> {
 
 	/**
-	 * JPQL Query - findPaywaysByPrimaryKey
+	 * JPQL Query - findPaywaysByWay
 	 *
 	 */
-	public Payways findPaywaysByPrimaryKey(String way) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findPaywaysByPrimaryKey
-	 *
-	 */
-	public Payways findPaywaysByPrimaryKey(String way, int startResult, int maxRows) throws DataAccessException;
+	public Payways findPaywaysByWay(String way) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findPaywaysByWay
 	 *
 	 */
-	public Payways findPaywaysByWay(String way_1) throws DataAccessException;
+	public Payways findPaywaysByWay(String way, int startResult, int maxRows) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findPaywaysByWay
+	 * JPQL Query - findPaywaysByPrimaryKey
 	 *
 	 */
-	public Payways findPaywaysByWay(String way_1, int startResult, int maxRows) throws DataAccessException;
+	public Payways findPaywaysByPrimaryKey(String way_1) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findPaywaysByPrimaryKey
+	 *
+	 */
+	public Payways findPaywaysByPrimaryKey(String way_1, int startResult, int maxRows) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findAllPaywayss

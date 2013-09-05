@@ -21,9 +21,9 @@ import javax.persistence.*;
 		@NamedQuery(name = "findPaywaysByPrimaryKey", query = "select myPayways from Payways myPayways where myPayways.way = ?1"),
 		@NamedQuery(name = "findPaywaysByWay", query = "select myPayways from Payways myPayways where myPayways.way = ?1"),
 		@NamedQuery(name = "findPaywaysByWayContaining", query = "select myPayways from Payways myPayways where myPayways.way like ?1") })
-@Table(catalog = "EShopDemo", name = "payways")
+@Table(catalog = "eshopdemo", name = "payways")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(namespace = "EShopDemo/com/lqf/eshopdemo/domain", name = "Payways")
+@XmlType(namespace = "t11/com/lqf/eshopdemo/domain", name = "Payways")
 public class Payways implements Serializable {
 	private static final long serialVersionUID = 1L;
 

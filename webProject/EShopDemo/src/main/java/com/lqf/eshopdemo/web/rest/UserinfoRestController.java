@@ -64,6 +64,35 @@ public class UserinfoRestController {
 	private UserinfoService userinfoService;
 
 	/**
+	 * Save an existing Order entity
+	 * 
+	 */
+	@RequestMapping(value = "/Userinfo/{userinfo_id}/orders", method = RequestMethod.PUT)
+	@ResponseBody
+	public Order saveUserinfoOrders(@PathVariable Integer userinfo_id, @RequestBody Order orders) {
+		userinfoService.saveUserinfoOrders(userinfo_id, orders);
+		return orderDAO.findOrderByPrimaryKey(orders.getId());
+	}
+
+	/**
+	 * Register custom, context-specific property editors
+	 * 
+	 */
+	@InitBinder
+	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
+		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
+		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
+		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
+		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
+		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
+		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
+		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
+		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
+		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
+		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
+	}
+
+	/**
 	 * Create a new Userinfo entity
 	 * 
 	 */
@@ -72,6 +101,47 @@ public class UserinfoRestController {
 	public Userinfo newUserinfo(@RequestBody Userinfo userinfo) {
 		userinfoService.saveUserinfo(userinfo);
 		return userinfoDAO.findUserinfoByPrimaryKey(userinfo.getId());
+	}
+
+	/**
+	 * Select an existing Userinfo entity
+	 * 
+	 */
+	@RequestMapping(value = "/Userinfo/{userinfo_id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Userinfo loadUserinfo(@PathVariable Integer userinfo_id) {
+		return userinfoDAO.findUserinfoByPrimaryKey(userinfo_id);
+	}
+
+	/**
+	 * Save an existing Userinfo entity
+	 * 
+	 */
+	@RequestMapping(value = "/Userinfo", method = RequestMethod.PUT)
+	@ResponseBody
+	public Userinfo saveUserinfo(@RequestBody Userinfo userinfo) {
+		userinfoService.saveUserinfo(userinfo);
+		return userinfoDAO.findUserinfoByPrimaryKey(userinfo.getId());
+	}
+
+	/**
+	 * Show all CustomerComment entities by Userinfo
+	 * 
+	 */
+	@RequestMapping(value = "/Userinfo/{userinfo_id}/customerComments", method = RequestMethod.GET)
+	@ResponseBody
+	public List<CustomerComment> getUserinfoCustomerComments(@PathVariable Integer userinfo_id) {
+		return new java.util.ArrayList<CustomerComment>(userinfoDAO.findUserinfoByPrimaryKey(userinfo_id).getCustomerComments());
+	}
+
+	/**
+	 * Show all Userinfo entities
+	 * 
+	 */
+	@RequestMapping(value = "/Userinfo", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Userinfo> listUserinfos() {
+		return new java.util.ArrayList<Userinfo>(userinfoService.loadUserinfos());
 	}
 
 	/**
@@ -84,28 +154,6 @@ public class UserinfoRestController {
 		Order order = orderDAO.findOrderByPrimaryKey(related_orders_id, -1, -1);
 
 		return order;
-	}
-
-	/**
-	 * Save an existing CustomerComment entity
-	 * 
-	 */
-	@RequestMapping(value = "/Userinfo/{userinfo_id}/customerComments", method = RequestMethod.PUT)
-	@ResponseBody
-	public CustomerComment saveUserinfoCustomerComments(@PathVariable Integer userinfo_id, @RequestBody CustomerComment customercomments) {
-		userinfoService.saveUserinfoCustomerComments(userinfo_id, customercomments);
-		return customerCommentDAO.findCustomerCommentByPrimaryKey(customercomments.getProId(), customercomments.getUserId());
-	}
-
-	/**
-	 * Save an existing Order entity
-	 * 
-	 */
-	@RequestMapping(value = "/Userinfo/{userinfo_id}/orders", method = RequestMethod.PUT)
-	@ResponseBody
-	public Order saveUserinfoOrders(@PathVariable Integer userinfo_id, @RequestBody Order orders) {
-		userinfoService.saveUserinfoOrders(userinfo_id, orders);
-		return orderDAO.findOrderByPrimaryKey(orders.getId());
 	}
 
 	/**
@@ -131,24 +179,13 @@ public class UserinfoRestController {
 	}
 
 	/**
-	 * Show all Userinfo entities
+	 * Delete an existing CustomerComment entity
 	 * 
 	 */
-	@RequestMapping(value = "/Userinfo", method = RequestMethod.GET)
+	@RequestMapping(value = "/Userinfo/{userinfo_id}/customerComments/{customercomment_proId}/{customercomment_userId}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public List<Userinfo> listUserinfos() {
-		return new java.util.ArrayList<Userinfo>(userinfoService.loadUserinfos());
-	}
-
-	/**
-	 * Create a new Order entity
-	 * 
-	 */
-	@RequestMapping(value = "/Userinfo/{userinfo_id}/orders", method = RequestMethod.POST)
-	@ResponseBody
-	public Order newUserinfoOrders(@PathVariable Integer userinfo_id, @RequestBody Order order) {
-		userinfoService.saveUserinfoOrders(userinfo_id, order);
-		return orderDAO.findOrderByPrimaryKey(order.getId());
+	public void deleteUserinfoCustomerComments(@PathVariable Integer userinfo_id, @PathVariable Integer related_customercomments_proId, @PathVariable Integer related_customercomments_userId) {
+		userinfoService.deleteUserinfoCustomerComments(userinfo_id, related_customercomments_proId, related_customercomments_userId);
 	}
 
 	/**
@@ -162,61 +199,14 @@ public class UserinfoRestController {
 	}
 
 	/**
-	 * Register custom, context-specific property editors
+	 * Save an existing CustomerComment entity
 	 * 
 	 */
-	@InitBinder
-	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
-		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
-		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
-		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
-		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
-		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
-		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
-		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
-		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
-		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
-		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
-	}
-
-	/**
-	 * Select an existing Userinfo entity
-	 * 
-	 */
-	@RequestMapping(value = "/Userinfo/{userinfo_id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/Userinfo/{userinfo_id}/customerComments", method = RequestMethod.PUT)
 	@ResponseBody
-	public Userinfo loadUserinfo(@PathVariable Integer userinfo_id) {
-		return userinfoDAO.findUserinfoByPrimaryKey(userinfo_id);
-	}
-
-	/**
-	 * Delete an existing CustomerComment entity
-	 * 
-	 */
-	@RequestMapping(value = "/Userinfo/{userinfo_id}/customerComments/{customercomment_proId}/{customercomment_userId}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public void deleteUserinfoCustomerComments(@PathVariable Integer userinfo_id, @PathVariable Integer related_customercomments_proId, @PathVariable Integer related_customercomments_userId) {
-		userinfoService.deleteUserinfoCustomerComments(userinfo_id, related_customercomments_proId, related_customercomments_userId);
-	}
-
-	/**
-	 * Delete an existing Order entity
-	 * 
-	 */
-	@RequestMapping(value = "/Userinfo/{userinfo_id}/orders/{order_id}", method = RequestMethod.DELETE)
-	@ResponseBody
-	public void deleteUserinfoOrders(@PathVariable Integer userinfo_id, @PathVariable Integer related_orders_id) {
-		userinfoService.deleteUserinfoOrders(userinfo_id, related_orders_id);
-	}
-
-	/**
-	 * Show all CustomerComment entities by Userinfo
-	 * 
-	 */
-	@RequestMapping(value = "/Userinfo/{userinfo_id}/customerComments", method = RequestMethod.GET)
-	@ResponseBody
-	public List<CustomerComment> getUserinfoCustomerComments(@PathVariable Integer userinfo_id) {
-		return new java.util.ArrayList<CustomerComment>(userinfoDAO.findUserinfoByPrimaryKey(userinfo_id).getCustomerComments());
+	public CustomerComment saveUserinfoCustomerComments(@PathVariable Integer userinfo_id, @RequestBody CustomerComment customercomments) {
+		userinfoService.saveUserinfoCustomerComments(userinfo_id, customercomments);
+		return customerCommentDAO.findCustomerCommentByPrimaryKey(customercomments.getProId(), customercomments.getUserId());
 	}
 
 	/**
@@ -232,13 +222,23 @@ public class UserinfoRestController {
 	}
 
 	/**
-	 * Save an existing Userinfo entity
+	 * Create a new Order entity
 	 * 
 	 */
-	@RequestMapping(value = "/Userinfo", method = RequestMethod.PUT)
+	@RequestMapping(value = "/Userinfo/{userinfo_id}/orders", method = RequestMethod.POST)
 	@ResponseBody
-	public Userinfo saveUserinfo(@RequestBody Userinfo userinfo) {
-		userinfoService.saveUserinfo(userinfo);
-		return userinfoDAO.findUserinfoByPrimaryKey(userinfo.getId());
+	public Order newUserinfoOrders(@PathVariable Integer userinfo_id, @RequestBody Order order) {
+		userinfoService.saveUserinfoOrders(userinfo_id, order);
+		return orderDAO.findOrderByPrimaryKey(order.getId());
+	}
+
+	/**
+	 * Delete an existing Order entity
+	 * 
+	 */
+	@RequestMapping(value = "/Userinfo/{userinfo_id}/orders/{order_id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public void deleteUserinfoOrders(@PathVariable Integer userinfo_id, @PathVariable Integer related_orders_id) {
+		userinfoService.deleteUserinfoOrders(userinfo_id, related_orders_id);
 	}
 }

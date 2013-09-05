@@ -63,20 +63,31 @@ public class CustomerCommentController {
 	private CustomerCommentService customerCommentService;
 
 	/**
-	 * View an existing ProductDetail entity
+	 * Register custom, context-specific property editors
 	 * 
 	 */
-	@RequestMapping("/selectCustomerCommentProductDetail")
-	public ModelAndView selectCustomerCommentProductDetail(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @RequestParam Integer productdetail_id) {
-		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
+	@InitBinder
+	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
+		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
+		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
+		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
+		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
+		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
+		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
+		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
+		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
+		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
+		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
+	}
 
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("customercomment_proId", customercomment_proId);
-		mav.addObject("customercomment_userId", customercomment_userId);
-		mav.addObject("productdetail", productdetail);
-		mav.setViewName("customercomment/productdetail/viewProductDetail.jsp");
-
-		return mav;
+	/**
+	 * Save an existing CustomerComment entity
+	 * 
+	 */
+	@RequestMapping("/saveCustomerComment")
+	public String saveCustomerComment(@ModelAttribute CustomerComment customercomment) {
+		customerCommentService.saveCustomerComment(customercomment);
+		return "forward:/indexCustomerComment";
 	}
 
 	/**
@@ -92,164 +103,6 @@ public class CustomerCommentController {
 		mav.addObject("customercomment_userId", customercomment_userId);
 		mav.addObject("customercomment", parent_customercomment);
 		mav.setViewName("customercomment/viewCustomerComment.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Select an existing CustomerComment entity
-	 * 
-	 */
-	@RequestMapping("/selectCustomerComment")
-	public ModelAndView selectCustomerComment(@RequestParam Integer proIdKey, @RequestParam Integer userIdKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("customercomment", customerCommentDAO.findCustomerCommentByPrimaryKey(proIdKey, userIdKey));
-		mav.setViewName("customercomment/viewCustomerComment.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * View an existing Userinfo entity
-	 * 
-	 */
-	@RequestMapping("/selectCustomerCommentUserinfo")
-	public ModelAndView selectCustomerCommentUserinfo(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @RequestParam Integer userinfo_id) {
-		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(userinfo_id, -1, -1);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("customercomment_proId", customercomment_proId);
-		mav.addObject("customercomment_userId", customercomment_userId);
-		mav.addObject("userinfo", userinfo);
-		mav.setViewName("customercomment/userinfo/viewUserinfo.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Show all Userinfo entities by CustomerComment
-	 * 
-	 */
-	@RequestMapping("/listCustomerCommentUserinfo")
-	public ModelAndView listCustomerCommentUserinfo(@RequestParam Integer proIdKey, @RequestParam Integer userIdKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("customercomment", customerCommentDAO.findCustomerCommentByPrimaryKey(proIdKey, userIdKey));
-		mav.setViewName("customercomment/userinfo/listUserinfo.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Edit an existing Userinfo entity
-	 * 
-	 */
-	@RequestMapping("/editCustomerCommentUserinfo")
-	public ModelAndView editCustomerCommentUserinfo(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @RequestParam Integer userinfo_id) {
-		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(userinfo_id, -1, -1);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("customercomment_proId", customercomment_proId);
-		mav.addObject("customercomment_userId", customercomment_userId);
-		mav.addObject("userinfo", userinfo);
-		mav.setViewName("customercomment/userinfo/editUserinfo.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Create a new ProductDetail entity
-	 * 
-	 */
-	@RequestMapping("/newCustomerCommentProductDetail")
-	public ModelAndView newCustomerCommentProductDetail(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId) {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("customercomment_proId", customercomment_proId);
-		mav.addObject("customercomment_userId", customercomment_userId);
-		mav.addObject("productdetail", new ProductDetail());
-		mav.addObject("newFlag", true);
-		mav.setViewName("customercomment/productdetail/editProductDetail.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Create a new CustomerComment entity
-	 * 
-	 */
-	@RequestMapping("/newCustomerComment")
-	public ModelAndView newCustomerComment() {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("customercomment", new CustomerComment());
-		mav.addObject("newFlag", true);
-		mav.setViewName("customercomment/editCustomerComment.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Save an existing CustomerComment entity
-	 * 
-	 */
-	@RequestMapping("/saveCustomerComment")
-	public String saveCustomerComment(@ModelAttribute CustomerComment customercomment) {
-		customerCommentService.saveCustomerComment(customercomment);
-		return "forward:/indexCustomerComment";
-	}
-
-	/**
-	 */
-	@RequestMapping("/customercommentController/binary.action")
-	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("streamedBinaryContentView");
-		return mav;
-
-	}
-
-	/**
-	 * Select the child ProductDetail entity for display allowing the user to confirm that they would like to delete the entity
-	 * 
-	 */
-	@RequestMapping("/confirmDeleteCustomerCommentProductDetail")
-	public ModelAndView confirmDeleteCustomerCommentProductDetail(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @RequestParam Integer related_productdetail_id) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("productdetail", productDetailDAO.findProductDetailByPrimaryKey(related_productdetail_id));
-		mav.addObject("customercomment_proId", customercomment_proId);
-		mav.addObject("customercomment_userId", customercomment_userId);
-		mav.setViewName("customercomment/productdetail/deleteProductDetail.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Show all CustomerComment entities
-	 * 
-	 */
-	@RequestMapping("/indexCustomerComment")
-	public ModelAndView listCustomerComments() {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("customercomments", customerCommentService.loadCustomerComments());
-
-		mav.setViewName("customercomment/listCustomerComments.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Edit an existing CustomerComment entity
-	 * 
-	 */
-	@RequestMapping("/editCustomerComment")
-	public ModelAndView editCustomerComment(@RequestParam Integer proIdKey, @RequestParam Integer userIdKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("customercomment", customerCommentDAO.findCustomerCommentByPrimaryKey(proIdKey, userIdKey));
-		mav.setViewName("customercomment/editCustomerComment.jsp");
 
 		return mav;
 	}
@@ -273,53 +126,122 @@ public class CustomerCommentController {
 	}
 
 	/**
-	 * Register custom, context-specific property editors
+	 * Select the CustomerComment entity for display allowing the user to confirm that they would like to delete the entity
 	 * 
 	 */
-	@InitBinder
-	public void initBinder(WebDataBinder binder, HttpServletRequest request) { // Register static property editors.
-		binder.registerCustomEditor(java.util.Calendar.class, new org.skyway.spring.util.databinding.CustomCalendarEditor());
-		binder.registerCustomEditor(byte[].class, new org.springframework.web.multipart.support.ByteArrayMultipartFileEditor());
-		binder.registerCustomEditor(boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(false));
-		binder.registerCustomEditor(Boolean.class, new org.skyway.spring.util.databinding.EnhancedBooleanEditor(true));
-		binder.registerCustomEditor(java.math.BigDecimal.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(java.math.BigDecimal.class, true));
-		binder.registerCustomEditor(Integer.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Integer.class, true));
-		binder.registerCustomEditor(java.util.Date.class, new org.skyway.spring.util.databinding.CustomDateEditor());
-		binder.registerCustomEditor(String.class, new org.skyway.spring.util.databinding.StringEditor());
-		binder.registerCustomEditor(Long.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Long.class, true));
-		binder.registerCustomEditor(Double.class, new org.skyway.spring.util.databinding.NaNHandlingNumberEditor(Double.class, true));
-	}
-
-	/**
-	 * Edit an existing ProductDetail entity
-	 * 
-	 */
-	@RequestMapping("/editCustomerCommentProductDetail")
-	public ModelAndView editCustomerCommentProductDetail(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @RequestParam Integer productdetail_id) {
-		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
-
+	@RequestMapping("/confirmDeleteCustomerComment")
+	public ModelAndView confirmDeleteCustomerComment(@RequestParam Integer proIdKey, @RequestParam Integer userIdKey) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("customercomment_proId", customercomment_proId);
-		mav.addObject("customercomment_userId", customercomment_userId);
-		mav.addObject("productdetail", productdetail);
-		mav.setViewName("customercomment/productdetail/editProductDetail.jsp");
+
+		mav.addObject("customercomment", customerCommentDAO.findCustomerCommentByPrimaryKey(proIdKey, userIdKey));
+		mav.setViewName("customercomment/deleteCustomerComment.jsp");
 
 		return mav;
 	}
 
 	/**
-	 * Save an existing ProductDetail entity
+	 * Select the child ProductDetail entity for display allowing the user to confirm that they would like to delete the entity
 	 * 
 	 */
-	@RequestMapping("/saveCustomerCommentProductDetail")
-	public ModelAndView saveCustomerCommentProductDetail(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @ModelAttribute ProductDetail productdetail) {
-		CustomerComment parent_customercomment = customerCommentService.saveCustomerCommentProductDetail(customercomment_proId, customercomment_userId, productdetail);
+	@RequestMapping("/confirmDeleteCustomerCommentProductDetail")
+	public ModelAndView confirmDeleteCustomerCommentProductDetail(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @RequestParam Integer related_productdetail_id) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("productdetail", productDetailDAO.findProductDetailByPrimaryKey(related_productdetail_id));
+		mav.addObject("customercomment_proId", customercomment_proId);
+		mav.addObject("customercomment_userId", customercomment_userId);
+		mav.setViewName("customercomment/productdetail/deleteProductDetail.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Show all Userinfo entities by CustomerComment
+	 * 
+	 */
+	@RequestMapping("/listCustomerCommentUserinfo")
+	public ModelAndView listCustomerCommentUserinfo(@RequestParam Integer proIdKey, @RequestParam Integer userIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("customercomment", customerCommentDAO.findCustomerCommentByPrimaryKey(proIdKey, userIdKey));
+		mav.setViewName("customercomment/userinfo/listUserinfo.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Select an existing CustomerComment entity
+	 * 
+	 */
+	@RequestMapping("/selectCustomerComment")
+	public ModelAndView selectCustomerComment(@RequestParam Integer proIdKey, @RequestParam Integer userIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("customercomment", customerCommentDAO.findCustomerCommentByPrimaryKey(proIdKey, userIdKey));
+		mav.setViewName("customercomment/viewCustomerComment.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Edit an existing Userinfo entity
+	 * 
+	 */
+	@RequestMapping("/editCustomerCommentUserinfo")
+	public ModelAndView editCustomerCommentUserinfo(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @RequestParam Integer userinfo_id) {
+		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(userinfo_id, -1, -1);
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("customercomment_proId", customercomment_proId);
 		mav.addObject("customercomment_userId", customercomment_userId);
-		mav.addObject("customercomment", parent_customercomment);
-		mav.setViewName("customercomment/viewCustomerComment.jsp");
+		mav.addObject("userinfo", userinfo);
+		mav.setViewName("customercomment/userinfo/editUserinfo.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Show all ProductDetail entities by CustomerComment
+	 * 
+	 */
+	@RequestMapping("/listCustomerCommentProductDetail")
+	public ModelAndView listCustomerCommentProductDetail(@RequestParam Integer proIdKey, @RequestParam Integer userIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("customercomment", customerCommentDAO.findCustomerCommentByPrimaryKey(proIdKey, userIdKey));
+		mav.setViewName("customercomment/productdetail/listProductDetail.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Create a new Userinfo entity
+	 * 
+	 */
+	@RequestMapping("/newCustomerCommentUserinfo")
+	public ModelAndView newCustomerCommentUserinfo(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("customercomment_proId", customercomment_proId);
+		mav.addObject("customercomment_userId", customercomment_userId);
+		mav.addObject("userinfo", new Userinfo());
+		mav.addObject("newFlag", true);
+		mav.setViewName("customercomment/userinfo/editUserinfo.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Select the child Userinfo entity for display allowing the user to confirm that they would like to delete the entity
+	 * 
+	 */
+	@RequestMapping("/confirmDeleteCustomerCommentUserinfo")
+	public ModelAndView confirmDeleteCustomerCommentUserinfo(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @RequestParam Integer related_userinfo_id) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("userinfo", userinfoDAO.findUserinfoByPrimaryKey(related_userinfo_id));
+		mav.addObject("customercomment_proId", customercomment_proId);
+		mav.addObject("customercomment_userId", customercomment_userId);
+		mav.setViewName("customercomment/userinfo/deleteUserinfo.jsp");
 
 		return mav;
 	}
@@ -343,50 +265,6 @@ public class CustomerCommentController {
 	}
 
 	/**
-	 * Show all ProductDetail entities by CustomerComment
-	 * 
-	 */
-	@RequestMapping("/listCustomerCommentProductDetail")
-	public ModelAndView listCustomerCommentProductDetail(@RequestParam Integer proIdKey, @RequestParam Integer userIdKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("customercomment", customerCommentDAO.findCustomerCommentByPrimaryKey(proIdKey, userIdKey));
-		mav.setViewName("customercomment/productdetail/listProductDetail.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Select the CustomerComment entity for display allowing the user to confirm that they would like to delete the entity
-	 * 
-	 */
-	@RequestMapping("/confirmDeleteCustomerComment")
-	public ModelAndView confirmDeleteCustomerComment(@RequestParam Integer proIdKey, @RequestParam Integer userIdKey) {
-		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("customercomment", customerCommentDAO.findCustomerCommentByPrimaryKey(proIdKey, userIdKey));
-		mav.setViewName("customercomment/deleteCustomerComment.jsp");
-
-		return mav;
-	}
-
-	/**
-	 * Create a new Userinfo entity
-	 * 
-	 */
-	@RequestMapping("/newCustomerCommentUserinfo")
-	public ModelAndView newCustomerCommentUserinfo(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId) {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("customercomment_proId", customercomment_proId);
-		mav.addObject("customercomment_userId", customercomment_userId);
-		mav.addObject("userinfo", new Userinfo());
-		mav.addObject("newFlag", true);
-		mav.setViewName("customercomment/userinfo/editUserinfo.jsp");
-
-		return mav;
-	}
-
-	/**
 	 * Delete an existing CustomerComment entity
 	 * 
 	 */
@@ -398,17 +276,48 @@ public class CustomerCommentController {
 	}
 
 	/**
-	 * Select the child Userinfo entity for display allowing the user to confirm that they would like to delete the entity
+	 * Create a new ProductDetail entity
 	 * 
 	 */
-	@RequestMapping("/confirmDeleteCustomerCommentUserinfo")
-	public ModelAndView confirmDeleteCustomerCommentUserinfo(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @RequestParam Integer related_userinfo_id) {
+	@RequestMapping("/newCustomerCommentProductDetail")
+	public ModelAndView newCustomerCommentProductDetail(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId) {
 		ModelAndView mav = new ModelAndView();
-
-		mav.addObject("userinfo", userinfoDAO.findUserinfoByPrimaryKey(related_userinfo_id));
 		mav.addObject("customercomment_proId", customercomment_proId);
 		mav.addObject("customercomment_userId", customercomment_userId);
-		mav.setViewName("customercomment/userinfo/deleteUserinfo.jsp");
+		mav.addObject("productdetail", new ProductDetail());
+		mav.addObject("newFlag", true);
+		mav.setViewName("customercomment/productdetail/editProductDetail.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * View an existing Userinfo entity
+	 * 
+	 */
+	@RequestMapping("/selectCustomerCommentUserinfo")
+	public ModelAndView selectCustomerCommentUserinfo(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @RequestParam Integer userinfo_id) {
+		Userinfo userinfo = userinfoDAO.findUserinfoByPrimaryKey(userinfo_id, -1, -1);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("customercomment_proId", customercomment_proId);
+		mav.addObject("customercomment_userId", customercomment_userId);
+		mav.addObject("userinfo", userinfo);
+		mav.setViewName("customercomment/userinfo/viewUserinfo.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Edit an existing CustomerComment entity
+	 * 
+	 */
+	@RequestMapping("/editCustomerComment")
+	public ModelAndView editCustomerComment(@RequestParam Integer proIdKey, @RequestParam Integer userIdKey) {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("customercomment", customerCommentDAO.findCustomerCommentByPrimaryKey(proIdKey, userIdKey));
+		mav.setViewName("customercomment/editCustomerComment.jsp");
 
 		return mav;
 	}
@@ -419,5 +328,96 @@ public class CustomerCommentController {
 	 */
 	public String indexCustomerComment() {
 		return "redirect:/indexCustomerComment";
+	}
+
+	/**
+	 */
+	@RequestMapping("/customercommentController/binary.action")
+	public ModelAndView streamBinary(@ModelAttribute HttpServletRequest request, @ModelAttribute HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("streamedBinaryContentView");
+		return mav;
+
+	}
+
+	/**
+	 * View an existing ProductDetail entity
+	 * 
+	 */
+	@RequestMapping("/selectCustomerCommentProductDetail")
+	public ModelAndView selectCustomerCommentProductDetail(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @RequestParam Integer productdetail_id) {
+		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("customercomment_proId", customercomment_proId);
+		mav.addObject("customercomment_userId", customercomment_userId);
+		mav.addObject("productdetail", productdetail);
+		mav.setViewName("customercomment/productdetail/viewProductDetail.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Create a new CustomerComment entity
+	 * 
+	 */
+	@RequestMapping("/newCustomerComment")
+	public ModelAndView newCustomerComment() {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("customercomment", new CustomerComment());
+		mav.addObject("newFlag", true);
+		mav.setViewName("customercomment/editCustomerComment.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Save an existing ProductDetail entity
+	 * 
+	 */
+	@RequestMapping("/saveCustomerCommentProductDetail")
+	public ModelAndView saveCustomerCommentProductDetail(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @ModelAttribute ProductDetail productdetail) {
+		CustomerComment parent_customercomment = customerCommentService.saveCustomerCommentProductDetail(customercomment_proId, customercomment_userId, productdetail);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("customercomment_proId", customercomment_proId);
+		mav.addObject("customercomment_userId", customercomment_userId);
+		mav.addObject("customercomment", parent_customercomment);
+		mav.setViewName("customercomment/viewCustomerComment.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Show all CustomerComment entities
+	 * 
+	 */
+	@RequestMapping("/indexCustomerComment")
+	public ModelAndView listCustomerComments() {
+		ModelAndView mav = new ModelAndView();
+
+		mav.addObject("customercomments", customerCommentService.loadCustomerComments());
+
+		mav.setViewName("customercomment/listCustomerComments.jsp");
+
+		return mav;
+	}
+
+	/**
+	 * Edit an existing ProductDetail entity
+	 * 
+	 */
+	@RequestMapping("/editCustomerCommentProductDetail")
+	public ModelAndView editCustomerCommentProductDetail(@RequestParam Integer customercomment_proId, @RequestParam Integer customercomment_userId, @RequestParam Integer productdetail_id) {
+		ProductDetail productdetail = productDetailDAO.findProductDetailByPrimaryKey(productdetail_id, -1, -1);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("customercomment_proId", customercomment_proId);
+		mav.addObject("customercomment_userId", customercomment_userId);
+		mav.addObject("productdetail", productdetail);
+		mav.setViewName("customercomment/productdetail/editProductDetail.jsp");
+
+		return mav;
 	}
 }

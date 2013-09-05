@@ -47,10 +47,10 @@ import org.springframework.web.context.request.SessionScope;
 		DirtiesContextTestExecutionListener.class,
 		TransactionalTestExecutionListener.class })
 @ContextConfiguration(locations = {
-		"file:./src/main/resources/EShopDemo-security-context.xml",
-		"file:./src/main/resources/EShopDemo-service-context.xml",
-		"file:./src/main/resources/EShopDemo-dao-context.xml",
-		"file:./src/main/resources/EShopDemo-web-context.xml" })
+		"file:./resources/t11-security-context.xml",
+		"file:./resources/t11-service-context.xml",
+		"file:./resources/t11-dao-context.xml",
+		"file:./resources/t11-web-context.xml" })
 @Transactional
 public class OrderItemsServiceTest {
 
@@ -78,33 +78,6 @@ public class OrderItemsServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Return all OrderItems entity
-	 * 
-	 */
-	@Test
-	public void findAllOrderItemss() {
-		// TODO: JUnit - Populate test inputs for operation: findAllOrderItemss 
-		Integer startResult = 0;
-		Integer maxRows = 0;
-		List<OrderItems> response = null;
-		response = service.findAllOrderItemss(startResult, maxRows);
-		// TODO: JUnit - Add assertions to test outputs of operation: findAllOrderItemss
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Load an existing OrderItems entity
-	 * 
-	 */
-	@Test
-	public void loadOrderItemss() {
-		Set<OrderItems> response = null;
-		response = service.loadOrderItemss();
-		// TODO: JUnit - Add assertions to test outputs of operation: loadOrderItemss
-	}
-
-	/**
-	 * Operation Unit Test
 	 * Save an existing ProductDetail entity
 	 * 
 	 */
@@ -117,6 +90,61 @@ public class OrderItemsServiceTest {
 		OrderItems response = null;
 		response = service.saveOrderItemsProductDetail(orderId, productId, related_productdetail);
 		// TODO: JUnit - Add assertions to test outputs of operation: saveOrderItemsProductDetail
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Delete an existing Order entity
+	 * 
+	 */
+	@Test
+	public void deleteOrderItemsOrder() {
+		// TODO: JUnit - Populate test inputs for operation: deleteOrderItemsOrder 
+		Integer orderitems_orderId = 0;
+		Integer orderitems_productId = 0;
+		Integer related_order_id = 0;
+		OrderItems response = null;
+		response = service.deleteOrderItemsOrder(orderitems_orderId, orderitems_productId, related_order_id);
+		// TODO: JUnit - Add assertions to test outputs of operation: deleteOrderItemsOrder
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Delete an existing OrderItems entity
+	 * 
+	 */
+	@Test
+	public void deleteOrderItems() {
+		// TODO: JUnit - Populate test inputs for operation: deleteOrderItems 
+		OrderItems orderitems = new com.lqf.eshopdemo.domain.OrderItems();
+		service.deleteOrderItems(orderitems);
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Save an existing OrderItems entity
+	 * 
+	 */
+	@Test
+	public void saveOrderItems() {
+		// TODO: JUnit - Populate test inputs for operation: saveOrderItems 
+		OrderItems orderitems_1 = new com.lqf.eshopdemo.domain.OrderItems();
+		service.saveOrderItems(orderitems_1);
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Return all OrderItems entity
+	 * 
+	 */
+	@Test
+	public void findAllOrderItemss() {
+		// TODO: JUnit - Populate test inputs for operation: findAllOrderItemss 
+		Integer startResult = 0;
+		Integer maxRows = 0;
+		List<OrderItems> response = null;
+		response = service.findAllOrderItemss(startResult, maxRows);
+		// TODO: JUnit - Add assertions to test outputs of operation: findAllOrderItemss
 	}
 
 	/**
@@ -150,46 +178,6 @@ public class OrderItemsServiceTest {
 
 	/**
 	 * Operation Unit Test
-	 * Save an existing OrderItems entity
-	 * 
-	 */
-	@Test
-	public void saveOrderItems() {
-		// TODO: JUnit - Populate test inputs for operation: saveOrderItems 
-		OrderItems orderitems = new com.lqf.eshopdemo.domain.OrderItems();
-		service.saveOrderItems(orderitems);
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Delete an existing OrderItems entity
-	 * 
-	 */
-	@Test
-	public void deleteOrderItems() {
-		// TODO: JUnit - Populate test inputs for operation: deleteOrderItems 
-		OrderItems orderitems_1 = new com.lqf.eshopdemo.domain.OrderItems();
-		service.deleteOrderItems(orderitems_1);
-	}
-
-	/**
-	 * Operation Unit Test
-	 * Delete an existing Order entity
-	 * 
-	 */
-	@Test
-	public void deleteOrderItemsOrder() {
-		// TODO: JUnit - Populate test inputs for operation: deleteOrderItemsOrder 
-		Integer orderitems_orderId = 0;
-		Integer orderitems_productId = 0;
-		Integer related_order_id = 0;
-		OrderItems response = null;
-		response = service.deleteOrderItemsOrder(orderitems_orderId, orderitems_productId, related_order_id);
-		// TODO: JUnit - Add assertions to test outputs of operation: deleteOrderItemsOrder
-	}
-
-	/**
-	 * Operation Unit Test
 	 * Return a count of all OrderItems entity
 	 * 
 	 */
@@ -198,6 +186,18 @@ public class OrderItemsServiceTest {
 		Integer response = null;
 		response = service.countOrderItemss();
 		// TODO: JUnit - Add assertions to test outputs of operation: countOrderItemss
+	}
+
+	/**
+	 * Operation Unit Test
+	 * Load an existing OrderItems entity
+	 * 
+	 */
+	@Test
+	public void loadOrderItemss() {
+		Set<OrderItems> response = null;
+		response = service.loadOrderItemss();
+		// TODO: JUnit - Add assertions to test outputs of operation: loadOrderItemss
 	}
 
 	/**

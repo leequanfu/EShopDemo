@@ -15,40 +15,16 @@ import org.springframework.dao.DataAccessException;
 public interface ProductCatalogDAO extends JpaDao<ProductCatalog> {
 
 	/**
-	 * JPQL Query - findProductCatalogByPrimaryKey
+	 * JPQL Query - findProductCatalogByProductId
 	 *
 	 */
-	public ProductCatalog findProductCatalogByPrimaryKey(Integer productId, Integer catalogId) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findProductCatalogByPrimaryKey
-	 *
-	 */
-	public ProductCatalog findProductCatalogByPrimaryKey(Integer productId, Integer catalogId, int startResult, int maxRows) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findProductCatalogByCatalogId
-	 *
-	 */
-	public Set<ProductCatalog> findProductCatalogByCatalogId(Integer catalogId_1) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findProductCatalogByCatalogId
-	 *
-	 */
-	public Set<ProductCatalog> findProductCatalogByCatalogId(Integer catalogId_1, int startResult, int maxRows) throws DataAccessException;
+	public Set<ProductCatalog> findProductCatalogByProductId(Integer productId) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findProductCatalogByProductId
 	 *
 	 */
-	public Set<ProductCatalog> findProductCatalogByProductId(Integer productId_1) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findProductCatalogByProductId
-	 *
-	 */
-	public Set<ProductCatalog> findProductCatalogByProductId(Integer productId_1, int startResult, int maxRows) throws DataAccessException;
+	public Set<ProductCatalog> findProductCatalogByProductId(Integer productId, int startResult, int maxRows) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findAllProductCatalogs
@@ -61,5 +37,29 @@ public interface ProductCatalogDAO extends JpaDao<ProductCatalog> {
 	 *
 	 */
 	public Set<ProductCatalog> findAllProductCatalogs(int startResult, int maxRows) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findProductCatalogByPrimaryKey
+	 *
+	 */
+	public ProductCatalog findProductCatalogByPrimaryKey(Integer productId_1, Integer catalogId) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findProductCatalogByPrimaryKey
+	 *
+	 */
+	public ProductCatalog findProductCatalogByPrimaryKey(Integer productId_1, Integer catalogId, int startResult, int maxRows) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findProductCatalogByCatalogId
+	 *
+	 */
+	public Set<ProductCatalog> findProductCatalogByCatalogId(Integer catalogId_1) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findProductCatalogByCatalogId
+	 *
+	 */
+	public Set<ProductCatalog> findProductCatalogByCatalogId(Integer catalogId_1, int startResult, int maxRows) throws DataAccessException;
 
 }

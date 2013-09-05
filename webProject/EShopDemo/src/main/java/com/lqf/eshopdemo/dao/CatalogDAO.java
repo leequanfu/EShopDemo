@@ -15,16 +15,16 @@ import org.springframework.dao.DataAccessException;
 public interface CatalogDAO extends JpaDao<Catalog> {
 
 	/**
-	 * JPQL Query - findCatalogByName
+	 * JPQL Query - findCatalogByNameContaining
 	 *
 	 */
-	public Set<Catalog> findCatalogByName(String name) throws DataAccessException;
+	public Set<Catalog> findCatalogByNameContaining(String name) throws DataAccessException;
 
 	/**
-	 * JPQL Query - findCatalogByName
+	 * JPQL Query - findCatalogByNameContaining
 	 *
 	 */
-	public Set<Catalog> findCatalogByName(String name, int startResult, int maxRows) throws DataAccessException;
+	public Set<Catalog> findCatalogByNameContaining(String name, int startResult, int maxRows) throws DataAccessException;
 
 	/**
 	 * JPQL Query - findCatalogByPrimaryKey
@@ -51,6 +51,18 @@ public interface CatalogDAO extends JpaDao<Catalog> {
 	public Catalog findCatalogById(Integer id_1, int startResult, int maxRows) throws DataAccessException;
 
 	/**
+	 * JPQL Query - findCatalogByName
+	 *
+	 */
+	public Set<Catalog> findCatalogByName(String name_1) throws DataAccessException;
+
+	/**
+	 * JPQL Query - findCatalogByName
+	 *
+	 */
+	public Set<Catalog> findCatalogByName(String name_1, int startResult, int maxRows) throws DataAccessException;
+
+	/**
 	 * JPQL Query - findAllCatalogs
 	 *
 	 */
@@ -61,17 +73,5 @@ public interface CatalogDAO extends JpaDao<Catalog> {
 	 *
 	 */
 	public Set<Catalog> findAllCatalogs(int startResult, int maxRows) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findCatalogByNameContaining
-	 *
-	 */
-	public Set<Catalog> findCatalogByNameContaining(String name_1) throws DataAccessException;
-
-	/**
-	 * JPQL Query - findCatalogByNameContaining
-	 *
-	 */
-	public Set<Catalog> findCatalogByNameContaining(String name_1, int startResult, int maxRows) throws DataAccessException;
 
 }
