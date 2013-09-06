@@ -679,18 +679,7 @@ if (true) {
 
 }
 });
-gv_vAlignTable['u96'] = 'top';gv_vAlignTable['u146'] = 'center';document.getElementById('u196_img').tabIndex = 0;
-
-u196.style.cursor = 'pointer';
-$axure.eventManager.click('u196', function(e) {
-
-if (true) {
-
-	self.location.href=$axure.globalVariableProvider.getLinkUrl('productDetail.html');
-
-}
-});
-document.getElementById('u15_img').tabIndex = 0;
+gv_vAlignTable['u96'] = 'top';gv_vAlignTable['u146'] = 'center';document.getElementById('u15_img').tabIndex = 0;
 
 u15.style.cursor = 'pointer';
 $axure.eventManager.click('u15', function(e) {

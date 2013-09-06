@@ -31,23 +31,28 @@ public class UserHomeController {
 		Set<ProductCatalog> moviePc = pcDao.findProductCatalogByCatalogId(2);
 		Set<ProductCatalog> phonePc = pcDao.findProductCatalogByCatalogId(3);
 		
-		Set<ProductDetail> bookList = getProductDetailByPc(bookPc);
-		Set<ProductDetail> movieList = getProductDetailByPc(moviePc);
-		Set<ProductDetail> phoneList = getProductDetailByPc(phonePc);
+		Set<ProductDetail> bookList = getProductDetailByPc(bookPc, 4);
+		Set<ProductDetail> movieList = getProductDetailByPc(moviePc, 4);
+		Set<ProductDetail> phoneList = getProductDetailByPc(phonePc, 4);
 		
-		model.addAttribute("bookList", bookList);
-		model.addAttribute("movieList", movieList);
-		model.addAttribute("phoneList", phoneList);
-		model.addAttribute("test", "ttt");
+		model.addAttribute("bookList", bookList.toArray());
+		model.addAttribute("movieList", movieList.toArray());
+		model.addAttribute("phoneList", phoneList.toArray());
 		return "UserHome";
 	}
 
-	private Set<ProductDetail> getProductDetailByPc(Set<ProductCatalog> bookPc) {
+	private Set<ProductDetail> getProductDetailByPc(Set<ProductCatalog> bookPc, int num) {
 		Set<ProductDetail> ret = new HashSet<ProductDetail>();
 		Iterator<ProductCatalog> it = bookPc.iterator();
+		int i = 0;
 		while (it.hasNext()) {
 			ProductCatalog pc = it.next();
-			ret.add(pdDao.findProductDetailById(pc.getProductId()));
+			ProductDetail pd = pdDao.findProductDetailById(pc.getProductId());
+			if (pd.getTitle().length() > 40)
+				pd.setTitle(pd.getTitle().substring(0, 37) + "...");
+			ret.add(pd);
+			if (++i >= num)
+				break;
 		}
 		
 		return ret;

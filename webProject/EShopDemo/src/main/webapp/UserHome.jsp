@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div id="u4" class="u4_container"   data-label="link">
 <div id="u4_img" class="u4_normal detectCanvas"></div>
 <div id="u5" class="u5"  >
-<div id="u5_rtf"><p style="text-align:left;"><a><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#004080;">[Sign in]</span></p></div>
+<div id="u5_rtf"><p style="text-align:left;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#004080;">[Sign in]</span></p></div>
 </div>
 </div>
 <div id="u6" class="u6_container"   data-label="link">
@@ -673,49 +673,10 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u191" class="u191_container"   >
 <div id="u191_img" class="u191_normal detectCanvas"></div>
 <div id="u192" class="u192"  >
-<div id="u192_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">Copyright 漏 2013 </span><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">Quanfu Li </span><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">All rights reserved&nbsp; </span><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">email: leequanfu@gmail.com</span></p></div>
+<div id="u192_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">Copyright © 2013 </span><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">Quanfu Li </span><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">All rights reserved&nbsp; </span><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">email: leequanfu@gmail.com</span></p></div>
 </div>
 </div>
 <DIV id="u193" style="border-style:dotted; border-color:red; visibility:hidden; position:absolute; left:211px; top:1267px; width:996px; height:46px;;" ></div>
-
-<br>============</br>
-<br>${test},${bookList} alalsls</br>
-<br>============</br>
-
-<c:forEach var="book" items="${bookList}">
-	<div id="u194" class="u194_container"   >
-	<div id="u194_img" class="u194_normal detectCanvas"></div>
-	<div id="u195" class="u195" style="visibility:hidden;"  >
-	<div id="u195_rtf"></div>
-	</div>
-	</div>
-	<div id="u196" class="u196_container"   >
-	<div id="u196_img" >
-	<img src="images/<c:out value="${book.id}"/>/main.jpg"  class="raw_image"></div>
-	<div id="u197" class="u197" style="visibility:hidden;"  >
-	<div id="u197_rtf"></div>
-	</div>
-	</div>
-	<div id="u198" class="u198_container"   >
-	<div id="u198_img" class="u198_normal detectCanvas"></div>
-	<div id="u199" class="u199"  >
-	<div id="u199_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;"><c:out value="${book.price}"/></span></p></div>
-	</div>
-	</div>
-	<div id="u200" class="u200_container"   >
-	<div id="u200_img" class="u200_normal detectCanvas"></div>
-	<div id="u201" class="u201"  >
-	<div id="u201_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;"><c:out value="${book.title}"/></span></p></div>
-	</div>
-	</div>
-	<div id="u202" class="u202_container"   >
-	<div id="u202_img" class="u202_normal detectCanvas"></div>
-	<div id="u203" class="u203" style="visibility:hidden;"  >
-	<div id="u203_rtf"></div>
-	</div>
-</c:forEach>
-
-
 <div id="u194" class="u194_container"   >
 <div id="u194_img" class="u194_normal detectCanvas"></div>
 <div id="u195" class="u195" style="visibility:hidden;"  >
@@ -724,7 +685,7 @@ InitializeSubmenu('sm2u31', 'u35');
 </div>
 <div id="u196" class="u196_container"   >
 <div id="u196_img" >
-<img src="UserHome_files/u196_normal.jpg"  class="raw_image"></div>
+<img src="images/<c:out value="${bookList[0].id}"/>/main.jpg"  class="raw_image"></div>
 <div id="u197" class="u197" style="visibility:hidden;"  >
 <div id="u197_rtf"></div>
 </div>
@@ -732,13 +693,13 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u198" class="u198_container"   >
 <div id="u198_img" class="u198_normal detectCanvas"></div>
 <div id="u199" class="u199"  >
-<div id="u199_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$12950</span></p></div>
+<div id="u199_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$${bookList[0].price}</span></p></div>
 </div>
 </div>
 <div id="u200" class="u200_container"   >
 <div id="u200_img" class="u200_normal detectCanvas"></div>
 <div id="u201" class="u201"  >
-<div id="u201_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">American Psychological Association</span></p></div>
+<div id="u201_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">${bookList[0].title}</span></p></div>
 </div>
 </div>
 <div id="u202" class="u202_container"   >
@@ -749,7 +710,7 @@ InitializeSubmenu('sm2u31', 'u35');
 </div>
 <div id="u204" class="u204_container"   >
 <div id="u204_img" >
-<img src="UserHome_files/u196_normal.jpg"  class="raw_image"></div>
+<img src="images/<c:out value="${bookList[1].id}"/>/main.jpg"  class="raw_image"></div>
 <div id="u205" class="u205" style="visibility:hidden;"  >
 <div id="u205_rtf"></div>
 </div>
@@ -757,13 +718,13 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u206" class="u206_container"   >
 <div id="u206_img" class="u206_normal detectCanvas"></div>
 <div id="u207" class="u207"  >
-<div id="u207_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$12950</span></p></div>
+<div id="u207_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$${bookList[1].price}</span></p></div>
 </div>
 </div>
 <div id="u208" class="u208_container"   >
 <div id="u208_img" class="u208_normal detectCanvas"></div>
 <div id="u209" class="u209"  >
-<div id="u209_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">American Psychological Association</span></p></div>
+<div id="u209_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">${bookList[1].title}</span></p></div>
 </div>
 </div>
 <div id="u210" class="u210_container"   >
@@ -774,7 +735,7 @@ InitializeSubmenu('sm2u31', 'u35');
 </div>
 <div id="u212" class="u212_container"   >
 <div id="u212_img" >
-<img src="UserHome_files/u196_normal.jpg"  class="raw_image"></div>
+<img src="images/<c:out value="${bookList[2].id}"/>/main.jpg"  class="raw_image"></div>
 <div id="u213" class="u213" style="visibility:hidden;"  >
 <div id="u213_rtf"></div>
 </div>
@@ -782,13 +743,13 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u214" class="u214_container"   >
 <div id="u214_img" class="u214_normal detectCanvas"></div>
 <div id="u215" class="u215"  >
-<div id="u215_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$12950</span></p></div>
+<div id="u215_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$${bookList[2].price}</span></p></div>
 </div>
 </div>
 <div id="u216" class="u216_container"   >
 <div id="u216_img" class="u216_normal detectCanvas"></div>
 <div id="u217" class="u217"  >
-<div id="u217_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">American Psychological Association</span></p></div>
+<div id="u217_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">${bookList[2].title}</span></p></div>
 </div>
 </div>
 <div id="u218" class="u218_container"   >
@@ -799,7 +760,7 @@ InitializeSubmenu('sm2u31', 'u35');
 </div>
 <div id="u220" class="u220_container"   >
 <div id="u220_img" >
-<img src="UserHome_files/u196_normal.jpg"  class="raw_image"></div>
+<img src="images/<c:out value="${bookList[3].id}"/>/main.jpg"  class="raw_image"></div>
 <div id="u221" class="u221" style="visibility:hidden;"  >
 <div id="u221_rtf"></div>
 </div>
@@ -807,13 +768,13 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u222" class="u222_container"   >
 <div id="u222_img" class="u222_normal detectCanvas"></div>
 <div id="u223" class="u223"  >
-<div id="u223_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$12950</span></p></div>
+<div id="u223_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$${bookList[3].title}</span></p></div>
 </div>
 </div>
 <div id="u224" class="u224_container"   >
 <div id="u224_img" class="u224_normal detectCanvas"></div>
 <div id="u225" class="u225"  >
-<div id="u225_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">American Psychological Association</span></p></div>
+<div id="u225_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">${bookList[3].title}</span></p></div>
 </div>
 </div>
 <div id="u226" class="u226_container"   >
@@ -824,7 +785,7 @@ InitializeSubmenu('sm2u31', 'u35');
 </div>
 <div id="u228" class="u228_container"   >
 <div id="u228_img" >
-<img src="UserHome_files/u196_normal.jpg"  class="raw_image"></div>
+<img src="images/<c:out value="${movieList[0].id}"/>/main.jpg"  class="raw_image"></div>
 <div id="u229" class="u229" style="visibility:hidden;"  >
 <div id="u229_rtf"></div>
 </div>
@@ -832,13 +793,13 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u230" class="u230_container"   >
 <div id="u230_img" class="u230_normal detectCanvas"></div>
 <div id="u231" class="u231"  >
-<div id="u231_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$12950</span></p></div>
+<div id="u231_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$${movieList[0].price}</span></p></div>
 </div>
 </div>
 <div id="u232" class="u232_container"   >
 <div id="u232_img" class="u232_normal detectCanvas"></div>
 <div id="u233" class="u233"  >
-<div id="u233_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">American Psychological Association</span></p></div>
+<div id="u233_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">${movieList[0].title}</span></p></div>
 </div>
 </div>
 <div id="u234" class="u234_container"   >
@@ -849,7 +810,7 @@ InitializeSubmenu('sm2u31', 'u35');
 </div>
 <div id="u236" class="u236_container"   >
 <div id="u236_img" >
-<img src="UserHome_files/u196_normal.jpg"  class="raw_image"></div>
+<img src="images/<c:out value="${movieList[1].id}"/>/main.jpg"  class="raw_image"></div>
 <div id="u237" class="u237" style="visibility:hidden;"  >
 <div id="u237_rtf"></div>
 </div>
@@ -857,13 +818,13 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u238" class="u238_container"   >
 <div id="u238_img" class="u238_normal detectCanvas"></div>
 <div id="u239" class="u239"  >
-<div id="u239_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$12950</span></p></div>
+<div id="u239_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$${movieList[1].price}</span></p></div>
 </div>
 </div>
 <div id="u240" class="u240_container"   >
 <div id="u240_img" class="u240_normal detectCanvas"></div>
 <div id="u241" class="u241"  >
-<div id="u241_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">American Psychological Association</span></p></div>
+<div id="u241_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">${movieList[1].title}</span></p></div>
 </div>
 </div>
 <div id="u242" class="u242_container"   >
@@ -874,7 +835,7 @@ InitializeSubmenu('sm2u31', 'u35');
 </div>
 <div id="u244" class="u244_container"   >
 <div id="u244_img" >
-<img src="UserHome_files/u196_normal.jpg"  class="raw_image"></div>
+<img src="images/<c:out value="${movieList[2].id}"/>/main.jpg"  class="raw_image"></div>
 <div id="u245" class="u245" style="visibility:hidden;"  >
 <div id="u245_rtf"></div>
 </div>
@@ -882,13 +843,13 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u246" class="u246_container"   >
 <div id="u246_img" class="u246_normal detectCanvas"></div>
 <div id="u247" class="u247"  >
-<div id="u247_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$12950</span></p></div>
+<div id="u247_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$${movieList[2].price}</span></p></div>
 </div>
 </div>
 <div id="u248" class="u248_container"   >
 <div id="u248_img" class="u248_normal detectCanvas"></div>
 <div id="u249" class="u249"  >
-<div id="u249_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">American Psychological Association</span></p></div>
+<div id="u249_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">${movieList[2].title}</span></p></div>
 </div>
 </div>
 <div id="u250" class="u250_container"   >
@@ -899,7 +860,7 @@ InitializeSubmenu('sm2u31', 'u35');
 </div>
 <div id="u252" class="u252_container"   >
 <div id="u252_img" >
-<img src="UserHome_files/u196_normal.jpg"  class="raw_image"></div>
+<img src="images/<c:out value="${movieList[3].id}"/>/main.jpg"  class="raw_image"></div>
 <div id="u253" class="u253" style="visibility:hidden;"  >
 <div id="u253_rtf"></div>
 </div>
@@ -907,13 +868,13 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u254" class="u254_container"   >
 <div id="u254_img" class="u254_normal detectCanvas"></div>
 <div id="u255" class="u255"  >
-<div id="u255_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$12950</span></p></div>
+<div id="u255_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$${movieList[3].price}</span></p></div>
 </div>
 </div>
 <div id="u256" class="u256_container"   >
 <div id="u256_img" class="u256_normal detectCanvas"></div>
 <div id="u257" class="u257"  >
-<div id="u257_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">American Psychological Association</span></p></div>
+<div id="u257_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">${movieList[3].title}</span></p></div>
 </div>
 </div>
 <div id="u258" class="u258_container"   >
@@ -924,7 +885,7 @@ InitializeSubmenu('sm2u31', 'u35');
 </div>
 <div id="u260" class="u260_container"   >
 <div id="u260_img" >
-<img src="UserHome_files/u196_normal.jpg"  class="raw_image"></div>
+<img src="images/<c:out value="${phoneList[0].id}"/>/main.jpg"  class="raw_image"></div>
 <div id="u261" class="u261" style="visibility:hidden;"  >
 <div id="u261_rtf"></div>
 </div>
@@ -932,13 +893,13 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u262" class="u262_container"   >
 <div id="u262_img" class="u262_normal detectCanvas"></div>
 <div id="u263" class="u263"  >
-<div id="u263_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$12950</span></p></div>
+<div id="u263_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$${phoneList[0].price}</span></p></div>
 </div>
 </div>
 <div id="u264" class="u264_container"   >
 <div id="u264_img" class="u264_normal detectCanvas"></div>
 <div id="u265" class="u265"  >
-<div id="u265_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">American Psychological Association</span></p></div>
+<div id="u265_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">${phoneList[0].title}</span></p></div>
 </div>
 </div>
 <div id="u266" class="u266_container"   >
@@ -949,7 +910,7 @@ InitializeSubmenu('sm2u31', 'u35');
 </div>
 <div id="u268" class="u268_container"   >
 <div id="u268_img" >
-<img src="UserHome_files/u196_normal.jpg"  class="raw_image"></div>
+<img src="images/<c:out value="${phoneList[1].id}"/>/main.jpg"  class="raw_image"></div>
 <div id="u269" class="u269" style="visibility:hidden;"  >
 <div id="u269_rtf"></div>
 </div>
@@ -957,13 +918,13 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u270" class="u270_container"   >
 <div id="u270_img" class="u270_normal detectCanvas"></div>
 <div id="u271" class="u271"  >
-<div id="u271_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$12950</span></p></div>
+<div id="u271_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$${phoneList[1].price}</span></p></div>
 </div>
 </div>
 <div id="u272" class="u272_container"   >
 <div id="u272_img" class="u272_normal detectCanvas"></div>
 <div id="u273" class="u273"  >
-<div id="u273_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">American Psychological Association</span></p></div>
+<div id="u273_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">${phoneList[1].title}</span></p></div>
 </div>
 </div>
 <div id="u274" class="u274_container"   >
@@ -974,7 +935,7 @@ InitializeSubmenu('sm2u31', 'u35');
 </div>
 <div id="u276" class="u276_container"   >
 <div id="u276_img" >
-<img src="UserHome_files/u196_normal.jpg"  class="raw_image"></div>
+<img src="images/<c:out value="${phoneList[2].id}"/>/main.jpg"  class="raw_image"></div>
 <div id="u277" class="u277" style="visibility:hidden;"  >
 <div id="u277_rtf"></div>
 </div>
@@ -982,13 +943,13 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u278" class="u278_container"   >
 <div id="u278_img" class="u278_normal detectCanvas"></div>
 <div id="u279" class="u279"  >
-<div id="u279_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$12950</span></p></div>
+<div id="u279_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$${phoneList[2].price}</span></p></div>
 </div>
 </div>
 <div id="u280" class="u280_container"   >
 <div id="u280_img" class="u280_normal detectCanvas"></div>
 <div id="u281" class="u281"  >
-<div id="u281_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">American Psychological Association</span></p></div>
+<div id="u281_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">${phoneList[2].title}</span></p></div>
 </div>
 </div>
 <div id="u282" class="u282_container"   >
@@ -999,7 +960,7 @@ InitializeSubmenu('sm2u31', 'u35');
 </div>
 <div id="u284" class="u284_container"   >
 <div id="u284_img" >
-<img src="UserHome_files/u196_normal.jpg"  class="raw_image"></div>
+<img src="images/<c:out value="${phoneList[3].id}"/>/main.jpg"  class="raw_image"></div>
 <div id="u285" class="u285" style="visibility:hidden;"  >
 <div id="u285_rtf"></div>
 </div>
@@ -1007,13 +968,13 @@ InitializeSubmenu('sm2u31', 'u35');
 <div id="u286" class="u286_container"   >
 <div id="u286_img" class="u286_normal detectCanvas"></div>
 <div id="u287" class="u287"  >
-<div id="u287_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$12950</span></p></div>
+<div id="u287_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">$${phoneList[3].price}</span></p></div>
 </div>
 </div>
 <div id="u288" class="u288_container"   >
 <div id="u288_img" class="u288_normal detectCanvas"></div>
 <div id="u289" class="u289"  >
-<div id="u289_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">American Psychological Association</span></p></div>
+<div id="u289_rtf"><p style="text-align:center;"><span style="font-family:Arial;font-size:13px;font-weight:normal;font-style:normal;text-decoration:none;color:#333333;">${phoneList[3].title}</span></p></div>
 </div>
 </div>
 <div id="u290" class="u290_container"   >
