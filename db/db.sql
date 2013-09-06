@@ -20,12 +20,14 @@ CREATE TABLE IF NOT EXISTS `catalog` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- 正在导出表  eshopdemo.catalog 的数据：~0 rows (大约)
+-- 正在导出表  eshopdemo.catalog 的数据：~3 rows (大约)
 /*!40000 ALTER TABLE `catalog` DISABLE KEYS */;
 INSERT INTO `catalog` (`id`, `name`) VALUES
-	(1, 'car');
+	(1, 'book'),
+	(2, 'movie'),
+	(3, 'phone');
 /*!40000 ALTER TABLE `catalog` ENABLE KEYS */;
 
 
@@ -37,8 +39,8 @@ CREATE TABLE IF NOT EXISTS `customer_comment` (
   `comment` varchar(9999) DEFAULT NULL,
   KEY `FK_customer_comment_product_detail` (`pro_id`),
   KEY `FK_customer_comment_userinfo` (`user_id`),
-  CONSTRAINT `FK_customer_comment_userinfo` FOREIGN KEY (`user_id`) REFERENCES `userinfo` (`id`),
-  CONSTRAINT `FK_customer_comment_product_detail` FOREIGN KEY (`pro_id`) REFERENCES `product_detail` (`id`)
+  CONSTRAINT `FK_customer_comment_product_detail` FOREIGN KEY (`pro_id`) REFERENCES `product_detail` (`id`),
+  CONSTRAINT `FK_customer_comment_userinfo` FOREIGN KEY (`user_id`) REFERENCES `userinfo` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 正在导出表  eshopdemo.customer_comment 的数据：~0 rows (大约)
@@ -117,8 +119,24 @@ CREATE TABLE IF NOT EXISTS `product_catalog` (
   CONSTRAINT `FK__productinfo` FOREIGN KEY (`product_id`) REFERENCES `product_detail` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- 正在导出表  eshopdemo.product_catalog 的数据：~0 rows (大约)
+-- 正在导出表  eshopdemo.product_catalog 的数据：~15 rows (大约)
 /*!40000 ALTER TABLE `product_catalog` DISABLE KEYS */;
+INSERT INTO `product_catalog` (`product_id`, `catalog_id`) VALUES
+	(1, 1),
+	(2, 1),
+	(3, 1),
+	(4, 1),
+	(5, 1),
+	(6, 2),
+	(7, 2),
+	(8, 2),
+	(9, 2),
+	(10, 2),
+	(11, 3),
+	(12, 3),
+	(13, 3),
+	(14, 3),
+	(15, 3);
 /*!40000 ALTER TABLE `product_catalog` ENABLE KEYS */;
 
 
@@ -129,14 +147,29 @@ CREATE TABLE IF NOT EXISTS `product_detail` (
   `price` float unsigned NOT NULL DEFAULT '0',
   `quantity` int(255) unsigned DEFAULT '20',
   `description` mediumtext,
+  `picnum` int(10) DEFAULT '1',
+  `rate` int(10) DEFAULT '5',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
--- 正在导出表  eshopdemo.product_detail 的数据：~2 rows (大约)
+-- 正在导出表  eshopdemo.product_detail 的数据：~15 rows (大约)
 /*!40000 ALTER TABLE `product_detail` DISABLE KEYS */;
-INSERT INTO `product_detail` (`id`, `title`, `price`, `quantity`, `description`) VALUES
-	(1, 'Nissan Tiida 18G H/Back 2005', 4000, 9999, '# No cambelt - Chain driven \r\n# 4 Cylinder DOHC 16V EFI engine \r\n# CVT transmission - Save fuel \r\n# Navigation/GPS \r\n# Reversing camera \r\n# Power windows \r\n# Power mirrors \r\n# Anti lock brakes \r\n# Adjustable steering \r\n# Electric seats \r\n# Electric seat lifter \r\n# Tinted glass \r\n# Rear wiper \r\n# Overdrive and sport setting \r\n# B-platform wide wheelbase \r\n# Half leather half trim \r\n# HID headlights \r\n# Split fold rear seat \r\n# 4 Near brand new tyres \r\n\r\nBUY WITH CONFIDENCE \r\n\r\nSuperb clean condition inside and out. \r\nDrives smooth and very well no mechanical issues. \r\n\r\nThis is a fresh import inspected and complied by VINZ. \r\nOdometer is certified by AA. \r\n\r\nThis vehicle has an annual fuel cost of $1900 and a fuel economy rating of 4.5 out of 6. Fuel saver. \r\n\r\nIf you wish to inspect this vehicle it has to be done prior the auction finishes, payment must be made within 3 days of the close of the auction, happy bidding.'),
-	(2, 'Nissan Tiida Latio LOW KM 2006', 7299, 9999, '* 2004 Nissan Tiida Latio 1.5L * \r\n\r\nTHIS IS YEAR 2004 NOT 2006 \r\nTHIS IS YEAR 2004 NOT 2006 \r\nTHIS IS YEAR 2004 NOT 2006 \r\n\r\nGeneral: \r\n-Genuine LOW 70,000km\'s \r\n-Japan Odometer Certified \r\n-NZ AA Odometer Certified \r\n-PASSED Japan Radiation Check \r\n-Import Grade 4 out of 5 \r\n-Fresh Import Car : No NZ owner \r\n-New VINZ WOF \r\n-NOT a Water Damage Car \r\n-NOT a Damage Vehicle \r\n-NO Money Owing on the car \r\n-Excellent Condition In and Out \r\n-30 Days Mechanical Warranty \r\n-Camchain Drive, Don\'t need to change \r\n- $300.00 on road cost apply (Include a new number plate and 6 months registration) \r\n\r\nFeatures: \r\n-Dual Air bags \r\n-ABS brakes \r\n-Air conditioning \r\n-Central locking \r\n-Electric windows \r\n-Power steering \r\n\r\nAll inspection is welcome at your own cost \r\n\r\nTest drive is welcome by appointment only \r\n\r\nPlease contact 021 198 9913 to arrange a time. \r\n\r\n@ Viewing times @ \r\nMonday-Saturday 10am - 5pm \r\nSunday CLOSED \r\n\r\nIf you require transportation for the vehicle. Please click the lin');
+INSERT INTO `product_detail` (`id`, `title`, `price`, `quantity`, `description`, `picnum`, `rate`) VALUES
+	(1, 'Publication Manual of the American Ps...', 19.86, 9999, 'Publication Date: July 15, 2009 | ISBN-10: 1433805618 | ISBN-13: 978-1433805615 | Edition: 6th\r\nThe "Publication Manual" is the style manual of choice for writers, editors, students, and educators. Although it is specifically designed to help writers in the behavioral sciences and social sciences, anyone who writes non-fiction prose can benefit from its guidance. The newly-revised Sixth Edition has not only been rewritten. It has also been thoroughly rethought and reorganized, making it the most user-friendly "Publication Manual" the APA has ever produced. You will be able to find answers to your questions faster than ever before. When you need advice on how to present information, including text, data, and graphics, for publication in any type of format--such as college and university papers, professional journals, presentations for colleagues, and online publication--you will find the advice you\'re looking for in the "Publication Manual."', 6, 5),
+	(2, 'Good Housekeeping (1-year auto-renewal)', 88.22, 9999, 'Publication Date: May 27, 2013 | ISBN-10: 0890425558 | ISBN-13: 978-0890425558 | Edition: 5\r\nThis new edition of the American Psychiatric Association\'s Diagnostic and Statistical Manual of Mental Disorders (DSM-5), used by clinicians and researchers to diagnose and classify mental disorders, is the product of more than 10 years of effort by hundreds of international experts in all aspects of mental health. Their dedication and hard work have yielded an authoritative volume that defines and classifies mental disorders in order to improve diagnoses, treatment, and research. This manual, which creates a common language for clinicians involved in the diagnosis of mental disorders, includes concise and specific criteria intended to facilitate an objective assessment of symptom presentations in a variety of clinical settings inpatient, outpatient, partial hospital, consultation-liaison, clinical, private practice, and primary care. The Diagnostic and Statistical Manual of Mental Disorders, Fifth Edition, is the most comprehensive, current, and critical resource for clinical practice available to today\'s mental health clinicians and researchers of all orientations. The information contained in the manual is also valuable to other physicians and health professionals, including psychologists, counselors, nurses, and occupational and rehabilitation therapists, as well as social workers and forensic and legal specialists. DSM-5 is the most definitive resource for the diagnosis and classification of mental disorders.', 6, 5),
+	(3, 'Esquire (1-year auto-renewal)', 13.21, 20, 'You know him from the hit A&E show Duck Dynasty—now you can enjoy Uncle Si’s tall tales, crazy exploits, and quirky one-liners in one raucous collection!', 6, 5),
+	(4, 'Popular Mechanics (6-month introducto...', 15.8, 20, 'Never go back—but Jack Reacher does, and the past finally catches up with him. . . . Never Go Back is #1 New York Times bestselling author Lee Child’s new novel of action-charged suspense starring “one of the best thriller characters at work today” (Newsweek).', 6, 5),
+	(5, 'King and Maxwell (King & Maxwell) Hardcover', 11.29, 20, 'At the conclusion of The Mark of Athena, Annabeth and Percy tumble into a pit leading straight to the Underworld. The other five demigods have to put aside their grief and follow Percy\'s instructions to find the mortal side of the Doors of Death. If they can fight their way through the Gaea\'s forces, and Percy and Annabeth can survive the House of Hades, then the Seven will be able to seal the Doors both sides and prevent the giants from raising Gaea. But, Leo wonders, if the Doors are sealed, how will Percy and Annabeth be able to escape?', 1, 5),
+	(6, 'Breaking Bad: The Complete First Seas...', 34.96, 20, 'No one would confuse the desperate dad Bryan Cranston plays in this character-driven drama with the fun-loving Hal from Malcolm in the Middle. In AMC\'s Breaking Bad, Walter White lives in the suburbs with his wife--and wears tighty-whiteys--but the similarities end there. During the pilot, the cash-strapped chemistry teacher finds out he has inoperable lung cancer. He and Skyler (Deadwood\'s Anna Gunn) have one son, Walter Jr. (R.J. Mitte), and a daughter on the way. With two years to get his affairs in order, Walter comes up with a wild plan: he and former student Jesse (Aaron Paul), a drug dealer, will open a meth lab.', 2, 5),
+	(7, 'Quantum of Solace (2008)', 13.19, 20, 'Daniel Craig returns as James Bond in this thrilling, action-packed adventure that picks up where Casino Royale left off. Betrayed by the woman he loved, 007 fights the urge to make his latest mission personal. On a nonstop quest for justice that crisscrosses the globe, Bond meets the beautiful but feisty Camille (Olga Kurylenko), who leads him to Dominic Greene (Mathieu Amalric), a ruthless businessman and major force within the mysterious Quantum organization. When Bond uncovers a conspiracy to take control of one of the world’s most important natural resources, he must navigate a minefield of treachery, deception and murder to neutralize Greene before it’s too late!', 6, 5),
+	(8, 'The Walking Dead: The Complete Third ...', 34.96, 20, 'In this uncertain world, Rick Grimes (Andrew Lincoln) and his band of survivors must not only fight the dead, but also face a whole new fear: the living. In this 16 episode season, the series Entertainment Weekly called the “greatest thriller ever produced for television”, Rick and his fellow survivors continue to seek refuge in a desolate and post-apocalyptic world and soon discover that there are greater forces to fear than just the walking dead. The struggle to survive has never been so perilous. This season also introduces new characters, including the Governor (David Morrissey) and fan-favorite Michonne (Danai Gurira), along with her zombie pets.', 2, 5),
+	(9, 'The Dark Knight Rises (Blu-ray/DVD Co...', 12.49, 20, 'Of all the "most anticipated" movies ever claiming that title, it\'s hard to imagine one that has caused so much speculation and breathless expectation as Christopher Nolan\'s final chapter to his magnificently brooding Batman trilogy, The Dark Knight Rises. Though it may not rise to the level of the mythic grandeur of its predecessor, The Dark Knight Rises is a truly magnificent work of cinematic brilliance that commandingly completes the cycle and is as heavy with literary resonance as it is of-the-moment insight into the political and social affairs unfolding on the world stage. That it is also a full-blown and fully realized epic crime drama packed with state-of-the-art action relying equally on immaculate CGI fakery and heart-stopping practical effects and stunt work makes its entrée into blockbuster history worthy of all the anticipation and more. It deserves all the accolades it will get for bringing an opulently baroque view of a comic book universe to life with sinister effectiveness.', 2, 5),
+	(10, 'The Big Bang Theory: The Complete Fifth Season (2011)', 16.99, 20, 'The fifth season of The Big Bang Theory settles into a solid, enjoyable groove. The original quintet of four nerds and a pretty girl has been complemented by two nerd girls, creating a dynamic social world that retains all the social awkwardness needed for comic effect. Much of the season revolves around relationships: Howard (Simon Helberg) is engaged to Bernadette (Melissa Rauch), though that bond is tested by everything from Howard getting commissioned to be an astronaut to online revelations of Howard\'s former sleaziness; Leonard (Johnny Galecki) and Penny (Kaley Cuoco) start dating again, this time as "Leonard & Penny 2.0," promising to treat problems as bugs that can be reported and fixed; and Sheldon (Jim Parsons) and Amy (Mayim Bialik) formalize their relationship with--what else?--a contract, though a dissatisfied Amy later decides to make Sheldon a better boyfriend through sneaky behavior modification.', 5, 5),
+	(11, 'BlackBerry Z10 (Verizon Wireless)', 539.99, 20, 'Faster, smarter, and smoother... BlackBerry is reinvented with the BlackBerry Z10 all-touch smartphone, powered by the robust and responsive BlackBerry 10 operating system.', 5, 5),
+	(12, 'Motorola DROID MAXX (Verizon Wireless)', 699.99, 20, 'Order now and we\'ll deliver when available. We\'ll e-mail you with an estimated delivery date as soon as we have more information. Your account will only be charged when we ship the item.', 3, 5),
+	(13, 'Samsung Galaxy S4, White (Verizon Wir...', 699.99, 20, 'The Galaxy S4 does what you want and what you didn\'t know was even possible. Erase a photo\'s background distractions with just a touch, catch every part of your child\'s somersault, or capture your view of the city skyline. Preview photos and files or read a news article without ever touching the screen. Use one screen to check Facebook as you catch up on email.', 5, 5),
+	(14, 'Nokia Lumia 928, Black (Verizon Wireless)', 499.99, 20, 'Featuring advanced photo technology that can capture, edit, and share epic moments better than ever before, the 4G LTE-enabled Nokia Lumia 928 from Verizon Wireless enables you to snap bright, blur-free photos and videos -- even in low light conditions such as indoors or at night. Powered by the Windows Phone 8 operating system, the stunning Lumia 928 feels sleek, solid and fits perfectly in your hand. And the 4.5-inch PureMotion HD+ OLED display delivers crystal clear bright content with great outdoor visibility and a fast, responsive touchscreen.', 5, 5),
+	(15, 'HTC DROID DNA (Verizon Wireless)', 649.99, 20, 'The DROID DNA by HTC features a sleek design and powerful features, all on Verizon\'s 4G LTE network. Running Android 4.1 (Jelly Bean) with HTC Sense, the DROID DNA boasts a Qualcomm quad-core 1.5 GHz processor, 2 GB of RAM, and more.', 4, 5);
 /*!40000 ALTER TABLE `product_detail` ENABLE KEYS */;
 
 
@@ -146,8 +179,8 @@ CREATE TABLE IF NOT EXISTS `product_offer` (
   `offer_id` int(10) DEFAULT NULL,
   KEY `FK__product_detail` (`pro_id`),
   KEY `FK__offer` (`offer_id`),
-  CONSTRAINT `FK__product_detail` FOREIGN KEY (`pro_id`) REFERENCES `product_detail` (`id`),
-  CONSTRAINT `FK__offer` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`id`)
+  CONSTRAINT `FK__offer` FOREIGN KEY (`offer_id`) REFERENCES `offer` (`id`),
+  CONSTRAINT `FK__product_detail` FOREIGN KEY (`pro_id`) REFERENCES `product_detail` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- 正在导出表  eshopdemo.product_offer 的数据：~0 rows (大约)
