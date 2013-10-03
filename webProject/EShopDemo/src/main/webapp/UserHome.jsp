@@ -896,7 +896,7 @@
 								    			height:160px; 
 								    			padding-left: 19px;
 								    			margin-bottom: 10px;">
-										<img src="images/${book.id}/main.jpg" class="raw_image"/>
+										<a href="productDetail?id=${book.id}"><img src="images/${book.id}/main.jpg" class="raw_image"/></a>
 									</div>
 									<div style="margin-bottom: 10px;">
 										<p>
@@ -926,7 +926,7 @@
 								    			height:160px; 
 								    			padding-left: 19px;
 								    			margin-bottom: 10px;">
-										<img src="images/${movie.id}/main.jpg" class="raw_image"/>
+										<a href="productDetail?id=${movie.id}"><img src="images/${movie.id}/main.jpg" class="raw_image"/></a>
 									</div>
 									<div style="margin-bottom: 10px;">
 										<p>
@@ -955,7 +955,7 @@
 								    <div style="width:112px; 
 								    			height:160px; 
 								    			padding-left: 19px;">
-										<img src="images/${phone.id}/main.jpg" style="height: 80%"/>
+										<a href="productDetail?id=${phone.id}"><img src="images/${phone.id}/main.jpg" style="height: 80%"/></a>
 									</div>
 									<div style="margin-bottom: 10px;">
 										<p>
